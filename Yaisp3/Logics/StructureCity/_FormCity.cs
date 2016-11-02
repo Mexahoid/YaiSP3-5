@@ -118,9 +118,9 @@ namespace Yaisp3
       if (ofd.ShowDialog() == DialogResult.OK)
         using (System.IO.StreamReader sr = new System.IO.StreamReader(ofd.FileName))
         {
-          CityCreationKit = new CityCreatorLogicsClass(_ctrlPicBxCity);
-          if (!CityCreationKit.Load(_ctrlPicBxCity, sr.ReadToEnd()))
-            MessageBox.Show("Неверный формат файла города", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+          CityCreationKit = new CityCreatorLogicsClass(_ctrlPicBxCity, sr.ReadToEnd());
+          //if (!CityCreationKit.Load(_ctrlPicBxCity, sr.ReadToEnd()))
+            //MessageBox.Show("Неверный формат файла города", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Hand);
           sr.Close();
         }
     }

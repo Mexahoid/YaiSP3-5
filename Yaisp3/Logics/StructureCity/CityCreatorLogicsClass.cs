@@ -21,11 +21,33 @@ namespace Yaisp3
     }
     public CityCreatorLogicsClass(System.Windows.Forms.Control Control)   //Это для загрузки уже созданного города
     {
-      cityMatrix = MainUnitProcessor.CityGetDrawingData();
-      cityName = MainUnitProcessor.CityGetName();
       cityDrawingKit = new CityCreatorDrawingClass(Control, cityMatrix.GetLength(1), cityMatrix.GetLength(0));
       ClearImage();
       MainDraw();
+      cityMatrix = MainUnitProcessor.CityGetDrawingData();
+      cityName = MainUnitProcessor.CityGetName();
+    }
+    public CityCreatorLogicsClass(System.Windows.Forms.Control Control, string Input)   //Это для загрузки уже созданного города
+    {
+      try
+      {
+        string[] Arr = Input.Split(new string[] { "\n", "\n\r" }, StringSplitOptions.RemoveEmptyEntries);
+        cityName = Arr[0];
+        int Height = int.Parse(Arr[1]);
+        int Width = int.Parse(Arr[2]);
+        cityMatrix = new int[Height, Width];
+        for (int i = 3; i < Height + 3; i++)
+          for (int j = 0; j < Width; j++)
+            cityMatrix[i - 3, j] = (int)char.GetNumericValue(Arr[i][j]);
+        cityDrawingKit = new CityCreatorDrawingClass(Control, Width, Height);
+        MainDraw();
+      }
+      catch
+      {
+        cityName = "";
+        cityMatrix = null;
+        cityDrawingKit = null;
+      }
     }
     public bool Load(System.Windows.Forms.Control Control, string Input)
     {
@@ -52,8 +74,8 @@ namespace Yaisp3
     }
     public string Save()
     {
-      int Width = cityMatrix.GetLength(1);
       int Height = cityMatrix.GetLength(0);
+      int Width = cityMatrix.GetLength(1);
       string Out = cityName + '\n' + 
         Height + '\n' + 
         Width + '\n';
