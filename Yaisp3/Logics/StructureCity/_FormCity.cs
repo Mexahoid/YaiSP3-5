@@ -109,7 +109,7 @@ namespace Yaisp3
         {
           sw.Write(CityCreationKit.Save());
           sw.Close();
-        }
+        } 
     }
 
     private void _ctrlButLoad_Click(object sender, EventArgs e)
