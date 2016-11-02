@@ -28,7 +28,7 @@ using System.Windows.Forms;
 На форме показать размещение баннеров в городе, очередь клиентов, пожелания клиентов,
 динамику поведения счета.  //Графики чтоль?
  */
-namespace Yaisp3_v._0._1
+namespace Yaisp3
 {
   public partial class _FormMain : Form
   {

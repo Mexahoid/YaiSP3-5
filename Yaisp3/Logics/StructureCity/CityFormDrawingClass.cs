@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace Yaisp3_v._0._1
+namespace Yaisp3
 {
   static class CityFormDrawingClass
   {

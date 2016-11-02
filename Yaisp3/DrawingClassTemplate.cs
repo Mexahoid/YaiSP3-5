@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace Yaisp3_v._0._1
+namespace Yaisp3
 {
   class DrawingClass
   {

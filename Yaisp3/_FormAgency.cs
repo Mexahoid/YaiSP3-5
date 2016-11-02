@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Yaisp3_v._0._1
+namespace Yaisp3
 {
   public partial class _FormAgency : Form
   {

@@ -1,4 +1,4 @@
-﻿namespace Yaisp3_v._0._1
+﻿namespace Yaisp3
 {
   partial class _FormCity
   {
