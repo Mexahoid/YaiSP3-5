@@ -119,6 +119,7 @@ namespace Yaisp3
         using (System.IO.StreamReader sr = new System.IO.StreamReader(ofd.FileName))
         {
           CityCreationKit = new CityCreatorLogicsClass(_ctrlPicBxCity, sr.ReadToEnd());
+          _ctrlButSave.Enabled = true;
           //if (!CityCreationKit.Load(_ctrlPicBxCity, sr.ReadToEnd()))
             //MessageBox.Show("Неверный формат файла города", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Hand);
           sr.Close();
