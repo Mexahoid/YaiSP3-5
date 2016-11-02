@@ -31,7 +31,6 @@ namespace Yaisp3
     private void button1_Click(object sender, EventArgs e)
     {
       CityCreationKit = new CityCreatorLogicsClass((int)(_ctrlNumCityWidth.Value), (int)(_ctrlNumCityHeight.Value), _ctrlTxbCityName.Text, _ctrlPicBxCity);
-      _ctrlButSave.Enabled = true;
     }
 
     private void _ctrlPicBxCity_MouseDown(object sender, MouseEventArgs e)
@@ -91,14 +90,11 @@ namespace Yaisp3
     private void _FormCity_Load(object sender, EventArgs e)
     {
       if (MainUnitProcessor.CityIsPresent())
-      {
         if (!loaded)
         {
           CityCreationKit = new CityCreatorLogicsClass(_ctrlPicBxCity);
           loaded = true;
         }
-        _ctrlButSave.Enabled = true;
-      }
     }
 
     private void _ctrlButSave_Click(object sender, EventArgs e)
@@ -118,7 +114,6 @@ namespace Yaisp3
       if (ofd.ShowDialog() == DialogResult.OK)
         using (System.IO.StreamReader sr = new System.IO.StreamReader(ofd.FileName))
         {
-          CityCreationKit = new CityCreatorLogicsClass(_ctrlPicBxCity);
           if (!CityCreationKit.Load(_ctrlPicBxCity, sr.ReadToEnd()))
             MessageBox.Show("Неверный формат файла города", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Hand);
           sr.Close();

@@ -97,17 +97,13 @@ namespace Yaisp3
       /*for блаблабла рисовка домов, дорог и баннеров*/
     }
   }
-  class DrawingClassCityCreator : DrawingClass
+  class DrawingClassCity : DrawingClass
   {
-    private int CityWidth, CityHeight;
-    public DrawingClassCityCreator(System.Windows.Forms.Control Control, int CWidth, int CHeight) : base(Control)
+    protected int CityWidth, CityHeight;
+    protected DrawingClassCity(System.Windows.Forms.Control Control, int CWidth, int CHeight) : base(Control)
     {
       CityHeight = CHeight;
       CityWidth = CWidth;
-    }
-    public void ClearCanvas()
-    {
-      _CanvasLogics.Clear(Color.White);
     }
     public void DrawGrid()
     {
@@ -120,27 +116,7 @@ namespace Yaisp3
         _CanvasLogics.DrawLine(Pens.Black, GetScreenX(i * 5), GetScreenY(0),
           GetScreenX(i * 5), GetScreenY(CityHeight * -5));
     }
-    public void DrawCurrentObject(int X, int Y, int Width, int Height)
-    {
-      double PapX = GetGraphX(X) - 2.5;
-      double PapY = GetGraphY(Y) - 2.5;
-      int a = GetScreenX(PapX),
-        b = GetScreenY(PapY),
-        c = Math.Abs(a - GetScreenX(PapX - 5 * Width)),
-        d = Math.Abs(b - GetScreenY(PapY + 5 * Height));
-      _CanvasLogics.FillRectangle(Brushes.Green, a, b, c, d);
-      _CanvasLogics.DrawRectangle(Pens.Black, a, b, c, d);
-    }
-    public bool FindPlaceInMatrix(int X, int Y, out int Row, out int Col)
-    {
-      Row = Col = 0;
-      int PapX = (int)GetGraphX(X);
-      int PapY = (int)GetGraphY(Y);
-      Col = PapX / 5;
-      Row = CityHeight - Math.Abs(PapY / 5) - 1;
-      return !(Col >= CityWidth || Row >= CityHeight || Row < 0 || Col < 0);
-    }
-    public void DrawCityElement(int MatrRow, int MatrCol)
+    public void DrawCityElement(int MatrRow, int MatrCol, int House)
     {
       int ScrX = GetScreenX(5 * MatrCol);
       int LastX = GetScreenX(5 * MatrCol + 5);
@@ -148,7 +124,13 @@ namespace Yaisp3
       int ScrY = GetScreenY(-CityHeight * 5 + 5 * MatrRow);
       int LastY = GetScreenY(-CityHeight * 5 + 5 * MatrRow + 5);
 
-      _CanvasLogics.FillRectangle(Brushes.Gray, ScrX, ScrY, LastX - ScrX, Math.Abs(ScrY - LastY));
+      Brush Br = House == 1 ? Brushes.Gray : Brushes.Orange;
+      _CanvasLogics.FillRectangle(Br, ScrX, ScrY, LastX - ScrX, Math.Abs(LastY - ScrY));
+    }
+    public void ClearCanvas()
+    {
+      _CanvasLogics.Clear(Color.White);
     }
   }
+  
 }

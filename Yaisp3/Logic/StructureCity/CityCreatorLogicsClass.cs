@@ -32,9 +32,10 @@ namespace Yaisp3
       try
       {
         string[] Arr = Input.Split(new string[] { "\n", "\n\r" }, StringSplitOptions.RemoveEmptyEntries);
+        int Leng = Arr.Length;
         cityName = Arr[0];
-        int Width = int.Parse(Arr[1]);
-        int Height = int.Parse(Arr[2]);
+        int Height = int.Parse(Arr[1]);
+        int Width = int.Parse(Arr[2]);
         cityMatrix = new int[Height, Width];
         for (int i = 3; i < Height + 3; i++)
           for (int j = 0; j < Width; j++)
