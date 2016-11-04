@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+      this.components = new System.ComponentModel.Container();
       this._ctrlPicBxMap = new System.Windows.Forms.PictureBox();
       this._ctrlPicBxGraph = new System.Windows.Forms.PictureBox();
       this._ctrlLblMisc1 = new System.Windows.Forms.Label();
-      this._ctrlLblMisc2 = new System.Windows.Forms.Label();
+      this._ctrlLblDate = new System.Windows.Forms.Label();
       this.button1 = new System.Windows.Forms.Button();
       this.textBox1 = new System.Windows.Forms.TextBox();
       this._ctrlMainStrip = new System.Windows.Forms.ToolStrip();
@@ -39,27 +40,34 @@
       this._ctrlTSMICreateCity = new System.Windows.Forms.ToolStripMenuItem();
       this._ctrlTSMIAgencyMenu = new System.Windows.Forms.ToolStripMenuItem();
       this._ctrlTSMIAgencyDelete = new System.Windows.Forms.ToolStripMenuItem();
+      this._ctrlTimer = new System.Windows.Forms.Timer(this.components);
+      this._ctrlButTimerPause = new System.Windows.Forms.Button();
+      this._ctrlButTimerStart = new System.Windows.Forms.Button();
+      this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this._ctrlTBSpeed = new System.Windows.Forms.TrackBar();
       ((System.ComponentModel.ISupportInitialize)(this._ctrlPicBxMap)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this._ctrlPicBxGraph)).BeginInit();
       this._ctrlMainStrip.SuspendLayout();
+      this.groupBox1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this._ctrlTBSpeed)).BeginInit();
       this.SuspendLayout();
       // 
       // _ctrlPicBxMap
       // 
       this._ctrlPicBxMap.BackColor = System.Drawing.SystemColors.ControlLightLight;
-      this._ctrlPicBxMap.Location = new System.Drawing.Point(12, 76);
+      this._ctrlPicBxMap.Location = new System.Drawing.Point(15, 41);
       this._ctrlPicBxMap.Name = "_ctrlPicBxMap";
-      this._ctrlPicBxMap.Size = new System.Drawing.Size(635, 464);
+      this._ctrlPicBxMap.Size = new System.Drawing.Size(635, 635);
       this._ctrlPicBxMap.TabIndex = 0;
       this._ctrlPicBxMap.TabStop = false;
-      this._ctrlPicBxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.StartMouseDrawing);
-      this._ctrlPicBxMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMovingEvent);
-      this._ctrlPicBxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.StopMouseDrawing);
+      this._ctrlPicBxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this._ctrlPicBxMap_MouseDown);
+      this._ctrlPicBxMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this._ctrlPicBxMap_MouseMove);
+      this._ctrlPicBxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this._ctrlPicBxMap_MouseUp);
       // 
       // _ctrlPicBxGraph
       // 
       this._ctrlPicBxGraph.BackColor = System.Drawing.SystemColors.ControlLightLight;
-      this._ctrlPicBxGraph.Location = new System.Drawing.Point(678, 490);
+      this._ctrlPicBxGraph.Location = new System.Drawing.Point(1064, 399);
       this._ctrlPicBxGraph.Name = "_ctrlPicBxGraph";
       this._ctrlPicBxGraph.Size = new System.Drawing.Size(100, 50);
       this._ctrlPicBxGraph.TabIndex = 1;
@@ -68,24 +76,24 @@
       // _ctrlLblMisc1
       // 
       this._ctrlLblMisc1.AutoSize = true;
-      this._ctrlLblMisc1.Location = new System.Drawing.Point(12, 50);
+      this._ctrlLblMisc1.Location = new System.Drawing.Point(12, 25);
       this._ctrlLblMisc1.Name = "_ctrlLblMisc1";
       this._ctrlLblMisc1.Size = new System.Drawing.Size(75, 13);
       this._ctrlLblMisc1.TabIndex = 2;
       this._ctrlLblMisc1.Text = "Карта города";
       // 
-      // _ctrlLblMisc2
+      // _ctrlLblDate
       // 
-      this._ctrlLblMisc2.AutoSize = true;
-      this._ctrlLblMisc2.Location = new System.Drawing.Point(9, 561);
-      this._ctrlLblMisc2.Name = "_ctrlLblMisc2";
-      this._ctrlLblMisc2.Size = new System.Drawing.Size(35, 13);
-      this._ctrlLblMisc2.TabIndex = 3;
-      this._ctrlLblMisc2.Text = "label1";
+      this._ctrlLblDate.AutoSize = true;
+      this._ctrlLblDate.Location = new System.Drawing.Point(6, 24);
+      this._ctrlLblDate.Name = "_ctrlLblDate";
+      this._ctrlLblDate.Size = new System.Drawing.Size(93, 13);
+      this._ctrlLblDate.TabIndex = 3;
+      this._ctrlLblDate.Text = "Дата: 01.01.1970";
       // 
       // button1
       // 
-      this.button1.Location = new System.Drawing.Point(663, 240);
+      this.button1.Location = new System.Drawing.Point(804, 348);
       this.button1.Name = "button1";
       this.button1.Size = new System.Drawing.Size(75, 23);
       this.button1.TabIndex = 4;
@@ -94,7 +102,7 @@
       // 
       // textBox1
       // 
-      this.textBox1.Location = new System.Drawing.Point(818, 270);
+      this.textBox1.Location = new System.Drawing.Point(731, 324);
       this.textBox1.Name = "textBox1";
       this.textBox1.Size = new System.Drawing.Size(100, 20);
       this.textBox1.TabIndex = 5;
@@ -142,15 +150,65 @@
       this._ctrlTSMIAgencyDelete.Text = "Удалить агентство";
       this._ctrlTSMIAgencyDelete.Click += new System.EventHandler(this._ctrlTSMIAgencyDelete_Click);
       // 
+      // _ctrlTimer
+      // 
+      this._ctrlTimer.Tick += new System.EventHandler(this._ctrlTimer_Tick);
+      // 
+      // _ctrlButTimerPause
+      // 
+      this._ctrlButTimerPause.Enabled = false;
+      this._ctrlButTimerPause.Location = new System.Drawing.Point(133, 19);
+      this._ctrlButTimerPause.Name = "_ctrlButTimerPause";
+      this._ctrlButTimerPause.Size = new System.Drawing.Size(91, 23);
+      this._ctrlButTimerPause.TabIndex = 7;
+      this._ctrlButTimerPause.Text = "Пауза";
+      this._ctrlButTimerPause.UseVisualStyleBackColor = true;
+      this._ctrlButTimerPause.Click += new System.EventHandler(this._ctrlButTimerPause_Click);
+      // 
+      // _ctrlButTimerStart
+      // 
+      this._ctrlButTimerStart.Location = new System.Drawing.Point(668, 162);
+      this._ctrlButTimerStart.Name = "_ctrlButTimerStart";
+      this._ctrlButTimerStart.Size = new System.Drawing.Size(75, 23);
+      this._ctrlButTimerStart.TabIndex = 8;
+      this._ctrlButTimerStart.Text = "Начать";
+      this._ctrlButTimerStart.UseVisualStyleBackColor = true;
+      this._ctrlButTimerStart.Click += new System.EventHandler(this._ctrlButTimerStart_Click);
+      // 
+      // groupBox1
+      // 
+      this.groupBox1.Controls.Add(this._ctrlTBSpeed);
+      this.groupBox1.Controls.Add(this._ctrlButTimerPause);
+      this.groupBox1.Controls.Add(this._ctrlLblDate);
+      this.groupBox1.Location = new System.Drawing.Point(668, 41);
+      this.groupBox1.Name = "groupBox1";
+      this.groupBox1.Size = new System.Drawing.Size(230, 101);
+      this.groupBox1.TabIndex = 9;
+      this.groupBox1.TabStop = false;
+      this.groupBox1.Text = "Управление временем";
+      // 
+      // _ctrlTBSpeed
+      // 
+      this._ctrlTBSpeed.Location = new System.Drawing.Point(6, 49);
+      this._ctrlTBSpeed.Maximum = 25;
+      this._ctrlTBSpeed.Minimum = 1;
+      this._ctrlTBSpeed.Name = "_ctrlTBSpeed";
+      this._ctrlTBSpeed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+      this._ctrlTBSpeed.Size = new System.Drawing.Size(218, 45);
+      this._ctrlTBSpeed.TabIndex = 8;
+      this._ctrlTBSpeed.Value = 10;
+      this._ctrlTBSpeed.Scroll += new System.EventHandler(this._ctrlTBSpeed_Scroll);
+      // 
       // _FormMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1222, 646);
+      this.ClientSize = new System.Drawing.Size(1222, 691);
+      this.Controls.Add(this._ctrlButTimerStart);
+      this.Controls.Add(this.groupBox1);
       this.Controls.Add(this._ctrlMainStrip);
       this.Controls.Add(this.textBox1);
       this.Controls.Add(this.button1);
-      this.Controls.Add(this._ctrlLblMisc2);
       this.Controls.Add(this._ctrlLblMisc1);
       this.Controls.Add(this._ctrlPicBxGraph);
       this.Controls.Add(this._ctrlPicBxMap);
@@ -160,6 +218,9 @@
       ((System.ComponentModel.ISupportInitialize)(this._ctrlPicBxGraph)).EndInit();
       this._ctrlMainStrip.ResumeLayout(false);
       this._ctrlMainStrip.PerformLayout();
+      this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this._ctrlTBSpeed)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -170,7 +231,7 @@
         private System.Windows.Forms.PictureBox _ctrlPicBxMap;
         private System.Windows.Forms.PictureBox _ctrlPicBxGraph;
         private System.Windows.Forms.Label _ctrlLblMisc1;
-    private System.Windows.Forms.Label _ctrlLblMisc2;
+    private System.Windows.Forms.Label _ctrlLblDate;
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.TextBox textBox1;
     private System.Windows.Forms.ToolStrip _ctrlMainStrip;
@@ -178,6 +239,11 @@
     private System.Windows.Forms.ToolStripMenuItem _ctrlTSMIAgencyMenu;
     private System.Windows.Forms.ToolStripMenuItem _ctrlTSMIAgencyDelete;
     private System.Windows.Forms.ToolStripMenuItem _ctrlTSMICreateCity;
+    private System.Windows.Forms.Timer _ctrlTimer;
+    private System.Windows.Forms.Button _ctrlButTimerPause;
+    private System.Windows.Forms.Button _ctrlButTimerStart;
+    private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.TrackBar _ctrlTBSpeed;
   }
 }
 

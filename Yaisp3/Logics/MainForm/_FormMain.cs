@@ -32,8 +32,10 @@ namespace Yaisp3
 {
   public partial class _FormMain : Form
   {
-    bool drawing = false;
-    MouseEventArgs eOld;
+    private bool drawing = false;
+    private MouseEventArgs eOld;
+    private MainFormLogicClass mainLogic;
+
     public _FormMain()
     {
       MouseWheel += new MouseEventHandler(_ctrlPicBxMap_MouseScroll);
@@ -42,28 +44,37 @@ namespace Yaisp3
 
     private void _ctrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
     {
-      MainDrawingClass.MapZoom(e.X, e.Y, e.Delta);
-      MainDrawMethod();
+      if (mainLogic != null)
+        mainLogic.ZoomMap(e.X, e.Y, e.Delta);
     }
-    private void StartMouseDrawing(object sender, MouseEventArgs e)
+    private void _ctrlPicBxMap_MouseDown(object sender, MouseEventArgs e)
     {
-      eOld = e;
-      drawing = true;
+      if (mainLogic != null)
+        switch (e.Button)
+        {
+          case MouseButtons.Left:
+            eOld = e;
+            drawing = true;
+            break;
+          case MouseButtons.Middle:
+            mainLogic.SetNormalZoomMap();
+            break;
+        }
     }
-    private void StopMouseDrawing(object sender, MouseEventArgs e)
+    private void _ctrlPicBxMap_MouseUp(object sender, MouseEventArgs e)
     {
       drawing = false;
     }
-
-    private void MouseMovingEvent(object sender, MouseEventArgs e)
+    private void _ctrlPicBxMap_MouseMove(object sender, MouseEventArgs e)
     {
       if (drawing)
       {
-        MainDrawingClass.MapMove(e.X, e.Y, eOld.X, eOld.Y);
+        mainLogic.MoveMap(e.X, e.Y, eOld.X, eOld.Y);
         eOld = e;
         MainDrawMethod();
       }
     }
+
     private void MainDrawMethod()
     {
       if (MainUnitProcessor.AgencyIsPresent())
@@ -71,7 +82,6 @@ namespace Yaisp3
         //Что-то делать
       }
     }
-
     private void _ctrlTSMIAgencyMenu_Click(object sender, EventArgs e)
     {
       Program.formCreateAgency.ShowDialog();
@@ -80,10 +90,37 @@ namespace Yaisp3
     {
       MainUnitProcessor.AgencyDestroy();
     }
-
     private void _ctrlTSMICreateCity_Click(object sender, EventArgs e)
     {
-      Program.formCity.ShowDialog();
+      if (Program.formCity.ShowDialog() == DialogResult.OK)
+        mainLogic = new MainFormLogicClass(_ctrlPicBxMap, _ctrlPicBxGraph);
+    }
+
+    private void _ctrlTimer_Tick(object sender, EventArgs e)
+    {
+      _ctrlLblDate.Text = "Дата: " + MainUnitProcessor.DateGetAsString();
+      MainUnitProcessor.DateNewDay();
+    }
+
+    private void _ctrlButTimerStart_Click(object sender, EventArgs e)
+    {
+      MainUnitProcessor.MainReset();
+      _ctrlTimer.Enabled = true;
+      _ctrlButTimerPause.Enabled = true;
+    }
+
+    private void _ctrlButTimerPause_Click(object sender, EventArgs e)
+    {
+      _ctrlTimer.Enabled = !_ctrlTimer.Enabled;
+      if (_ctrlTimer.Enabled)
+        _ctrlButTimerPause.Text = "Пауза";
+      else
+        _ctrlButTimerPause.Text = "Продолжить";
+    }
+
+    private void _ctrlTBSpeed_Scroll(object sender, EventArgs e)
+    {
+      _ctrlTimer.Interval = _ctrlTBSpeed.Value * 10;
     }
   }
 }

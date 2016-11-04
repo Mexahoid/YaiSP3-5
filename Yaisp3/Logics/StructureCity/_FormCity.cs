@@ -15,7 +15,7 @@ namespace Yaisp3
     private bool drawing = false;
     private bool loaded = true;
     private MouseEventArgs e0;
-    private CityCreatorLogicsClass CityCreationKit;
+    private CityRedactorLogicsClass CityCreationKit;
 
     public _FormCity()
     {
@@ -28,9 +28,10 @@ namespace Yaisp3
         CityCreationKit.ZoomImage(e.X, e.Y, e.Delta);
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void _ctrlButMark_Click(object sender, EventArgs e)
     {
-      CityCreationKit = new CityCreatorLogicsClass((int)(_ctrlNumCityWidth.Value), (int)(_ctrlNumCityHeight.Value), _ctrlTxbCityName.Text, _ctrlPicBxCity);
+      CityCreationKit = new CityRedactorLogicsClass(_ctrlPicBxCity, (int)(_ctrlNumCityHeight.Value), 
+        (int)(_ctrlNumCityWidth.Value), _ctrlTxbCityName.Text);
       _ctrlButSave.Enabled = true;
     }
 
@@ -38,15 +39,22 @@ namespace Yaisp3
     {
       if (CityCreationKit != null)
       {
-        if (e.Button == MouseButtons.Right)
+        switch (e.Button)
         {
-          moving = true;
-          e0 = e;
-        }
-        if (e.Button == MouseButtons.Left && drawing)
-        {
-          CityCreationKit.AddElementToMatrix(e.X, e.Y, (int)(_ctrlNumHouseWidth.Value), (int)(_ctrlNumHouseHeigth.Value));
-          drawing = false;
+          case MouseButtons.Left:
+            if (drawing)
+            {
+              CityCreationKit.AddElementToMatrix(e.X, e.Y, (int)(_ctrlNumHouseWidth.Value), (int)(_ctrlNumHouseHeigth.Value));
+              drawing = false;
+            }
+            break;
+          case MouseButtons.Right:
+            moving = true;
+            e0 = e;
+            break;
+          case MouseButtons.Middle:
+            CityCreationKit.SetNormalZoom();
+            break;
         }
       }
     }
@@ -72,18 +80,15 @@ namespace Yaisp3
     {
       drawing = true;
     }
-
     private void _ctrlReset_Click(object sender, EventArgs e)
     {
       CityCreationKit.DestroyCreator();
     }
-
     private void _ctrlButReady_Click(object sender, EventArgs e)
     {
       CityCreationKit.CreateCity();
       CityCreationKit.DestroyCreator();
       CityCreationKit = null;
-      bool a = MainUnitProcessor.CityIsPresent();
       loaded = false;
       Close();
     }
@@ -94,7 +99,7 @@ namespace Yaisp3
       {
         if (!loaded)
         {
-          CityCreationKit = new CityCreatorLogicsClass(_ctrlPicBxCity);
+          CityCreationKit = new CityRedactorLogicsClass(_ctrlPicBxCity);
           loaded = true;
         }
         _ctrlButSave.Enabled = true;
@@ -118,10 +123,8 @@ namespace Yaisp3
       if (ofd.ShowDialog() == DialogResult.OK)
         using (System.IO.StreamReader sr = new System.IO.StreamReader(ofd.FileName))
         {
-          CityCreationKit = new CityCreatorLogicsClass(_ctrlPicBxCity, sr.ReadToEnd());
-          _ctrlButSave.Enabled = true;
-          //if (!CityCreationKit.Load(_ctrlPicBxCity, sr.ReadToEnd()))
-            //MessageBox.Show("Неверный формат файла города", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+          CityCreationKit = new CityRedactorLogicsClass(_ctrlPicBxCity, sr.ReadToEnd());
+            _ctrlButSave.Enabled = true;
           sr.Close();
         }
     }

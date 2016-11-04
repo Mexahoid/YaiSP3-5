@@ -30,8 +30,8 @@
     {
       this._ctrlPicBxCity = new System.Windows.Forms.PictureBox();
       this._ctrlButMark = new System.Windows.Forms.Button();
-      this._ctrlNumCityWidth = new System.Windows.Forms.NumericUpDown();
       this._ctrlNumCityHeight = new System.Windows.Forms.NumericUpDown();
+      this._ctrlNumCityWidth = new System.Windows.Forms.NumericUpDown();
       this._ctrlMiscLbl1 = new System.Windows.Forms.Label();
       this._ctrlMiscLbl2 = new System.Windows.Forms.Label();
       this._ctrlGrBCity = new System.Windows.Forms.GroupBox();
@@ -48,8 +48,8 @@
       this._ctrlButSave = new System.Windows.Forms.Button();
       this._ctrlButLoad = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this._ctrlPicBxCity)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this._ctrlNumCityWidth)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this._ctrlNumCityHeight)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this._ctrlNumCityWidth)).BeginInit();
       this._ctrlGrBCity.SuspendLayout();
       this._ctrlGrBHouse.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this._ctrlNumHouseWidth)).BeginInit();
@@ -76,27 +76,27 @@
       this._ctrlButMark.TabIndex = 1;
       this._ctrlButMark.Text = "Разметить";
       this._ctrlButMark.UseVisualStyleBackColor = true;
-      this._ctrlButMark.Click += new System.EventHandler(this.button1_Click);
+      this._ctrlButMark.Click += new System.EventHandler(this._ctrlButMark_Click);
       // 
-      // _ctrlNumCityWidth
+      // _ctrlNumCityHeight
       // 
-      this._ctrlNumCityWidth.Location = new System.Drawing.Point(55, 13);
-      this._ctrlNumCityWidth.Name = "_ctrlNumCityWidth";
-      this._ctrlNumCityWidth.Size = new System.Drawing.Size(48, 20);
-      this._ctrlNumCityWidth.TabIndex = 2;
-      this._ctrlNumCityWidth.Value = new decimal(new int[] {
+      this._ctrlNumCityHeight.Location = new System.Drawing.Point(54, 42);
+      this._ctrlNumCityHeight.Name = "_ctrlNumCityHeight";
+      this._ctrlNumCityHeight.Size = new System.Drawing.Size(48, 20);
+      this._ctrlNumCityHeight.TabIndex = 2;
+      this._ctrlNumCityHeight.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
       // 
-      // _ctrlNumCityHeight
+      // _ctrlNumCityWidth
       // 
-      this._ctrlNumCityHeight.Location = new System.Drawing.Point(55, 42);
-      this._ctrlNumCityHeight.Name = "_ctrlNumCityHeight";
-      this._ctrlNumCityHeight.Size = new System.Drawing.Size(48, 20);
-      this._ctrlNumCityHeight.TabIndex = 3;
-      this._ctrlNumCityHeight.Value = new decimal(new int[] {
+      this._ctrlNumCityWidth.Location = new System.Drawing.Point(54, 16);
+      this._ctrlNumCityWidth.Name = "_ctrlNumCityWidth";
+      this._ctrlNumCityWidth.Size = new System.Drawing.Size(48, 20);
+      this._ctrlNumCityWidth.TabIndex = 3;
+      this._ctrlNumCityWidth.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -105,7 +105,7 @@
       // _ctrlMiscLbl1
       // 
       this._ctrlMiscLbl1.AutoSize = true;
-      this._ctrlMiscLbl1.Location = new System.Drawing.Point(3, 15);
+      this._ctrlMiscLbl1.Location = new System.Drawing.Point(4, 18);
       this._ctrlMiscLbl1.Name = "_ctrlMiscLbl1";
       this._ctrlMiscLbl1.Size = new System.Drawing.Size(46, 13);
       this._ctrlMiscLbl1.TabIndex = 4;
@@ -114,7 +114,7 @@
       // _ctrlMiscLbl2
       // 
       this._ctrlMiscLbl2.AutoSize = true;
-      this._ctrlMiscLbl2.Location = new System.Drawing.Point(3, 44);
+      this._ctrlMiscLbl2.Location = new System.Drawing.Point(4, 44);
       this._ctrlMiscLbl2.Name = "_ctrlMiscLbl2";
       this._ctrlMiscLbl2.Size = new System.Drawing.Size(45, 13);
       this._ctrlMiscLbl2.TabIndex = 5;
@@ -124,9 +124,9 @@
       // 
       this._ctrlGrBCity.Controls.Add(this._ctrlButMark);
       this._ctrlGrBCity.Controls.Add(this._ctrlMiscLbl2);
-      this._ctrlGrBCity.Controls.Add(this._ctrlNumCityWidth);
-      this._ctrlGrBCity.Controls.Add(this._ctrlMiscLbl1);
       this._ctrlGrBCity.Controls.Add(this._ctrlNumCityHeight);
+      this._ctrlGrBCity.Controls.Add(this._ctrlMiscLbl1);
+      this._ctrlGrBCity.Controls.Add(this._ctrlNumCityWidth);
       this._ctrlGrBCity.Location = new System.Drawing.Point(468, 64);
       this._ctrlGrBCity.Name = "_ctrlGrBCity";
       this._ctrlGrBCity.Size = new System.Drawing.Size(113, 100);
@@ -219,6 +219,7 @@
       // 
       // _ctrlButReady
       // 
+      this._ctrlButReady.DialogResult = System.Windows.Forms.DialogResult.OK;
       this._ctrlButReady.Location = new System.Drawing.Point(468, 319);
       this._ctrlButReady.Name = "_ctrlButReady";
       this._ctrlButReady.Size = new System.Drawing.Size(113, 23);
@@ -278,8 +279,8 @@
       this.Text = "Редактор города";
       this.Load += new System.EventHandler(this._FormCity_Load);
       ((System.ComponentModel.ISupportInitialize)(this._ctrlPicBxCity)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this._ctrlNumCityWidth)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this._ctrlNumCityHeight)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this._ctrlNumCityWidth)).EndInit();
       this._ctrlGrBCity.ResumeLayout(false);
       this._ctrlGrBCity.PerformLayout();
       this._ctrlGrBHouse.ResumeLayout(false);
@@ -295,8 +296,8 @@
 
     private System.Windows.Forms.PictureBox _ctrlPicBxCity;
     private System.Windows.Forms.Button _ctrlButMark;
-    private System.Windows.Forms.NumericUpDown _ctrlNumCityWidth;
     private System.Windows.Forms.NumericUpDown _ctrlNumCityHeight;
+    private System.Windows.Forms.NumericUpDown _ctrlNumCityWidth;
     private System.Windows.Forms.Label _ctrlMiscLbl1;
     private System.Windows.Forms.Label _ctrlMiscLbl2;
     private System.Windows.Forms.GroupBox _ctrlGrBCity;
