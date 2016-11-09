@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Include="Logics\MainForm\Graph\GraphDrawingClass.cs" />
     <Compile Include="Logics\MainForm\Graph\GraphLogicsClass.cs" />
+    <Compile Include="Logics\StructureAgency\Billboard.cs" />
+    <Compile Include="Logics\StructureClient\Client.cs" />
+    <Compile Include="Logics\TextStorage\TextStorageClass.cs" />
     <Compile Include="Templates\MainLogicsTemplate.cs" />
     <Compile Include="Logics\MainForm\Map\MapDrawingClass.cs" />
     <Compile Include="Logics\MainForm\Map\MapLogicsClass.cs" />

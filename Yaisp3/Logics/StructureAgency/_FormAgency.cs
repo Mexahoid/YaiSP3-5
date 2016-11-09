@@ -19,7 +19,7 @@ namespace Yaisp3
 
     private void _ctrlButCreate_Click(object sender, EventArgs e)
     {
-      if (!MainUnitProcessor.AgencyCreate(_ctrlTxbName.Text, _ctrlTxbDeposit.Text, _ctrlTxbBillboards.Text, Strategy))
+      if (!MainUnitProcessor.AgencyCreate(_ctrlTxbName.Text, (int)_ctrlNumDeposit.Value, (int)_ctrlNumBillboards.Value, Strategy))
         MessageBox.Show("Вы ввели недопустимое значение в каком-то из полей. Проверьте правильность информации.", "Ошибка значений", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
       else
         Close();
@@ -33,24 +33,23 @@ namespace Yaisp3
     private void _FormAgency_Load(object sender, EventArgs e)
     {
       _ctrlButEdit.Enabled = MainUnitProcessor.AgencyIsPresent();
-      _ctrlButCreate.Enabled = _ctrlTxbBillboards.Enabled = _ctrlTxbDeposit.Enabled = !MainUnitProcessor.AgencyIsPresent();
+      _ctrlButCreate.Enabled = _ctrlNumBillboards.Enabled = _ctrlNumDeposit.Enabled = !MainUnitProcessor.AgencyIsPresent();
       if (MainUnitProcessor.AgencyIsPresent())
       {
-        string Name;
-        int Money, Bills, Strat;
-        MainUnitProcessor.AgencyGetData(out Name, out Money, out Bills, out Strat);
-        _ctrlTxbBillboards.Text = Bills.ToString();
-        _ctrlTxbDeposit.Text = Money.ToString();
-        _ctrlTxbName.Text = Name;
-        switch (Strat)
+        Tuple<string, int, int, Agency.Strategies> T =
+          MainUnitProcessor.AgencyGetData();
+        _ctrlNumBillboards.Value = T.Item3;
+        _ctrlNumDeposit.Value = T.Item2;
+        _ctrlTxbName.Text = T.Item1;
+        switch (T.Item4)
         {
-          case 1:
+          case Agency.Strategies.Conservative:
             _ctrlRadConserv.Checked = true;
             break;
-          case 2:
+          case Agency.Strategies.Normal:
             _ctrlRadNormal.Checked = true;
             break;
-          case 3:
+          case Agency.Strategies.Aggressive:
             _ctrlRadAggro.Checked = true;
             break;
         }
@@ -58,8 +57,6 @@ namespace Yaisp3
       else
       {
         _ctrlTxbName.Text = "ООО \"Вектор\"";
-        _ctrlTxbDeposit.Text = "100000";
-        _ctrlTxbBillboards.Text = "5";
         _ctrlRadConserv.Checked = true;
       }
     }

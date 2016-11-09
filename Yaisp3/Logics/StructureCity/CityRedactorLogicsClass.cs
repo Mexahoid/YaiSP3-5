@@ -132,11 +132,8 @@ namespace Yaisp3
       MainDraw();
     }
     /// <summary>
-    /// Создает экземпляр города
+    /// Лямбда-выражение: cоздает экземпляр города
     /// </summary>
-    public void CreateCity()
-    {
-      MainUnitProcessor.CityCreate(cityMatrix, cityName);
-    }
+    public void CreateCity() => MainUnitProcessor.CityCreate(cityMatrix, cityName);
   }
 }

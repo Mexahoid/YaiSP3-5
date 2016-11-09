@@ -10,6 +10,8 @@ namespace Yaisp3
     private static Agency Agency = null;
     private static City City = null;
     private static DateTime CurrentDate = new DateTime(1970, 1, 1);
+    private static List<City.Position> FreeSpaces;
+    private static Random Sychev = new Random();
 
     public static void MainReset()
     {
@@ -35,6 +37,17 @@ namespace Yaisp3
     public static void CityCreate(int[,] Matrix, string Name)
     {
       City = new City(Name, Matrix);
+      FreeSpaces = City.GetFreeSpaces();
+    }
+    /// <summary>
+    /// Возвращает случайное целое число от Min до Max
+    /// </summary>
+    /// <param name="Min">Минимальное случайное число</param>
+    /// <param name="Max">Максимальное случайное число</param>
+    /// <returns></returns>
+    public static int GetRandomValue(int Min, int Max)
+    {
+      return Sychev.Next(Min, Max);
     }
 
     /// <summary>
@@ -56,7 +69,7 @@ namespace Yaisp3
     /// <returns></returns>
     public static bool CityIsHouseCanBePlaced(int X00, int Y00, int RightWidth, int DownDepth)
     {
-      return City.TryToPlaceHouse(X00, Y00, RightWidth, DownDepth);
+      return City.TryToPlaceElement(X00, Y00, RightWidth, DownDepth);
     }
 
     /// <summary>
@@ -82,7 +95,28 @@ namespace Yaisp3
     /// <param name="Matrix">Целочисленная матрица города</param>
     public static void CityRecreateMatrix(int[,] Matrix)
     {
-      
+      City.RecreateMatrix(Matrix);
+    }
+
+    /// <summary>
+    /// Возвращает случайную свободную позицию на матрице города
+    /// </summary>
+    /// <returns>Возвращает экземпляр City.Position</returns>
+    public static City.Position CityReturnFreePosition()
+    {
+      Random Sychev = new Random();
+      int Pos = Sychev.Next(0, FreeSpaces.Count);
+      City.Position Position = FreeSpaces[Pos];
+      City.FillSpace(Position);
+      FreeSpaces = City.GetFreeSpaces();
+      return Position;
+    }
+    /// <summary>
+    /// Пересоздает список пустых мест
+    /// </summary>
+    public static void CityGetFreePositions()
+    {
+      FreeSpaces = City.GetFreeSpaces();
     }
 
     /// <summary>
@@ -93,45 +127,73 @@ namespace Yaisp3
     /// <param name="Billboards">Количество рекламных щитов</param>
     /// <param name="Strategy">Стратегия агентства</param>
     /// <returns></returns>
-    public static bool AgencyCreate(string Name, string Money, string Billboards, int Strategy)
+    public static bool AgencyCreate(string Name, int Money, int Billboards, int Strategy)
     {
       int Mon = 0, Bb = 0;
       if (Name != null && Name != "")
-        if (int.TryParse(Money, out Mon) && int.TryParse(Billboards, out Bb) && Mon > 0 && Bb > 0)
-        {
-          Agency = new Agency(Name, Mon, Bb, (Agency.Strategies)Strategy);
-          return true;
-        }
-        else
-          return false;
-      return false;
+      {
+        Agency = new Agency(Name, Mon, Bb, (Agency.Strategies)Strategy);
+        return true;
+      }
+      else
+        return false;
     }
+    /// <summary>
+    /// Возвращает True, если агентство создано
+    /// </summary>
+    /// <returns></returns>
     public static bool AgencyIsPresent()
     {
       return Agency != null;
     }
+    /// <summary>
+    /// Уничтожает агентство
+    /// </summary>
     public static void AgencyDestroy()
     {
       Agency = null;
     }
-    public static void AgencyGetData(out string Name, out int Money, out int Billboards, out int Strategy)
+    /// <summary>
+    /// Возвращает кортеж данных агентства
+    /// </summary>
+    /// <returns></returns>
+    public static Tuple<string, int, int, Agency.Strategies> AgencyGetData()
     {
-      Agency.Strategies Strat;
-      Agency.GetData(out Name, out Money, out Billboards, out Strat);
-      Strategy = (int)Strat;
+      return Agency.GetData();
     }
+    /// <summary>
+    /// Меняет данные агентства
+    /// </summary>
+    /// <param name="Name">Новое название агентства</param>
+    /// <param name="Strategy">Новая стратегия агентства</param>
     public static void AgencyChangeData(string Name, int Strategy)
     {
       Agency.ChangeMainData(Name, (Agency.Strategies)Strategy);
     }
 
+    /// <summary>
+    /// Добавляет один день к дате
+    /// </summary>
     public static void DateNewDay()
     {
       CurrentDate = CurrentDate.AddDays(1);
     }
+    /// <summary>
+    /// Возвращает дату строкой вида DD.MM.YYYY
+    /// </summary>
+    /// <returns></returns>
     public static string DateGetAsString()
     {
       return CurrentDate.ToShortDateString();
+    }
+    /// <summary>
+    /// Возвращает True, если по дате будний день
+    /// </summary>
+    /// <returns></returns>
+    public static bool DateIsWorkday()
+    {
+      return CurrentDate.DayOfWeek != DayOfWeek.Saturday &&
+      CurrentDate.DayOfWeek != DayOfWeek.Sunday;
     }
   }
 }
