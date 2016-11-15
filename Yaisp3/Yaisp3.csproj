@@ -45,18 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logics\MainForm\Graph\GraphDrawingClass.cs" />
-    <Compile Include="Logics\MainForm\Graph\GraphLogicsClass.cs" />
+    <Compile Include="Logics\MiscLogics\Graph\GraphDrawingClass.cs" />
+    <Compile Include="Logics\MiscLogics\Graph\GraphLogicsClass.cs" />
+    <Compile Include="Logics\StructureCity\Element.cs" />
+    <Compile Include="Logics\StructureQueue\QueueClass.cs" />
+    <Compile Include="Logics\StructureStrategy\Strategies.cs" />
     <Compile Include="Logics\StructureAgency\Billboard.cs" />
-    <Compile Include="Logics\StructureClient\Client.cs" />
-    <Compile Include="Logics\TextStorage\TextStorageClass.cs" />
-    <Compile Include="Templates\MainLogicsTemplate.cs" />
-    <Compile Include="Logics\MainForm\Map\MapDrawingClass.cs" />
-    <Compile Include="Logics\MainForm\Map\MapLogicsClass.cs" />
-    <Compile Include="Templates\MainDrawingTemplate.cs" />
-    <Compile Include="Templates\Interfaces.cs" />
-    <Compile Include="Logics\MainForm\MainFormLogicClass.cs" />
-    <Compile Include="Logics\MainUnitProcessor.cs" />
+    <Compile Include="Logics\StructureQueue\StructureClient\Client.cs" />
+    <Compile Include="Logics\MiscLogics\TextStorage\TextStorageClass.cs" />
+    <Compile Include="Logics\MiscLogics\Templates\MainLogicsTemplate.cs" />
+    <Compile Include="Logics\MiscLogics\MainForm\Map\MapDrawingClass.cs" />
+    <Compile Include="Logics\MiscLogics\MainForm\Map\MapLogicsClass.cs" />
+    <Compile Include="Logics\MiscLogics\Templates\MainDrawingTemplate.cs" />
+    <Compile Include="Logics\MiscLogics\Templates\Interfaces.cs" />
+    <Compile Include="Logics\MiscLogics\MainForm\MainFormLogicClass.cs" />
+    <Compile Include="Logics\MiscLogics\MainUnitProcessor.cs" />
     <Compile Include="Logics\StructureAgency\Agency.cs" />
     <Compile Include="Logics\StructureCity\City.cs" />
     <Compile Include="Logics\StructureCity\CityRedactorDrawingClass.cs" />
@@ -75,10 +78,10 @@
     <Compile Include="Logics\StructureCity\_FormCity.Designer.cs">
       <DependentUpon>_FormCity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logics\MainForm\_FormMain.cs">
+    <Compile Include="Logics\MiscLogics\MainForm\_FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\MainForm\_FormMain.Designer.cs">
+    <Compile Include="Logics\MiscLogics\MainForm\_FormMain.Designer.cs">
       <DependentUpon>_FormMain.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -97,7 +100,7 @@
     <EmbeddedResource Include="Logics\StructureCity\_FormCity.resx">
       <DependentUpon>_FormCity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logics\MainForm\_FormMain.resx">
+    <EmbeddedResource Include="Logics\MiscLogics\MainForm\_FormMain.resx">
       <DependentUpon>_FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

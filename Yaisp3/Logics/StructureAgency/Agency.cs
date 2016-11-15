@@ -20,27 +20,27 @@ namespace Yaisp3
     private Strategies agencyStrategy;
     private string agencyName;
     private int agencyDeposit;
-    private int agencyBillboardsCount;
-    private List<Billboard> agencyBillboards;
+    private List<Billboard2> agencyBillboards;
+    private double agencyProfitCoeff;
 
+    //Первичные методы
     public Agency(string Name, int Money, int Billboards, Strategies Strategy)
     {
       agencyName = Name;
       agencyDeposit = Money;
-      agencyBillboards = new List<Billboard>();
-      agencyBillboardsCount = Billboards;
-      for (int i = 0; i < agencyBillboardsCount; i++)
-        agencyBillboards.Add(new Billboard(MainUnitProcessor.CityReturnFreePosition()));
+      agencyBillboards = new List<Billboard2>();
+      for (int i = 0; i < agencyBillboards.Count; i++)
+        agencyBillboards.Add(new Billboard2(MainUnitProcessor.CityReturnFreePosition()));
       agencyStrategy = Strategy;
+      agencyProfitCoeff = 0;
     }
-
     /// <summary>
     /// Возвращает кортеж, состоящий из названия агентства, депозита, кол-ва щитов и стратегии
     /// </summary>
     /// <returns></returns>
     public Tuple<string, int, int, Strategies> GetData()
     {
-      return Tuple.Create(agencyName, agencyDeposit, agencyBillboardsCount, agencyStrategy);
+      return Tuple.Create(agencyName, agencyDeposit, 10, agencyStrategy);
     }
     /// <summary>
     /// У агентства можно менять только название и стратегию
@@ -52,7 +52,15 @@ namespace Yaisp3
       agencyName = Name;
       agencyStrategy = Strategy;
     }
+    //Методы интерфейса
+    public void PlaceBillboardAt(int Row, int Col)
+    {
 
+    }
+    public void FillBillboard()
+    {
+
+    }
     public void PlaceBillboardRnd()
     {
       if (MainUnitProcessor.DateIsWorkday())
@@ -65,7 +73,7 @@ namespace Yaisp3
     public void PassDay()
     {
       int AllMoneyForDay = 0;
-      for (int i = 0; i < agencyBillboardsCount; i++)
+      for (int i = 0; i < agencyBillboards.Count; i++)
         AllMoneyForDay += agencyBillboards[i].GetBillboardMoney();
       PlaceBillboardRnd();
     }
