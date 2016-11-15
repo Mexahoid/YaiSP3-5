@@ -5,51 +5,57 @@ namespace Yaisp3
   /// <summary>
   /// Класс базового элемента города
   /// </summary>
-  class Element
+  public class Element
   {
+    protected int elementWidth;
+    protected int elementHeight;
+
+    protected bool elementType;
+
     /// <summary>
-    /// Позиция элемента в матрице города
+    /// Возвращает состояние элемента
     /// </summary>
-    //protected City.Position Position;
-
-
-   /* /// <summary>
-    /// Базовый конструктор элемента
-    /// </summary>
-    /// <param name="Position">Позиция элемента</param>
-    protected Element(City.Position Position)
+    /// <returns>True, если элемент - дом, False - Если биллборд</returns>
+    public bool ReturnType()
     {
-      this.Position = Position;
-    }*/
-
+      return elementType;
+    }
   }
 
   /// <summary>
   /// Класс элемента дома
   /// </summary>
-  class House : Element
+  public class House : Element
   {
     /// <summary>
     /// Группа, к которой принадлежит город
     /// </summary>
     private int houseElementGroup;
 
+    public Tuple<int, int> GetHouseSize()
+    {
+      return Tuple.Create(elementWidth, elementHeight);
+    }
 
     /// <summary>
     /// Создает элемент города заданной группы элементов
     /// </summary>
-    /// <param name="Position">Позиция, на которую устанавливается элемент</param>
+    /// <param name="Width">Ширина дома</param>
     /// <param name="Group">Группа элементов</param>
-    public House(int Group)
+    /// <param name="Height">Высота дома</param>
+    public House(int Group, int Width, int Height)
     {
       houseElementGroup = Group;
+      elementWidth = Width;
+      elementHeight = Height;
+      elementType = true;
     }
   }
 
   /// <summary>
   /// Класс биллборда
   /// </summary>
-  class Billboard : Element
+  public class Billboard : Element
   {
     /// <summary>
     /// Состояние города
@@ -109,12 +115,14 @@ namespace Yaisp3
     /// </summary>
     /// <param name="Position">Позиция установки</param>
     /// <param name="AllCost">Ощая цена постройки биллборда</param>
-    public Billboard(City.Position Position, int AllCost) : base(Position)
+    public Billboard(int AllCost)
     {
       billboardBuilded = false;
       billboardProfitPerDay = 0;
+      elementHeight = elementWidth = 1;
       billboardCostPerDay = AllCost / 100;
       billboardType = State.Building;
+      elementType = false;
     }
 
     /// <summary>

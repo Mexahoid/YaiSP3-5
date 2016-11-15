@@ -8,7 +8,7 @@ namespace Yaisp3
 {
   class MapLogicsClass : MainLogicsTemplate
   {
-    protected int[,] cityMatrix;
+    protected System.Drawing.Color[,] colorMatrix;
     protected string cityName;
 
     /// <summary>
@@ -17,9 +17,9 @@ namespace Yaisp3
     /// <param name="Control">Контрол, на котором производится рисование</param>
     public MapLogicsClass(Control Control)
     {
-      cityMatrix = MainUnitProcessor.CityGetDrawingData();
+      colorMatrix = MainUnitProcessor.CityGetDrawingData();
       cityName = MainUnitProcessor.CityGetName();
-      drawingKit = new CityRedactorDrawingClass(Control, cityMatrix.GetLength(1), cityMatrix.GetLength(0));
+      drawingKit = new CityRedactorDrawingClass(Control, colorMatrix.GetLength(1), colorMatrix.GetLength(0));
       ClearImage();
       MainDraw();
     }
@@ -32,11 +32,11 @@ namespace Yaisp3
     /// </summary>
     protected void DrawElements()
     {
-      int Rows = cityMatrix.GetLength(0), Cols = cityMatrix.GetLength(1);
+      int Rows = colorMatrix.GetLength(0), Cols = colorMatrix.GetLength(1);
       for (int i = 0; i < Rows; i++)
         for (int j = 0; j < Cols; j++)
-          if (cityMatrix[i, j] != 0)
-            drawingKit.DrawCityElement(i, j, cityMatrix[i, j]);
+          if (colorMatrix[i, j] != null)
+            drawingKit.DrawCityElement(i, j, colorMatrix[i, j]);
     }
     /// <summary>
     /// Рисует сетку города

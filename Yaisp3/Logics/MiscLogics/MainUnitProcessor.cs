@@ -32,13 +32,15 @@ namespace Yaisp3
     /// <summary>
     /// Создает новый экземпляр города
     /// </summary>
-    /// <param name="Matrix">Матрица города</param>
     /// <param name="Name">Название города</param>
-    public static void CityCreate(int[,] Matrix, string Name)
+    /// <param name="Width">Ширина города</param>
+    /// <param name="Height">Высота города</param>
+    public static void CityCreate(string Name, int Height, int Width)
     {
-      City = new City(Name, Matrix);
-      FreeSpaces = City.GetFreeSpaces();
+      City = new City(Name, Width, Height);
+      //FreeSpaces = City.GetFreeSpaces();
     }
+
     /// <summary>
     /// Возвращает случайное целое число от Min до Max
     /// </summary>
@@ -54,22 +56,9 @@ namespace Yaisp3
     /// Возвращает матрицу города для дальнейших операций
     /// </summary>
     /// <returns>Возвращает матрицу целочисленных значений</returns>
-    public static int[,] CityGetDrawingData()
+    public static System.Drawing.Color[,] CityGetDrawingData()
     {
       return City.GetDrawingData();
-    }
-
-    /// <summary>
-    /// Оценивает возможность установки элемента в городе
-    /// </summary>
-    /// <param name="X00">Строка установки левого верхнего угла</param>
-    /// <param name="Y00">Столбец установки левого верхнего угла</param>
-    /// <param name="RightWidth">Ширина элемента</param>
-    /// <param name="DownDepth">Высота элемента</param>
-    /// <returns></returns>
-    public static bool CityIsHouseCanBePlaced(int X00, int Y00, int RightWidth, int DownDepth)
-    {
-      return City.TryToPlaceElement(X00, Y00, RightWidth, DownDepth);
     }
 
     /// <summary>
@@ -89,13 +78,9 @@ namespace Yaisp3
       City = null;
     }
 
-    /// <summary>
-    /// Изменяет матрицу города
-    /// </summary>
-    /// <param name="Matrix">Целочисленная матрица города</param>
-    public static void CityRecreateMatrix(int[,] Matrix)
+    public static void CityPlaceHouse(int X, int Y, int Width, int Height)
     {
-      City.RecreateMatrix(Matrix);
+      City.PlaceElement(X, Y, City.CreateHouse(Width, Height));
     }
 
     /// <summary>
@@ -107,10 +92,11 @@ namespace Yaisp3
       Random Sychev = new Random();
       int Pos = Sychev.Next(0, FreeSpaces.Count);
       City.Position Position = FreeSpaces[Pos];
-      City.FillSpace(Position);
+      //City.FillSpace(Position);
       FreeSpaces = City.GetFreeSpaces();
       return Position;
     }
+
     /// <summary>
     /// Пересоздает список пустых мест
     /// </summary>

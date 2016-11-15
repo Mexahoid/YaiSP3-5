@@ -47,7 +47,7 @@ namespace Yaisp3
     /// <param name="MatrRow">Строка матрицы</param>
     /// <param name="MatrCol">Столбец матрицы</param>
     /// <param name="House">1 - дом, 2 - щит, не 1\2 - занятый щит</param>
-    public void DrawCityElement(int MatrRow, int MatrCol, int House)
+    public void DrawCityElement(int MatrRow, int MatrCol, Color Color)
     {
       int ScrX = GetScreenX(5 * MatrCol);
       int LastX = GetScreenX(5 * MatrCol + 5);
@@ -55,7 +55,7 @@ namespace Yaisp3
       int ScrY = GetScreenY(-CityHeight * 5 + 5 * MatrRow);
       int LastY = GetScreenY(-CityHeight * 5 + 5 * MatrRow + 5);
 
-      Brush Br = House == 1 ? Brushes.Gray : House == 2 ? Brushes.Green : Brushes.Orange;
+      SolidBrush Br = new SolidBrush(Color);
       _CanvasLogics.FillRectangle(Br, ScrX, ScrY, LastX - ScrX, Math.Abs(LastY - ScrY));
     }
   }

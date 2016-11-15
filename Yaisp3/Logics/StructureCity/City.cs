@@ -33,7 +33,7 @@ namespace Yaisp3
     }
 
 
-    private int[,] cityMatrix;
+    //private int[,] cityMatrix;
 
 
     /// <summary>
@@ -47,7 +47,7 @@ namespace Yaisp3
     /// <summary>
     /// Главная матрица элементов
     /// </summary>
-    private Element[,] cityMatrix1;
+    private Element[,] cityMatrix;
     /// <summary>
     /// Количество групп элементов домов
     /// </summary>
@@ -57,23 +57,18 @@ namespace Yaisp3
     /// Главный конструктор города
     /// </summary>
     /// <param name="Name">Название города</param>
-    /// <param name="Matrix"></param>
-    public City(string Name, int[,] Matrix)
+    /// <param name="Width">Ширина города</param>
+    /// <param name="Height">Высота города</param>
+    public City(string Name, int Width, int Height)
     {
-      cityMatrix = Matrix;
+      cityMatrix = new Element[Height, Width];
+      cityMatrixProximity = new double[Height, Width];
       cityName = Name;
     }
-    public int[,] GetDrawingData()
-    {
-      return cityMatrix;
-    }
+
     public string GetName()
     {
       return cityName;
-    }
-    public void PlaceBillBoard(int X00, int Y00)
-    {
-      cityMatrix[X00, Y00] = 2;
     }
 
     /// <summary>
@@ -84,13 +79,25 @@ namespace Yaisp3
     /// <param name="RightWidth">Ширина элемента</param>
     /// <param name="DownDepth">Высота (вниз) элемента</param>
     /// <returns></returns>
-    public bool TryToPlaceElement(int X00, int Y00, int RightWidth, int DownDepth)
+    private bool TryToPlaceElement(int X00, int Y00, int RightWidth, int DownDepth)
     {
-      for (int i = Y00; i <= RightWidth; i++)
-        for (int j = X00; j <= DownDepth; j++)
-          if (cityMatrix1[i, j] != null)
+      for (int i = Y00; i <= RightWidth + Y00; i++)
+        for (int j = X00; j <= DownDepth + X00; j++)
+          if (cityMatrix[i, j] != null)
             return false;
       return true;
+    }
+
+    /// <summary>
+    /// Создает новый экземпляр дома
+    /// </summary>
+    /// <param name="Width">Ширина дома</param>
+    /// <param name="Height">Высота дома</param>
+    /// <returns>Возвращает дом новой группы</returns>
+    public House CreateHouse(int Width, int Height)
+    {
+      House House = new House(cityHouseGroups++, Width, Height);
+      return House;
     }
 
     /// <summary>
@@ -98,20 +105,35 @@ namespace Yaisp3
     /// </summary>
     /// <param name="X00">Х верхней левой точки элемента</param>
     /// <param name="Y00">Y верхней левой точки элемента</param>
-    /// <param name="RightWidth">Ширина элемента</param>
-    /// <param name="DownDepth">Высота (вниз) элемента</param>
-    public void PlaceElement(int X00, int Y00, int RightWidth, int DownDepth)
+    /// <param name="Element">Устанавливаемый элемент</param>
+    public void PlaceElement(int X00, int Y00, Element Element)
     {
-      House House = new House(null, 1);
-      for (int i = Y00; i <= RightWidth; i++)
-        for (int j = X00; j <= DownDepth; j++)
-          cityMatrix1[i, j] = House;
+      if (Element.ReturnType())
+      {
+        Tuple<int, int> T = ((House)Element).GetHouseSize();
+        if (TryToPlaceElement(X00, Y00, T.Item1, T.Item2))
+          for (int i = Y00; i < T.Item1 + Y00; i++)
+            for (int j = X00; j < T.Item2 + X00; j++)
+              cityMatrix[i, j] = Element;
+      }
+      else
+        cityMatrix[X00, Y00] = Element;
     }
 
-
-    public void RecreateMatrix(int[,] Matrix)
+    public System.Drawing.Color[,] GetDrawingData()
     {
-      cityMatrix = Matrix;
+      int Rows = cityMatrix.GetLength(0);
+      int Cols = cityMatrix.GetLength(1);
+
+      System.Drawing.Color[,] Colors = new System.Drawing.Color[Rows, Cols];
+      for (int i = 0; i < Rows; i++)
+        for (int j = 0; j < Cols; j++)
+          if (cityMatrix[i, j] != null)
+            if (cityMatrix[i, j].ReturnType())
+              Colors[i, j] = System.Drawing.Color.Gray;
+            else
+              Colors[i,j] = ((Billboard)cityMatrix[i, j]).GetBillboardColor();
+      return Colors;
     }
     public List<Position> GetFreeSpaces()
     {
@@ -120,13 +142,9 @@ namespace Yaisp3
       int Cols = cityMatrix.GetLength(1);
       for (int i = 0; i < Rows; i++)
         for (int j = 0; j < Cols; j++)
-          if (cityMatrix[i, j] == 0)
+          if (cityMatrix[i, j] == null)
             FreeSpaces.Add(new Position(i, j));
       return FreeSpaces;
-    }
-    public void FillSpace(Position Pos)
-    {
-      cityMatrix[Pos.row, Pos.col] = 2;
     }
   }
 }

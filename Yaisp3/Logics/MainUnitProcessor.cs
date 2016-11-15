@@ -119,6 +119,11 @@ namespace Yaisp3
       FreeSpaces = City.GetFreeSpaces();
     }
 
+    public static void CityAddElement(int X, int Y, int Width, int Height)
+    {
+      
+    }
+
     /// <summary>
     /// Создает новый экземпляр агентства
     /// </summary>

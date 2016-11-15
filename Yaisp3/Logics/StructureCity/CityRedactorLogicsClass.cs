@@ -15,26 +15,24 @@ namespace Yaisp3
     /// <param name="Height">Высота города (в у.е.)</param>
     /// <param name="Width">Ширина города (в у.е.)</param>
     /// <param name="Name">Название города</param>
-    public CityRedactorLogicsClass(Control Control, int Height, int Width, string Name) : base()
+    public CityRedactorLogicsClass(Control Control) : base(Control)
     {
-      cityMatrix = new int[Height, Width];
-      cityName = Name;
-      drawingKit = new CityRedactorDrawingClass(Control, Width, Height);
-      ClearImage();
-      MainDraw();
+      //colorMatrix = MainUnitProcessor.CityGetDrawingData();
+      //drawingKit = new CityRedactorDrawingClass(Control, colorMatrix.GetLength(1), colorMatrix.GetLength(0));
+      //ClearImage();
+      //MainDraw();
     }
-    /// <summary>
+  /*  /// <summary>
     /// Конструктор для загрузки города, загруженного в программе
     /// </summary>
     /// <param name="Control">Контрол, на котором производится рисование</param>
     public CityRedactorLogicsClass(Control Control) : base(Control)
     {
-      cityMatrix = MainUnitProcessor.CityGetDrawingData();
       cityName = MainUnitProcessor.CityGetName();
-      drawingKit = new CityRedactorDrawingClass(Control, cityMatrix.GetLength(1), cityMatrix.GetLength(0));
+      drawingKit = new CityRedactorDrawingClass(Control, colorMatrix.GetLength(1), colorMatrix.GetLength(0));
       ClearImage();
       MainDraw();
-    }
+    }*/
     /// <summary>
     /// Конструктор для парсинга и загрузки города из файла
     /// </summary>
@@ -42,7 +40,7 @@ namespace Yaisp3
     /// <param name="Input">Входная на парсер строка</param>
     public CityRedactorLogicsClass(Control Control, string Input) : base()
     {
-      try
+      /*try
       {
         string[] Arr = Input.Split(new string[] { "\n", "\n\r" }, StringSplitOptions.RemoveEmptyEntries);
         cityName = Arr[0];
@@ -60,44 +58,29 @@ namespace Yaisp3
         cityName = "";
         cityMatrix = null;
         drawingKit = null;
-      }
+      }*/
     }
 
-    /// <summary>
-    /// Проверка пустоты места, на которое устанавливается объект
-    /// </summary>
-    /// <param name="Row">Строка в матрице города</param>
-    /// <param name="Col">Столбец в матрице города</param>
-    /// <param name="Width">Ширина устанавливаемого объекта</param>
-    /// <param name="Height">Высота устанавливаемого объекта</param>
-    /// <returns>Возвращает логическое значение</returns>
-    private bool CanElementBePlaced(int Row, int Col, int Width, int Height)
-    {
-      for (int i = Row; i < Row + Height; i++)
-        for (int j = Col; j < Width + Col; j++)
-          if (cityMatrix[i, j] != 0)
-            return false;
-      return true;
-    }
     /// <summary>
     /// Сохранение карты города
     /// </summary>
     /// <returns>Возвращает строку-данные города</returns>
     public string Save()
     {
-      int Height = cityMatrix.GetLength(0);
-      int Width = cityMatrix.GetLength(1);
-      string Out = cityName + '\n' + 
-        Height + '\n' + 
+      //int Height = cityMatrix.GetLength(0);
+      //int Width = cityMatrix.GetLength(1);
+      string Out = cityName + '\n';
+      /*  Height + '\n' +
         Width + '\n';
       for (int i = 0; i < Height; i++)
       {
         for (int j = 0; j < Width; j++)
           Out += cityMatrix[i, j];
         Out += '\n';
-      }
+      }*/
       return Out;
     }
+
     /// <summary>
     /// Отрисовка устанавливаемого элемента
     /// </summary>
@@ -113,6 +96,7 @@ namespace Yaisp3
       DrawGrid();
       drawingKit.DrawImage();
     }
+
     /// <summary>
     /// Добавление устанавливаемого объекта на карту города
     /// </summary>
@@ -124,19 +108,9 @@ namespace Yaisp3
     {
       int Row, Col;
       if ((drawingKit as CityRedactorDrawingClass).FindPlaceInMatrix(X, Y, out Row, out Col))
-        if (CanElementBePlaced(Row, Col, Width, Height))
-          for (int i = Row; i < Row + Height; i++)
-            for (int j = Col; j < Width + Col; j++)
-              cityMatrix[i, j] = 1;
+        MainUnitProcessor.CityPlaceHouse(Row, Col, Width, Height);
       ClearImage();
       MainDraw();
-    }
-    /// <summary>
-    /// Создает экземпляр города
-    /// </summary>
-    public void CreateCity()
-    {
-        MainUnitProcessor.CityCreate(cityMatrix, cityName);
     }
   }
 }

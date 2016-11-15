@@ -30,8 +30,10 @@ namespace Yaisp3
 
     private void _ctrlButMark_Click(object sender, EventArgs e)
     {
-      CityCreationKit = new CityRedactorLogicsClass(_ctrlPicBxCity, (int)(_ctrlNumCityHeight.Value), 
-        (int)(_ctrlNumCityWidth.Value), _ctrlTxbCityName.Text);
+      MainUnitProcessor.CityCreate(_ctrlTxbCityName.Text, (int)(_ctrlNumCityHeight.Value),
+        (int)(_ctrlNumCityWidth.Value));
+
+      CityCreationKit = new CityRedactorLogicsClass(_ctrlPicBxCity);
       _ctrlButSave.Enabled = true;
     }
 
@@ -44,7 +46,8 @@ namespace Yaisp3
           case MouseButtons.Left:
             if (drawing)
             {
-              CityCreationKit.AddElementToMatrix(e.X, e.Y, (int)(_ctrlNumHouseWidth.Value), (int)(_ctrlNumHouseHeigth.Value));
+              CityCreationKit.AddElementToMatrix(e.X, e.Y, 
+                (int)(_ctrlNumHouseWidth.Value), (int)(_ctrlNumHouseHeigth.Value));
               drawing = false;
             }
             break;
@@ -86,7 +89,6 @@ namespace Yaisp3
     }
     private void _ctrlButReady_Click(object sender, EventArgs e)
     {
-      CityCreationKit.CreateCity();
       CityCreationKit.DestroyCreator();
       CityCreationKit = null;
       loaded = false;
