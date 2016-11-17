@@ -106,13 +106,12 @@ namespace Yaisp3
 
 
         /// <summary>
-        /// Создает новый биллборд
+        /// Создает новый биллборд.
         /// </summary>
         /// <param name="Position">Позиция установки</param>
         /// <param name="AllCost">Ощая цена постройки биллборда</param>
         public Billboard(int AllCost)
         {
-            billboardBuilded = false;
             billboardProfitPerDay = 0;
             elementHeight = elementWidth = 1;
             billboardCostPerDay = AllCost / 100;
@@ -121,9 +120,9 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Активирует биллборд как готовый к заполнению
+        /// Активирует биллборд как готовый к заполнению.
         /// </summary>
-        public void BuildBillboardToEnd()
+        public void BillboardBuildToEnd()
         {
             billboardType = State.Free;
         }
@@ -132,7 +131,7 @@ namespace Yaisp3
         /// Возвращает значение True, Если биллборд ещё строится
         /// </summary>
         /// <returns></returns>
-        public bool GetBillboardBuildingState()
+        public bool BillboardIsBuilding()
         {
             return billboardType == State.Building;
         }
@@ -141,7 +140,7 @@ namespace Yaisp3
         /// Возвращает значение True, если биллборд свободен
         /// </summary>
         /// <returns></returns>
-        public bool GetBillboardFillState()
+        public bool BillboardIsFilled()
         {
             return billboardType == State.Free && billboardType != State.Building;  //Это просто защита
         }
@@ -150,10 +149,10 @@ namespace Yaisp3
         /// Заполняет биллборд заказом клиента
         /// </summary>
         /// <param name="ClientDesire">Кортеж из текста рекламы, цены за аренду и уровня заказчика</param>
-        public void FillBillboard(Tuple<string, int, byte> ClientDesire)
+        public void BillboardFill(Tuple<string, int, byte> ClientDesire)
         {
             billboardText = ClientDesire.Item1;
-            billboardCostPerDay = ClientDesire.Item2;
+            billboardProfitPerDay = ClientDesire.Item2;
             billboardType = (State)ClientDesire.Item3;   //Значения Rank и State для заказов совпадают
         }
 
@@ -161,7 +160,7 @@ namespace Yaisp3
         /// Возвращает соответствующий цвет для отрисовки биллборда на карте
         /// </summary>
         /// <returns></returns>
-        public System.Drawing.Color GetBillboardColor()
+        public System.Drawing.Color BillboardGetColor()
         {
             switch (billboardType)
             {
@@ -176,6 +175,15 @@ namespace Yaisp3
                 default: // State.Government:
                     return System.Drawing.Color.Crimson;
             }
+        }
+
+        /// <summary>
+        /// Возвращает дневной доход с биллборда
+        /// </summary>
+        /// <returns>Возвращает положительное или отрицательное целое число</returns>
+        public int BillboardGetMoney()
+        {
+            return billboardProfitPerDay - billboardCostPerDay;
         }
     }
 }

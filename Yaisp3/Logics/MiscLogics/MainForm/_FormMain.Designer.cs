@@ -48,6 +48,8 @@
             this._ctrlChBIndCity = new System.Windows.Forms.CheckBox();
             this._ctrlChBIndAgen = new System.Windows.Forms.CheckBox();
             this._ctrlGrbIndic = new System.Windows.Forms.GroupBox();
+            this.ctrlChBProximity = new System.Windows.Forms.CheckBox();
+            this.CtrlTSMIProximityMap = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this._ctrlPicBxMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._ctrlPicBxGraph)).BeginInit();
             this._ctrlMainStrip.SuspendLayout();
@@ -127,30 +129,31 @@
             this._ctrlTSMIDrop.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._ctrlTSMICreateCity,
             this._ctrlTSMIAgencyMenu,
-            this._ctrlTSMIAgencyDelete});
+            this._ctrlTSMIAgencyDelete,
+            this.CtrlTSMIProximityMap});
             this._ctrlTSMIDrop.Name = "_ctrlTSMIDrop";
-            this._ctrlTSMIDrop.Size = new System.Drawing.Size(49, 22);
+            this._ctrlTSMIDrop.Size = new System.Drawing.Size(54, 22);
             this._ctrlTSMIDrop.Text = "Меню";
             this._ctrlTSMIDrop.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             // 
             // _ctrlTSMICreateCity
             // 
             this._ctrlTSMICreateCity.Name = "_ctrlTSMICreateCity";
-            this._ctrlTSMICreateCity.Size = new System.Drawing.Size(184, 22);
+            this._ctrlTSMICreateCity.Size = new System.Drawing.Size(197, 22);
             this._ctrlTSMICreateCity.Text = "Создать город";
             this._ctrlTSMICreateCity.Click += new System.EventHandler(this._ctrlTSMICreateCity_Click);
             // 
             // _ctrlTSMIAgencyMenu
             // 
             this._ctrlTSMIAgencyMenu.Name = "_ctrlTSMIAgencyMenu";
-            this._ctrlTSMIAgencyMenu.Size = new System.Drawing.Size(184, 22);
+            this._ctrlTSMIAgencyMenu.Size = new System.Drawing.Size(197, 22);
             this._ctrlTSMIAgencyMenu.Text = "Меню агентства";
             this._ctrlTSMIAgencyMenu.Click += new System.EventHandler(this._ctrlTSMIAgencyMenu_Click);
             // 
             // _ctrlTSMIAgencyDelete
             // 
             this._ctrlTSMIAgencyDelete.Name = "_ctrlTSMIAgencyDelete";
-            this._ctrlTSMIAgencyDelete.Size = new System.Drawing.Size(184, 22);
+            this._ctrlTSMIAgencyDelete.Size = new System.Drawing.Size(197, 22);
             this._ctrlTSMIAgencyDelete.Text = "Удалить агентство";
             this._ctrlTSMIAgencyDelete.Click += new System.EventHandler(this._ctrlTSMIAgencyDelete_Click);
             // 
@@ -199,7 +202,7 @@
             this._ctrlTBSpeed.Minimum = 1;
             this._ctrlTBSpeed.Name = "_ctrlTBSpeed";
             this._ctrlTBSpeed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this._ctrlTBSpeed.Size = new System.Drawing.Size(218, 42);
+            this._ctrlTBSpeed.Size = new System.Drawing.Size(218, 45);
             this._ctrlTBSpeed.TabIndex = 8;
             this._ctrlTBSpeed.Value = 10;
             this._ctrlTBSpeed.Scroll += new System.EventHandler(this._ctrlTBSpeed_Scroll);
@@ -237,11 +240,30 @@
             this._ctrlGrbIndic.TabStop = false;
             this._ctrlGrbIndic.Text = "Готовность";
             // 
+            // ctrlChBProximity
+            // 
+            this.ctrlChBProximity.AutoSize = true;
+            this.ctrlChBProximity.Location = new System.Drawing.Point(663, 298);
+            this.ctrlChBProximity.Name = "ctrlChBProximity";
+            this.ctrlChBProximity.Size = new System.Drawing.Size(80, 17);
+            this.ctrlChBProximity.TabIndex = 13;
+            this.ctrlChBProximity.Text = "checkBox1";
+            this.ctrlChBProximity.UseVisualStyleBackColor = true;
+            this.ctrlChBProximity.CheckedChanged += new System.EventHandler(this.CtrlChBProximity_CheckedChanged);
+            // 
+            // CtrlTSMIProximityMap
+            // 
+            this.CtrlTSMIProximityMap.Name = "CtrlTSMIProximityMap";
+            this.CtrlTSMIProximityMap.Size = new System.Drawing.Size(197, 22);
+            this.CtrlTSMIProximityMap.Text = "Карта коэффициентов";
+            this.CtrlTSMIProximityMap.Click += new System.EventHandler(this.CtrlTSMIProximityMap_Click);
+            // 
             // _FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(911, 691);
+            this.Controls.Add(this.ctrlChBProximity);
             this.Controls.Add(this._ctrlGrbIndic);
             this.Controls.Add(this._ctrlButTimerStart);
             this.Controls.Add(this.groupBox1);
@@ -288,6 +310,8 @@
     private System.Windows.Forms.CheckBox _ctrlChBIndCity;
     private System.Windows.Forms.CheckBox _ctrlChBIndAgen;
     private System.Windows.Forms.GroupBox _ctrlGrbIndic;
-  }
+        private System.Windows.Forms.CheckBox ctrlChBProximity;
+        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIProximityMap;
+    }
 }
 

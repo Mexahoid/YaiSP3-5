@@ -47,11 +47,18 @@
   <ItemGroup>
     <Compile Include="Logics\MiscLogics\Graph\GraphDrawingClass.cs" />
     <Compile Include="Logics\MiscLogics\Graph\GraphLogicsClass.cs" />
+    <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.Designer.cs">
+      <DependentUpon>FormProximity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\ProximityDrawingClass.cs" />
+    <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\ProximityLogicsClass.cs" />
     <Compile Include="Logics\StructureCity\Element.cs" />
     <Compile Include="Logics\StructureCity\Matrices.cs" />
     <Compile Include="Logics\StructureQueue\QueueClass.cs" />
     <Compile Include="Logics\StructureStrategy\Strategies.cs" />
-    <Compile Include="Logics\StructureAgency\Billboard.cs" />
     <Compile Include="Logics\StructureQueue\StructureClient\Client.cs" />
     <Compile Include="Logics\MiscLogics\TextStorage\TextStorageClass.cs" />
     <Compile Include="Logics\MiscLogics\Templates\MainLogicsTemplate.cs" />
@@ -85,6 +92,9 @@
     <Compile Include="Logics\MiscLogics\MainForm\_FormMain.Designer.cs">
       <DependentUpon>_FormMain.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.resx">
+      <DependentUpon>FormProximity.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -117,6 +127,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

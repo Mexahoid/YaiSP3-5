@@ -37,9 +37,42 @@ namespace Yaisp3
             return cityName;
         }
 
+        /// <summary>
+        /// Устанавливает новый дом
+        /// </summary>
+        /// <param name="Row">Строка верхнего левого квадрата дома</param>
+        /// <param name="Col">Столбец верхнего левого квадрата дома</param>
+        /// <param name="RightWidth">Ширина дома</param>
+        /// <param name="DownDepth">Высота дома</param>
         public void PlaceHouse(int Row, int Col, int RightWidth, int DownDepth)
         {
             cityMatrix.PlaceHouse(Row, Col, RightWidth, DownDepth);
+        }
+
+        /// <summary>
+        /// Достраивает все строящиеся биллборды
+        /// </summary>
+        public void BuildBillboardsToEnd()
+        {
+            cityMatrix.BuildAllBillboardsToEnd();
+        }
+
+        /// <summary>
+        /// Устанавливает биллборд на случайной локации
+        /// </summary>
+        /// <param name="Billboard"></param>
+        public void PlaceBillboard(Billboard Billboard)
+        {
+            cityMatrix.PlaceBillboard(Billboard);
+        }
+
+        /// <summary>
+        /// Заполняет случайный биллборд заказом клиента
+        /// </summary>
+        /// <param name="ClientDesire">Кортеж желания клиента</param>
+        public void FillBillboard(Tuple<string, int, byte> ClientDesire)
+        {
+            cityMatrix.FillRandomBillboard(ClientDesire);
         }
 
         /// <summary>
@@ -51,14 +84,9 @@ namespace Yaisp3
             return cityMatrix.GetDrawingData();
         }
 
-        /// <summary>
-        /// Возвращает массив из значения строки и столбца места с минимальным коэффициентом
-        /// </summary>
-        /// <returns>Возвращает массив целочисленных значений</returns>
-        public int[] GetFreeSpace()
+        public System.Drawing.Color[,] GetProximityMap()
         {
-            return cityMatrixProximity.GetRandomFreeSpace();
+            return cityMatrix.GetCoeffMapColors();
         }
-        
     }
 }

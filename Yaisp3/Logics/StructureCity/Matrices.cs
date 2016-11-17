@@ -46,8 +46,10 @@ namespace Yaisp3
             /// <returns></returns>
             private bool TryToPlaceElement(int Row, int Col, int RightWidth, int DownDepth)
             {
-                for (int i = Col; i <= RightWidth + Col; i++)
-                    for (int j = Row; j <= DownDepth + Row; j++)
+                if (Row + DownDepth > rows || Col + RightWidth > cols)
+                    return false;
+                for (int i = Row; i < DownDepth + Row; i++)
+                    for (int j = Col; j < RightWidth + Col; j++)
                         if (((Element[,])matrix)[i, j] != null)
                             return false;
                 return true;
@@ -66,7 +68,7 @@ namespace Yaisp3
                             if (((Element[,])matrix)[i, j].ReturnType())
                                 Colors[i, j] = System.Drawing.Color.Gray;
                             else
-                                Colors[i, j] = ((Billboard)((Element[,])matrix)[i, j]).GetBillboardColor();
+                                Colors[i, j] = ((Billboard)((Element[,])matrix)[i, j]).BillboardGetColor();
                 return Colors;
             }
 
@@ -77,18 +79,16 @@ namespace Yaisp3
             /// <param name="Col">Столбец верхнего левого квадрата дома</param>
             /// <param name="RightWidth">Ширина дома</param>
             /// <param name="DownDepth">Высота дома</param>
-            /// <returns></returns>
             public void PlaceHouse(int Row, int Col, int RightWidth, int DownDepth)
             {
                 House NewHouse = new House(++currentHouseGroup, RightWidth, DownDepth);
                 if (TryToPlaceElement(Row, Col, RightWidth, DownDepth))
-                    for (int i = Col; i <= RightWidth + Col; i++)
-                        for (int j = Row; j <= DownDepth + Row; j++)
+                    for (int i = Row; i < DownDepth + Row; i++)
+                        for (int j = Col; j < RightWidth + Col; j++)
                         {
                             ((Element[,])matrix)[i, j] = NewHouse;
                             cityMatrixProximity.PlaceCityElement(i, j);
                         }
-
             }
 
             /// <summary>
@@ -110,8 +110,8 @@ namespace Yaisp3
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
                         if (((Element[,])matrix)[i, j] != null &&
-                            !((Billboard)((Element[,])matrix)[i, j]).GetBillboardBuildingState())
-                            ((Billboard)((Element[,])matrix)[i, j]).BuildBillboardToEnd();
+                            !((Billboard)((Element[,])matrix)[i, j]).BillboardIsBuilding())
+                            ((Billboard)((Element[,])matrix)[i, j]).BillboardBuildToEnd();
             }
 
             /// <summary>
@@ -123,8 +123,13 @@ namespace Yaisp3
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
                         if (((Element[,])matrix)[i, j] != null &&
-                            ((Billboard)((Element[,])matrix)[i, j]).GetBillboardFillState())
-                            ((Billboard)((Element[,])matrix)[i, j]).FillBillboard(ClientDesire);
+                            ((Billboard)((Element[,])matrix)[i, j]).BillboardIsFilled())
+                            ((Billboard)((Element[,])matrix)[i, j]).BillboardFill(ClientDesire);
+            }
+
+            public System.Drawing.Color[,] GetCoeffMapColors()
+            {
+                return cityMatrixProximity.GetCoeffMap();
             }
         }
         public class MatrixCoefficients : Matrix
@@ -139,30 +144,30 @@ namespace Yaisp3
                 /// </summary>
                 None,
                 /// <summary>
-                /// 
+                /// Вверх
                 /// </summary>
                 Up,
                 /// <summary>
-                /// 
+                /// Вниз
                 /// </summary>
                 Down,
                 /// <summary>
-                /// 
+                /// Налево
                 /// </summary>
                 Left,
                 /// <summary>
-                /// 
+                /// Направо
                 /// </summary>
                 Right
             }
 
+            /// <summary>
+            /// Возвращает случайную позицию с минимальным коэффициентом
+            /// </summary>
+            /// <returns>Возвращает массив целочисленных значений</returns>
             public int[] GetRandomFreeSpace()
             {
-                double minCoeff = double.MaxValue;
-                for (int i = 0; i < rows; i++)
-                    for (int j = 0; j < cols; j++)
-                        if (minCoeff > ((double[,])matrix)[i, j])
-                            minCoeff = ((double[,])matrix)[i, j];   //Ищем по всей матрице значение минимального коэффициента
+                double minCoeff = GetCoeff(true);
 
                 List<int[]> FreeSpaces = new List<int[]>();
 
@@ -206,7 +211,30 @@ namespace Yaisp3
             /// <param name="Width">Ширина дома</param>
             public void PlaceCityElement(int Row, int Col)
             {
-                 ((double[,])matrix)[Row, Col] = 1000;
+                ((double[,])matrix)[Row, Col] = 1000;
+            }
+
+             /// <summary>
+            /// Возвращает необходимое значение коэффициента.
+            /// </summary>
+            /// <param name="Min">True - поиск минимального, False - поиск максимального</param>
+            /// <returns></returns>
+            private double GetCoeff(bool Min)
+            {
+                double neededCoeff = Min ? double.MaxValue : double.MinValue;
+                for (int i = 0; i < rows; i++)
+                    for (int j = 0; j < cols; j++)
+                        if (Min)
+                        {
+                            if (neededCoeff > ((double[,])matrix)[i, j])
+                                neededCoeff = ((double[,])matrix)[i, j];
+                        }
+                        else
+                        {
+                            if (((double[,])matrix)[i, j] < 1000 && neededCoeff < ((double[,])matrix)[i, j])
+                                neededCoeff = ((double[,])matrix)[i, j];
+                        }
+                return neededCoeff;
             }
 
             /// <summary>
@@ -218,7 +246,11 @@ namespace Yaisp3
             /// <param name="Dest">Направление предыдущего хода</param>
             private void RecursionCoefficients(int Row, int Col, double Coeff, Destinations Dest)
             {
-                if (Row != rows && Col != cols && Coeff >= 0)
+                if (Row != rows && 
+                    Row >= 0 &&
+                    Col != cols &&
+                    Col >= 0 &&
+                    Coeff >= 0)
                 {
                     ((double[,])matrix)[Row, Col] += Coeff;
                     switch (Dest)
@@ -251,6 +283,26 @@ namespace Yaisp3
                             break;
                     }
                 }
+            }
+
+            /// <summary>
+            /// Возвращает карту цветов коэффициентов
+            /// </summary>
+            /// <returns>Возвращает массив цветов</returns>
+            public System.Drawing.Color[,] GetCoeffMap()
+            {
+                System.Drawing.Color[,] Out = new System.Drawing.Color[rows, cols];
+                double MaxCoeff = GetCoeff(false);
+                for (int i = 0; i < rows; i++)
+                    for (int j = 0; j < cols; j++)
+                        if (((double[,])matrix)[i, j] < 100)
+                            Out[i, j] = System.Drawing.Color.FromArgb(
+                                (int)(255 * ((double[,])matrix)[i, j] / MaxCoeff),
+                                (int)(165 * ((double[,])matrix)[i, j] / MaxCoeff),
+                                0);
+                        else
+                            Out[i, j] = System.Drawing.Color.DarkGreen;
+                return Out;
             }
         }
     }
