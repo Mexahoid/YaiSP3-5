@@ -48,6 +48,7 @@
     <Compile Include="Logics\MiscLogics\Graph\GraphDrawingClass.cs" />
     <Compile Include="Logics\MiscLogics\Graph\GraphLogicsClass.cs" />
     <Compile Include="Logics\StructureCity\Element.cs" />
+    <Compile Include="Logics\StructureCity\Matrices.cs" />
     <Compile Include="Logics\StructureQueue\QueueClass.cs" />
     <Compile Include="Logics\StructureStrategy\Strategies.cs" />
     <Compile Include="Logics\StructureAgency\Billboard.cs" />

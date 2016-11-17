@@ -87,14 +87,9 @@ namespace Yaisp3
     /// Возвращает случайную свободную позицию на матрице города
     /// </summary>
     /// <returns>Возвращает экземпляр City.Position</returns>
-    public static City.Position CityReturnFreePosition()
+    public static int[] CityReturnFreePosition()
     {
-      Random Sychev = new Random();
-      int Pos = Sychev.Next(0, FreeSpaces.Count);
-      City.Position Position = FreeSpaces[Pos];
-      //City.FillSpace(Position);
-      FreeSpaces = City.GetFreeSpaces();
-      return Position;
+      return City.GetFreeSpace();
     }
 
     /// <summary>

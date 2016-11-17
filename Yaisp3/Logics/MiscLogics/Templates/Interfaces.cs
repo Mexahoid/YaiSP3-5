@@ -7,10 +7,9 @@ namespace Yaisp3
 {
   class Interfaces
   {
-    public interface ICityDrawable
+    public interface IEnum
     {
-      void DrawGrid();
-      void DrawCityElement(int MatrRow, int MatrCol, int House);
+      
     }
   }
 }
