@@ -6,17 +6,20 @@ using System.Windows.Forms;
 
 namespace Yaisp3
 {
-  class GraphLogicsClass : MainLogicsTemplate
-  {
-    private GraphDrawingClass graphDrawingKit;
-
-    /// <summary>
-    /// Создает экземпляр логики графика
-    /// </summary>
-    /// <param name="Control"></param>
-    public GraphLogicsClass(Control Control)
+    class GraphLogicsClass : MainLogicsTemplate
     {
-      graphDrawingKit = new GraphDrawingClass(Control);
+        /// <summary>
+        /// Создает экземпляр логики графика
+        /// </summary>
+        /// <param name="Control"></param>
+        public GraphLogicsClass(Control Control, List<double[]> graphPoints)
+        {
+            drawingKit = new GraphDrawingClass(Control, graphPoints);
+        }
+
+        protected override void MainDraw()
+        {
+            ((GraphDrawingClass)drawingKit).DrawGraph();
+        }
     }
-  }
 }

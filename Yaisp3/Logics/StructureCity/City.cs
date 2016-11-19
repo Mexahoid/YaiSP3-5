@@ -53,9 +53,9 @@ namespace Yaisp3
         /// <summary>
         /// Достраивает все строящиеся биллборды
         /// </summary>
-        public void BuildBillboardsToEnd()
+        public int BuildBillboardsToEnd()
         {
-            cityMatrix.BuildAllBillboardsToEnd();
+            return cityMatrix.BuildAllBillboardsToEnd();
         }
 
         /// <summary>
@@ -67,6 +67,9 @@ namespace Yaisp3
             cityMatrix.PlaceBillboard(Billboard);
         }
 
+        /// <summary>
+        /// Удаляет все биллборды
+        /// </summary>
         public void DeleteBillboards()
         {
             cityMatrix.DeleteBillboards();

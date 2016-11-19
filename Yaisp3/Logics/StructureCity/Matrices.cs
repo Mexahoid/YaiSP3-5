@@ -5,23 +5,50 @@ using System.Text;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Класс матриц
+    /// </summary>
     static class Matrices
     {
+        /// <summary>
+        /// Родительский класс матрицы
+        /// </summary>
         internal class Matrix
         {
+            /// <summary>
+            /// Кол-во строк матрицы
+            /// </summary>
             protected int rows;
+            /// <summary>
+            /// Кол-во столбцов матрицы
+            /// </summary>
             protected int cols;
 
+            /// <summary>
+            /// Сама матрица
+            /// </summary>
             protected object matrix;
 
+            /// <summary>
+            /// Конструктор матрицы
+            /// </summary>
+            /// <param name="Rows">Кол-во строк матрицы</param>
+            /// <param name="Cols">Кол-во столбцов матрицы</param>
             protected Matrix(int Rows, int Cols)
             {
                 rows = Rows;
                 cols = Cols;
             }
         }
+
+        /// <summary>
+        /// Класс матрицы элементов города
+        /// </summary>
         public class MatrixElements : Matrix
         {
+            /// <summary>
+            /// Нынешняя группа добавляемого дома
+            /// </summary>
             private int currentHouseGroup;
 
             /// <summary>
@@ -29,6 +56,11 @@ namespace Yaisp3
             /// </summary>
             private MatrixCoefficients cityMatrixProximity;
 
+            /// <summary>
+            /// Конструктор матрицы элементов
+            /// </summary>
+            /// <param name="Rows">Кол-во строк</param>
+            /// <param name="Cols">Кол-во столбцов</param>
             public MatrixElements(int Rows, int Cols)
                 : base(Rows, Cols)
             {
@@ -106,30 +138,39 @@ namespace Yaisp3
             /// <summary>
             /// Заканчивает строительство всех недостроенных биллбордов
             /// </summary>
-            public void BuildAllBillboardsToEnd()
+            public int BuildAllBillboardsToEnd()
             {
+                int Count = 0;
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
                         if (((Element[,])matrix)[i, j] != null &&
-                            !((Billboard)((Element[,])matrix)[i, j]).BillboardIsBuilding())
+                            ((Billboard)((Element[,])matrix)[i, j]).BillboardIsBuilding())
+                        {
                             ((Billboard)((Element[,])matrix)[i, j]).BillboardBuildToEnd();
+                            Count++;
+                        }
+                return Count;
             }
 
             /// <summary>
             /// Заполняет биллборд заказом клиента
             /// </summary>
             /// <param name="ClientDesire">Кортеж из текста рекламы, цены за аренду и уровня заказчика</param>
-            public void FillRandomBillboard(Tuple<string, int, byte> ClientDesire)
+            public bool FillRandomBillboard(Tuple<string, int, byte> ClientDesire)
             {
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
                         if (((Element[,])matrix)[i, j] != null &&
                             ((Billboard)((Element[,])matrix)[i, j]).BillboardIsFilled())
+                        {
                             ((Billboard)((Element[,])matrix)[i, j]).BillboardFill(ClientDesire);
+                            return true;
+                        }
+                return false;
             }
 
             /// <summary>
-            /// 
+            /// Возвращает карту коэффициентов
             /// </summary>
             /// <returns></returns>
             public System.Drawing.Color[,] GetCoeffMapColors()
@@ -137,16 +178,23 @@ namespace Yaisp3
                 return cityMatrixProximity.GetCoeffMap();
             }
 
+            /// <summary>
+            /// Удаляет все биллборды с карты
+            /// </summary>
             public void DeleteBillboards()
             {
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
-                        if (((Element[,])matrix)[i, j]!= null && 
+                        if (((Element[,])matrix)[i, j] != null &&
                             ((Element[,])matrix)[i, j].GetType() == typeof(Billboard))
                             ((Element[,])matrix)[i, j] = null;
                 cityMatrixProximity.DeleteBillboardCoefficients();
             }
         }
+
+        /// <summary>
+        /// Класс матрицы коэффициентов
+        /// </summary>
         public class MatrixCoefficients : Matrix
         {
             /// <summary>
@@ -253,6 +301,9 @@ namespace Yaisp3
                 }
             }
 
+            /// <summary>
+            /// Удаляет коэффициенты биллбордов
+            /// </summary>
             public void DeleteBillboardCoefficients()
             {
                 for (int i = 0; i < rows; i++)

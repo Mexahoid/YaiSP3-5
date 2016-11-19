@@ -8,7 +8,6 @@ namespace Yaisp3
 {
     class MainFormLogicClass
     {
-        private GraphLogicsClass graphLogics;
         private MapLogicsClass mapLogics;
 
         /// <summary>
@@ -18,7 +17,6 @@ namespace Yaisp3
         public MainFormLogicClass(Control MapControl, Control GraphControl)
         {
             mapLogics = new MapLogicsClass(MapControl);
-            graphLogics = new GraphLogicsClass(GraphControl);
         }
 
         /// <summary>
@@ -49,5 +47,6 @@ namespace Yaisp3
         {
             mapLogics.ZoomImage(IX, IY, Delta);
         }
+
     }
 }

@@ -59,7 +59,10 @@ namespace Yaisp3
             if (QueueIsNull())
                 queueHead = queueTail = NewNode;
             else
+            {
                 queueTail.NodeNext = NewNode;
+                queueTail = NewNode;
+            }
         }
 
         public bool QueueIsNull()
@@ -116,10 +119,10 @@ namespace Yaisp3
                 if (Q.NodeNext == null)
                     return Q.NodeClient.GetTextData();
                 else
-                    while (Q.NodeNext != null)
+                    while (Q != null)
                     {
+                        Out += Q.NodeClient.GetTextData() + "\n=================" + Environment.NewLine;
                         Q = Q.NodeNext;
-                        Out += Q.NodeClient.GetTextData() + '\n';
                     }
             }
             return Out;

@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logics\MiscLogics\Graph\FormGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Logics\MiscLogics\Graph\FormGraph.Designer.cs">
+      <DependentUpon>FormGraph.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logics\MiscLogics\Graph\GraphDrawingClass.cs" />
     <Compile Include="Logics\MiscLogics\Graph\GraphLogicsClass.cs" />
     <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.cs">
@@ -53,7 +59,6 @@
     <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.Designer.cs">
       <DependentUpon>FormProximity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\ProximityDrawingClass.cs" />
     <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\ProximityLogicsClass.cs" />
     <Compile Include="Logics\StructureCity\Element.cs" />
     <Compile Include="Logics\StructureCity\Matrices.cs" />
@@ -92,6 +97,9 @@
     <Compile Include="Logics\MiscLogics\MainForm\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Logics\MiscLogics\Graph\FormGraph.resx">
+      <DependentUpon>FormGraph.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.resx">
       <DependentUpon>FormProximity.cs</DependentUpon>
     </EmbeddedResource>

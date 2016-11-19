@@ -14,8 +14,8 @@ namespace Yaisp3
         protected Bitmap _CanvasImage;
 
         protected int I1 = 0, I2 = 0, J1 = 0, J2 = 0;
-        private double x1p = -10, y1p = -100, x2p = 100, y2p = 10;
-        private double x1old = -10, y1old = -100, x2old = 100, y2old = 10; //Константные координаты истинного масштаба
+        protected double x1p = -10, y1p = -100, x2p = 100, y2p = 10;
+        protected double x1old = -10, y1old = -100, x2old = 100, y2old = 10; //Константные координаты истинного масштаба
 
         /// <summary>
         /// Выгружает канвасы из памяти

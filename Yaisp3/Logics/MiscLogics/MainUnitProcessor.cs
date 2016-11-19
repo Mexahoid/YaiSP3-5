@@ -14,6 +14,10 @@ namespace Yaisp3
         private static Strategy Strategy;
         private static QueueClass Queue;
 
+        #region Главные методы
+        /// <summary>
+        /// Полный сброс всей программы
+        /// </summary>
         public static void MainReset()
         {
             Agency = null;
@@ -21,20 +25,27 @@ namespace Yaisp3
             CurrentDate = new DateTime(1970, 1, 1);
         }
 
+        /// <summary>
+        /// Считывает тексты в память
+        /// </summary>
         public static void MainParseTexts()
         {
             TextStorageClass.ParseTextData();
         }
 
         /// <summary>
-        /// Возвращает Тrue, Если город создан и False, Если нет
+        /// Возвращает случайное целое число от Min до Max
         /// </summary>
-        /// <returns>Возвращает логическое значение</returns>
-        public static bool CityIsPresent()
+        /// <param name="Min">Минимальное случайное число</param>
+        /// <param name="Max">Максимальное случайное число</param>
+        /// <returns></returns>
+        public static int GetRandomValue(int Min, int Max)
         {
-            return City != null;
+            return Sychev.Next(Min, Max);
         }
+        #endregion
 
+        #region Город
         /// <summary>
         /// Создает новый экземпляр города
         /// </summary>
@@ -48,32 +59,12 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает случайное целое число от Min до Max
+        /// Возвращает Тrue, Если город создан и False, Если нет
         /// </summary>
-        /// <param name="Min">Минимальное случайное число</param>
-        /// <param name="Max">Максимальное случайное число</param>
-        /// <returns></returns>
-        public static int GetRandomValue(int Min, int Max)
+        /// <returns>Возвращает логическое значение</returns>
+        public static bool CityIsPresent()
         {
-            return Sychev.Next(Min, Max);
-        }
-
-        /// <summary>
-        /// Возвращает матрицу цветов элементов города
-        /// </summary>
-        /// <returns>Возвращает матрицу цветовых значений</returns>
-        public static System.Drawing.Color[,] CityGetDrawingData()
-        {
-            return City.GetDrawingData();
-        }
-
-        /// <summary>
-        /// Возвращает цветовую матрицу коэффициентов
-        /// </summary>
-        /// <returns>Возвращает матрицу цветовых значений</returns>
-        public static System.Drawing.Color[,] CityGetProximityMap()
-        {
-            return City.GetProximityMap();
+            return City != null;
         }
 
         /// <summary>
@@ -114,10 +105,15 @@ namespace Yaisp3
             City.PlaceBillboard(Billboard);
         }
 
-        public static void CityBillboardsBuildToEnd()
+        /// <summary>
+        /// Достраивает все биллборды на карте
+        /// </summary>
+        /// <returns>Возвращает число достроенных биллбордов</returns>
+        public static int CityBillboardsBuildToEnd()
         {
-            City.BuildBillboardsToEnd();
+            return City.BuildBillboardsToEnd();
         }
+
         /// <summary>
         /// Заполняет случайный пустой биллборд на карте
         /// </summary>
@@ -127,6 +123,26 @@ namespace Yaisp3
             City.FillBillboard(Desire);
         }
 
+        /// <summary>
+        /// Возвращает матрицу цветов элементов города
+        /// </summary>
+        /// <returns>Возвращает матрицу цветовых значений</returns>
+        public static System.Drawing.Color[,] CityGetDrawingData()
+        {
+            return City.GetDrawingData();
+        }
+
+        /// <summary>
+        /// Возвращает цветовую матрицу коэффициентов
+        /// </summary>
+        /// <returns>Возвращает матрицу цветовых значений</returns>
+        public static System.Drawing.Color[,] CityGetProximityMap()
+        {
+            return City.GetProximityMap();
+        }
+        #endregion
+
+        #region Агентство  
         /// <summary>
         /// Создает новый экземпляр агентства
         /// </summary>
@@ -158,6 +174,10 @@ namespace Yaisp3
                 return false;
         }
 
+        /// <summary>
+        /// Возвращает тип стратегии агентства
+        /// </summary>
+        /// <returns></returns>
         public static Strategy.StrategyType AgencyGetStrategy()
         {
             return Strategy.ReturnStrategyType();
@@ -171,6 +191,7 @@ namespace Yaisp3
         {
             return Agency != null;
         }
+
         /// <summary>
         /// Уничтожает агентство
         /// </summary>
@@ -179,6 +200,7 @@ namespace Yaisp3
             City.DeleteBillboards();
             Agency = null;
         }
+
         /// <summary>
         /// Возвращает кортеж данных агентства
         /// </summary>
@@ -187,6 +209,7 @@ namespace Yaisp3
         {
             return Agency.GetData();
         }
+
         /// <summary>
         /// Меняет данные агентства
         /// </summary>
@@ -197,6 +220,25 @@ namespace Yaisp3
             Agency.ChangeName(Name);
         }
 
+        /// <summary>
+        /// Проводит один день работы агентства
+        /// </summary>
+        public static void AgencyPassDay()
+        {
+            Agency.PassDay();
+        }
+
+        /// <summary>
+        /// Возвращает список-отчет роста бюджета
+        /// </summary>
+        /// <returns></returns>
+        public static List<double[]> AgencyGetSummary()
+        {
+            return Agency.GetAgencySummary();
+        }
+        #endregion
+
+        #region Дата
         /// <summary>
         /// Добавляет один день к дате.
         /// </summary>
@@ -223,34 +265,80 @@ namespace Yaisp3
             return CurrentDate.DayOfWeek != DayOfWeek.Saturday &&
             CurrentDate.DayOfWeek != DayOfWeek.Sunday;
         }
+        #endregion
 
+        #region Очередь клиентов
+        /// <summary>
+        /// Создает очередь
+        /// </summary>
         public static void QueueCreate()
         {
             Queue = new QueueClass();
         }
 
+        /// <summary>
+        /// Возвращает желания всех клиентов
+        /// </summary>
+        /// <returns>Возвращает строку</returns>
         public static string QueueGetText()
         {
             return Queue.GetQueueOrders();
         }
 
-        public static void QueueAddRand(int Seed)
+        /// <summary>
+        /// Возвращает кортеж заказчика
+        /// </summary>
+        /// <returns></returns>
+        public static Tuple<string, int, byte> QueueTakeOrder()
+        {
+            Client Cl;
+
+            if (Queue.QueueHasHighPriority())
+                Cl = Queue.QueuePushHighPriority();
+            else
+                Cl = Queue.QueuePushNormal();
+            return Cl.GetOrder();
+        }
+
+        /// <summary>
+        /// Возвращает True, если очередь пуста
+        /// </summary>
+        /// <returns></returns>
+        public static bool QueueIsNull()
+        {
+            return Queue.QueueIsNull();
+        }
+
+        /// <summary>
+        /// Добавляет в очередь случайное количество случайных клиентов
+        /// </summary>
+        /// <param name="Quantity">Максимальное количество клиентов</param>
+        /// <param name="Intensity"></param>
+        public static void QueueAddRand(int Quantity, int Intensity)
         {
             Client Cl = null;
-            Client.Rank Rnk = (Client.Rank)GetRandomValue(2, 4);
-            switch (Rnk)
+            int Quant = GetRandomValue(0, Quantity);
+            Client.Rank Rnk;
+
+            for (int i = 0; i < Quant; i++)
             {
-                case Client.Rank.Person:
-                    Cl = new ClientPerson(TextStorageClass.GetRandomData((byte)Rnk));
-                    break;
-                case Client.Rank.Company:
-                    Cl = new ClientCompany(TextStorageClass.GetRandomData((byte)Rnk));
-                    break;
-                case Client.Rank.Government:
-                    Cl = new ClientGovernment(TextStorageClass.GetRandomData((byte)Rnk));
-                    break;
+                Rnk = (Client.Rank)GetRandomValue(2, 4);
+                switch (Rnk)
+                {
+                    case Client.Rank.Person:
+                        Cl = new ClientPerson(TextStorageClass.GetRandomData((byte)Rnk));
+                        break;
+                    case Client.Rank.Company:
+                        Cl = new ClientCompany(TextStorageClass.GetRandomData((byte)Rnk));
+                        break;
+                    case Client.Rank.Government:
+                        Cl = new ClientGovernment(TextStorageClass.GetRandomData((byte)Rnk));
+                        break;
+                }
+                Queue.QueueAdd(Cl);
             }
-            Queue.QueueAdd(Cl);
+
         }
+        #endregion
     }
 }

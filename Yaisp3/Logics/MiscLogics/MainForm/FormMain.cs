@@ -39,14 +39,14 @@ namespace Yaisp3
 {
     public partial class FormMain : Form
     {
-        private bool drawing = false;
+        private bool drawingMap = false;
         private MouseEventArgs eOld;
         private MainFormLogicClass mainLogic;
 
         public FormMain()
         {
-            MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
             InitializeComponent();
+            CtrlPicBxMap.MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
         }
 
         private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
@@ -54,6 +54,7 @@ namespace Yaisp3
             if (mainLogic != null)
                 mainLogic.ZoomMap(e.X, e.Y, e.Delta);
         }
+       
         private void CtrlPicBxMap_MouseDown(object sender, MouseEventArgs e)
         {
             if (mainLogic != null)
@@ -61,7 +62,7 @@ namespace Yaisp3
                 {
                     case MouseButtons.Left:
                         eOld = e;
-                        drawing = true;
+                        drawingMap = true;
                         break;
                     case MouseButtons.Middle:
                         mainLogic.SetNormalZoomMap();
@@ -70,19 +71,22 @@ namespace Yaisp3
         }
         private void CtrlPicBxMap_MouseUp(object sender, MouseEventArgs e)
         {
-            drawing = false;
+            drawingMap = false;
         }
         private void CtrlPicBxMap_MouseMove(object sender, MouseEventArgs e)
         {
-            if (drawing)
+            if (drawingMap)
             {
                 mainLogic.MoveMap(e.X, e.Y, eOld.X, eOld.Y);
                 eOld = e;
             }
         }
+
+
+
         private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
         {
-            if (Program.formCreateAgency.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (Program.formCreateAgency.ShowDialog() == DialogResult.OK)
             {
                 CtrlChBIndAgen.Checked = true;
                 if (CtrlChBIndCity.Checked)
@@ -109,14 +113,18 @@ namespace Yaisp3
         private void CtrlTimer_Tick(object sender, EventArgs e)
         {
             CtrlLblDate.Text = "Дата: " + MainUnitProcessor.DateGetAsString();
+            MainUnitProcessor.QueueAddRand(CtrlTBQueueQuantity.Value, CtrlTBQueueIntense.Value);
             CtrlTxbOrders.Text = MainUnitProcessor.QueueGetText();
-            MainUnitProcessor.QueueAddRand(CtrlTBQueue.Value);
             MainUnitProcessor.DateNewDay();
+            MainUnitProcessor.AgencyPassDay();
+            mainLogic.MoveMap(0, 0, 0, 0);
         }
 
         private void CtrlButTimerStartClick(object sender, EventArgs e)
         {
-            MainUnitProcessor.MainReset();
+            //MainUnitProcessor.MainReset();
+            MainUnitProcessor.QueueCreate();
+            TextStorageClass.ParseTextData();
             CtrlTimer.Enabled = true;
             CtrlButTimerPause.Enabled = true;
         }
@@ -138,6 +146,11 @@ namespace Yaisp3
         private void CtrlTSMIProximityMapClick(object sender, EventArgs e)
         {
             Program.formProximity.ShowDialog();
+        }
+
+        private void CtrlTSMIGraph_Click(object sender, EventArgs e)
+        {
+            Program.formGraph.ShowDialog();
         }
     }
 }

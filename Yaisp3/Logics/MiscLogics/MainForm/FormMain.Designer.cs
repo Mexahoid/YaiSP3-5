@@ -43,17 +43,21 @@
             this.CtrlButTimerPause = new System.Windows.Forms.Button();
             this.CtrlButTimerStart = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CtrlLblMisc3 = new System.Windows.Forms.Label();
+            this.CtrlLblMisc2 = new System.Windows.Forms.Label();
             this.CtrlTBSpeed = new System.Windows.Forms.TrackBar();
             this.CtrlChBIndCity = new System.Windows.Forms.CheckBox();
             this.CtrlChBIndAgen = new System.Windows.Forms.CheckBox();
             this.CtrlGrbIndic = new System.Windows.Forms.GroupBox();
             this.CtrlGrBQueue = new System.Windows.Forms.GroupBox();
-            this.CtrlTBQueue = new System.Windows.Forms.TrackBar();
-            this.CtrlLblMisc2 = new System.Windows.Forms.Label();
-            this.CtrlLblMisc3 = new System.Windows.Forms.Label();
-            this.CtrlLblMisc4 = new System.Windows.Forms.Label();
+            this.CtrlLblMisc7 = new System.Windows.Forms.Label();
+            this.CtrlLblMisc6 = new System.Windows.Forms.Label();
+            this.CtrlTBQueueIntense = new System.Windows.Forms.TrackBar();
             this.CtrlLblMisc5 = new System.Windows.Forms.Label();
+            this.CtrlLblMisc4 = new System.Windows.Forms.Label();
+            this.CtrlTBQueueQuantity = new System.Windows.Forms.TrackBar();
             this.CtrlTxbOrders = new System.Windows.Forms.TextBox();
+            this.CtrlTSMIGraph = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxGraph)).BeginInit();
             this.CtrlMainStrip.SuspendLayout();
@@ -61,7 +65,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.CtrlTBSpeed)).BeginInit();
             this.CtrlGrbIndic.SuspendLayout();
             this.CtrlGrBQueue.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CtrlTBQueue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CtrlTBQueueIntense)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CtrlTBQueueQuantity)).BeginInit();
             this.SuspendLayout();
             // 
             // CtrlPicBxMap
@@ -78,11 +83,10 @@
             // 
             // CtrlPicBxGraph
             // 
-            this.CtrlPicBxGraph.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.CtrlPicBxGraph.Location = new System.Drawing.Point(667, 544);
+            this.CtrlPicBxGraph.Location = new System.Drawing.Point(0, 0);
             this.CtrlPicBxGraph.Name = "CtrlPicBxGraph";
-            this.CtrlPicBxGraph.Size = new System.Drawing.Size(232, 132);
-            this.CtrlPicBxGraph.TabIndex = 1;
+            this.CtrlPicBxGraph.Size = new System.Drawing.Size(100, 22);
+            this.CtrlPicBxGraph.TabIndex = 15;
             this.CtrlPicBxGraph.TabStop = false;
             // 
             // CtrlLblMisc1
@@ -120,7 +124,8 @@
             this.CtrlTSMICreateCity,
             this.CtrlTSMIAgencyMenu,
             this.CtrlTSMIAgencyDelete,
-            this.CtrlTSMIProximityMap});
+            this.CtrlTSMIProximityMap,
+            this.CtrlTSMIGraph});
             this.CtrlTSMIDrop.Name = "CtrlTSMIDrop";
             this.CtrlTSMIDrop.Size = new System.Drawing.Size(54, 22);
             this.CtrlTSMIDrop.Text = "Меню";
@@ -174,7 +179,7 @@
             // CtrlButTimerStart
             // 
             this.CtrlButTimerStart.Enabled = false;
-            this.CtrlButTimerStart.Location = new System.Drawing.Point(817, 291);
+            this.CtrlButTimerStart.Location = new System.Drawing.Point(817, 375);
             this.CtrlButTimerStart.Name = "CtrlButTimerStart";
             this.CtrlButTimerStart.Size = new System.Drawing.Size(75, 23);
             this.CtrlButTimerStart.TabIndex = 8;
@@ -195,6 +200,24 @@
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Управление временем";
+            // 
+            // CtrlLblMisc3
+            // 
+            this.CtrlLblMisc3.AutoSize = true;
+            this.CtrlLblMisc3.Location = new System.Drawing.Point(179, 85);
+            this.CtrlLblMisc3.Name = "CtrlLblMisc3";
+            this.CtrlLblMisc3.Size = new System.Drawing.Size(45, 13);
+            this.CtrlLblMisc3.TabIndex = 10;
+            this.CtrlLblMisc3.Text = "Быстро";
+            // 
+            // CtrlLblMisc2
+            // 
+            this.CtrlLblMisc2.AutoSize = true;
+            this.CtrlLblMisc2.Location = new System.Drawing.Point(6, 85);
+            this.CtrlLblMisc2.Name = "CtrlLblMisc2";
+            this.CtrlLblMisc2.Size = new System.Drawing.Size(58, 13);
+            this.CtrlLblMisc2.TabIndex = 9;
+            this.CtrlLblMisc2.Text = "Медленно";
             // 
             // CtrlTBSpeed
             // 
@@ -234,7 +257,7 @@
             // 
             this.CtrlGrbIndic.Controls.Add(this.CtrlChBIndCity);
             this.CtrlGrbIndic.Controls.Add(this.CtrlChBIndAgen);
-            this.CtrlGrbIndic.Location = new System.Drawing.Point(668, 248);
+            this.CtrlGrbIndic.Location = new System.Drawing.Point(667, 333);
             this.CtrlGrbIndic.Name = "CtrlGrbIndic";
             this.CtrlGrbIndic.Size = new System.Drawing.Size(89, 66);
             this.CtrlGrbIndic.TabIndex = 12;
@@ -243,72 +266,89 @@
             // 
             // CtrlGrBQueue
             // 
+            this.CtrlGrBQueue.Controls.Add(this.CtrlLblMisc7);
+            this.CtrlGrBQueue.Controls.Add(this.CtrlLblMisc6);
+            this.CtrlGrBQueue.Controls.Add(this.CtrlTBQueueIntense);
             this.CtrlGrBQueue.Controls.Add(this.CtrlLblMisc5);
             this.CtrlGrBQueue.Controls.Add(this.CtrlLblMisc4);
-            this.CtrlGrBQueue.Controls.Add(this.CtrlTBQueue);
+            this.CtrlGrBQueue.Controls.Add(this.CtrlTBQueueQuantity);
             this.CtrlGrBQueue.Location = new System.Drawing.Point(668, 158);
             this.CtrlGrBQueue.Name = "CtrlGrBQueue";
-            this.CtrlGrBQueue.Size = new System.Drawing.Size(230, 71);
+            this.CtrlGrBQueue.Size = new System.Drawing.Size(230, 123);
             this.CtrlGrBQueue.TabIndex = 13;
             this.CtrlGrBQueue.TabStop = false;
             this.CtrlGrBQueue.Text = "Интенсивность заказов";
             // 
-            // CtrlTBQueue
+            // CtrlLblMisc7
             // 
-            this.CtrlTBQueue.Location = new System.Drawing.Point(6, 19);
-            this.CtrlTBQueue.Maximum = 12;
-            this.CtrlTBQueue.Minimum = 1;
-            this.CtrlTBQueue.Name = "CtrlTBQueue";
-            this.CtrlTBQueue.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.CtrlTBQueue.Size = new System.Drawing.Size(218, 45);
-            this.CtrlTBQueue.TabIndex = 9;
-            this.CtrlTBQueue.Value = 1;
+            this.CtrlLblMisc7.AutoSize = true;
+            this.CtrlLblMisc7.Location = new System.Drawing.Point(188, 102);
+            this.CtrlLblMisc7.Name = "CtrlLblMisc7";
+            this.CtrlLblMisc7.Size = new System.Drawing.Size(36, 13);
+            this.CtrlLblMisc7.TabIndex = 14;
+            this.CtrlLblMisc7.Text = "Чаще";
             // 
-            // CtrlLblMisc2
+            // CtrlLblMisc6
             // 
-            this.CtrlLblMisc2.AutoSize = true;
-            this.CtrlLblMisc2.Location = new System.Drawing.Point(6, 85);
-            this.CtrlLblMisc2.Name = "CtrlLblMisc2";
-            this.CtrlLblMisc2.Size = new System.Drawing.Size(58, 13);
-            this.CtrlLblMisc2.TabIndex = 9;
-            this.CtrlLblMisc2.Text = "Медленно";
+            this.CtrlLblMisc6.AutoSize = true;
+            this.CtrlLblMisc6.Location = new System.Drawing.Point(6, 102);
+            this.CtrlLblMisc6.Name = "CtrlLblMisc6";
+            this.CtrlLblMisc6.Size = new System.Drawing.Size(34, 13);
+            this.CtrlLblMisc6.TabIndex = 13;
+            this.CtrlLblMisc6.Text = "Реже";
             // 
-            // CtrlLblMisc3
+            // CtrlTBQueueIntense
             // 
-            this.CtrlLblMisc3.AutoSize = true;
-            this.CtrlLblMisc3.Location = new System.Drawing.Point(179, 85);
-            this.CtrlLblMisc3.Name = "CtrlLblMisc3";
-            this.CtrlLblMisc3.Size = new System.Drawing.Size(45, 13);
-            this.CtrlLblMisc3.TabIndex = 10;
-            this.CtrlLblMisc3.Text = "Быстро";
+            this.CtrlTBQueueIntense.Location = new System.Drawing.Point(6, 70);
+            this.CtrlTBQueueIntense.Maximum = 12;
+            this.CtrlTBQueueIntense.Name = "CtrlTBQueueIntense";
+            this.CtrlTBQueueIntense.Size = new System.Drawing.Size(218, 45);
+            this.CtrlTBQueueIntense.TabIndex = 12;
+            this.CtrlTBQueueIntense.Value = 1;
+            // 
+            // CtrlLblMisc5
+            // 
+            this.CtrlLblMisc5.AutoSize = true;
+            this.CtrlLblMisc5.Location = new System.Drawing.Point(177, 51);
+            this.CtrlLblMisc5.Name = "CtrlLblMisc5";
+            this.CtrlLblMisc5.Size = new System.Drawing.Size(46, 13);
+            this.CtrlLblMisc5.TabIndex = 11;
+            this.CtrlLblMisc5.Text = "Больше";
             // 
             // CtrlLblMisc4
             // 
             this.CtrlLblMisc4.AutoSize = true;
             this.CtrlLblMisc4.Location = new System.Drawing.Point(6, 51);
             this.CtrlLblMisc4.Name = "CtrlLblMisc4";
-            this.CtrlLblMisc4.Size = new System.Drawing.Size(34, 13);
+            this.CtrlLblMisc4.Size = new System.Drawing.Size(48, 13);
             this.CtrlLblMisc4.TabIndex = 10;
-            this.CtrlLblMisc4.Text = "Мало";
+            this.CtrlLblMisc4.Text = "Меньше";
             // 
-            // CtrlLblMisc5
+            // CtrlTBQueueQuantity
             // 
-            this.CtrlLblMisc5.AutoSize = true;
-            this.CtrlLblMisc5.Location = new System.Drawing.Point(185, 51);
-            this.CtrlLblMisc5.Name = "CtrlLblMisc5";
-            this.CtrlLblMisc5.Size = new System.Drawing.Size(39, 13);
-            this.CtrlLblMisc5.TabIndex = 11;
-            this.CtrlLblMisc5.Text = "Много";
+            this.CtrlTBQueueQuantity.Location = new System.Drawing.Point(6, 19);
+            this.CtrlTBQueueQuantity.Maximum = 12;
+            this.CtrlTBQueueQuantity.Name = "CtrlTBQueueQuantity";
+            this.CtrlTBQueueQuantity.Size = new System.Drawing.Size(218, 45);
+            this.CtrlTBQueueQuantity.TabIndex = 9;
+            this.CtrlTBQueueQuantity.Value = 1;
             // 
             // CtrlTxbOrders
             // 
             this.CtrlTxbOrders.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.CtrlTxbOrders.Location = new System.Drawing.Point(667, 332);
+            this.CtrlTxbOrders.Location = new System.Drawing.Point(666, 405);
             this.CtrlTxbOrders.Multiline = true;
             this.CtrlTxbOrders.Name = "CtrlTxbOrders";
             this.CtrlTxbOrders.ReadOnly = true;
             this.CtrlTxbOrders.Size = new System.Drawing.Size(232, 119);
             this.CtrlTxbOrders.TabIndex = 14;
+            // 
+            // CtrlTSMIGraph
+            // 
+            this.CtrlTSMIGraph.Name = "CtrlTSMIGraph";
+            this.CtrlTSMIGraph.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMIGraph.Text = "График бюджета";
+            this.CtrlTSMIGraph.Click += new System.EventHandler(this.CtrlTSMIGraph_Click);
             // 
             // FormMain
             // 
@@ -337,7 +377,8 @@
             this.CtrlGrbIndic.PerformLayout();
             this.CtrlGrBQueue.ResumeLayout(false);
             this.CtrlGrBQueue.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CtrlTBQueue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CtrlTBQueueIntense)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CtrlTBQueueQuantity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -368,8 +409,12 @@
         private System.Windows.Forms.Label CtrlLblMisc2;
         private System.Windows.Forms.Label CtrlLblMisc5;
         private System.Windows.Forms.Label CtrlLblMisc4;
-        private System.Windows.Forms.TrackBar CtrlTBQueue;
+        private System.Windows.Forms.TrackBar CtrlTBQueueQuantity;
         private System.Windows.Forms.TextBox CtrlTxbOrders;
+        private System.Windows.Forms.Label CtrlLblMisc7;
+        private System.Windows.Forms.Label CtrlLblMisc6;
+        private System.Windows.Forms.TrackBar CtrlTBQueueIntense;
+        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIGraph;
     }
 }
 

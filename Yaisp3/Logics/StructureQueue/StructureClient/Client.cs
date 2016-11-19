@@ -69,17 +69,25 @@ namespace Yaisp3
             return Tuple.Create(clientDesire, clientOffering, (byte)clientRank);
         }
 
+        /// <summary>
+        /// Возвращает информацию о клиенте в текстовом формате
+        /// </summary>
+        /// <returns>Возвращает строку</returns>
         public string GetTextData()
         {
             string Out = "";
-            Out += "Клиент: " + clientName + 
-                ", Текст: " + clientDesire + 
-                ". Уровень: " + (clientRank == Rank.Person ? "Частное лицо. " :
-                clientRank == Rank.Company ? "Компания. " : "Гос. организация. ") + 
-                "Предложение: " + clientOffering.ToString();
+            Out += "\nКлиент: " + clientName + 
+                "\nТекст: " + clientDesire + 
+                "\nУровень: " + (clientRank == Rank.Person ? "Частное лицо." :
+                clientRank == Rank.Company ? "Компания." : "Гос. организация.") + Environment.NewLine +
+                "\nПредложение: " + clientOffering.ToString() + Environment.NewLine;
             return Out;
         }
 
+        /// <summary>
+        /// Возвращает True, если у клиента высокий приоритет
+        /// </summary>
+        /// <returns></returns>
         public bool IsHighPriority()
         {
             return clientRank == Rank.Government;

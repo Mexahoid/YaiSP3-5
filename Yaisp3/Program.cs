@@ -11,6 +11,7 @@ namespace Yaisp3
         public static FormMain formMain;
         public static FormCity formCity;
         public static FormProximity formProximity;
+        public static FormGraph formGraph;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -23,6 +24,7 @@ namespace Yaisp3
             formCreateAgency = new FormAgency();
             formCity = new FormCity();
             formProximity = new FormProximity();
+            formGraph = new FormGraph();
             Application.Run(formMain);
         }
     }

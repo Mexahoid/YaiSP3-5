@@ -32,6 +32,10 @@ namespace Yaisp3
         /// </summary>
         private int houseElementGroup;
 
+        /// <summary>
+        /// Возвращает кортеж с размером дома
+        /// </summary>
+        /// <returns></returns>
         public Tuple<int, int> GetHouseSize()
         {
             return Tuple.Create(elementWidth, elementHeight);
@@ -57,6 +61,7 @@ namespace Yaisp3
     /// </summary>
     public class Billboard : Element
     {
+        #region Переменные
         /// <summary>
         /// Состояние биллборда
         /// </summary>
@@ -103,7 +108,7 @@ namespace Yaisp3
         /// Состояние биллборда
         /// </summary>
         private State billboardType;
-
+        #endregion
 
         /// <summary>
         /// Создает новый биллборд.
@@ -165,7 +170,7 @@ namespace Yaisp3
             switch (billboardType)
             {
                 case State.Building:
-                    return System.Drawing.Color.DarkGoldenrod;
+                    return System.Drawing.Color.LightBlue;
                 case State.Free:
                     return System.Drawing.Color.Aquamarine;
                 case State.Personal:

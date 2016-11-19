@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Класс работы с текстами заказчиков
+    /// </summary>
     public static class TextStorageClass
     {
         private static string[] BillboardTexts;
@@ -12,6 +15,9 @@ namespace Yaisp3
         private static string[] CompanyNames;
         private static string[] GovernNames;
 
+        /// <summary>
+        /// Считывает и сохраняет в память все имена и тексты
+        /// </summary>
         public static void ParseTextData()
         {
             System.IO.StreamReader sr = new System.IO.StreamReader("../../Logics/TextStorage/CompanyNames.txt");
@@ -28,6 +34,7 @@ namespace Yaisp3
               StringSplitOptions.RemoveEmptyEntries);
             sr.Close();
         }
+
         /// <summary>
         /// Возвращает случаное название и текст для биллборда
         /// </summary>

@@ -12,7 +12,7 @@ namespace Yaisp3
         public ProximityLogicsClass(Control Control)
         {
             colorMatrix = MainUnitProcessor.CityGetProximityMap();
-            drawingKit = new ProximityDrawingClass(Control, colorMatrix.GetLength(1), colorMatrix.GetLength(0));
+            drawingKit = new MapDrawingClass(Control, colorMatrix.GetLength(1), colorMatrix.GetLength(0));
             ClearImage();
             MainDraw();
         }
@@ -24,7 +24,7 @@ namespace Yaisp3
         {
             colorMatrix = MainUnitProcessor.CityGetProximityMap();
             DrawProximityMap();
-            ((ProximityDrawingClass)drawingKit).DrawGrid();
+            ((MapDrawingClass)drawingKit).DrawGrid();
             drawingKit.DrawImage();
         }
 
@@ -33,7 +33,7 @@ namespace Yaisp3
             int Rows = colorMatrix.GetLength(0), Cols = colorMatrix.GetLength(1);
             for (int i = 0; i < Rows; i++)
                 for (int j = 0; j < Cols; j++)
-                    ((ProximityDrawingClass)drawingKit).DrawCityElement(i, j, colorMatrix[i, j]);
+                    ((MapDrawingClass)drawingKit).DrawCityElement(i, j, colorMatrix[i, j]);
         }
     }
 }

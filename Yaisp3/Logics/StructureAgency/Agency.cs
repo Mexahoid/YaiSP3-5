@@ -11,7 +11,8 @@ namespace Yaisp3
         private int agencyDeposit;
         private List<Billboard> agencyBillboards;
         private int agencyFreeBillboards;
-        private double agencyProfitCoeff;
+        private int agencyStaffCount;
+        private List<double[]> agencySummary;
 
         //Первичные методы
         public Agency(string Name, int Money, int Billboards)
@@ -19,9 +20,11 @@ namespace Yaisp3
             agencyName = Name;
             agencyDeposit = Money;
             agencyBillboards = new List<Billboard>();
+            agencySummary = new List<double[]>();
+            agencyStaffCount = 1 + Billboards * 3;  //Глава + обслуга
 
-            agencyFreeBillboards = Billboards;
-            for (int i = 0; i < agencyFreeBillboards; i++)
+            agencyFreeBillboards = 0;
+            for (int i = 0; i < Billboards; i++)
                 PlaceBillboardRnd();
         }
 
@@ -35,10 +38,9 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// У агентства можно менять только название и стратегию
+        /// Меняет название агентства
         /// </summary>
         /// <param name="Name">Новое имя агентства</param>
-        /// <param name="Strategy">Стратегия агентства</param>
         public void ChangeName(string Name)
         {
             agencyName = Name;
@@ -51,9 +53,11 @@ namespace Yaisp3
         /// </summary>
         public void PlaceBillboardRnd()
         {
-            Billboard Billboard = new Billboard(10000 + MainUnitProcessor.GetRandomValue(-1000, 1000));
+            int Cost = 10000 + MainUnitProcessor.GetRandomValue(-1000, 1000);
+            Billboard Billboard = new Billboard(Cost);
             MainUnitProcessor.CityBillboardPlace(Billboard);   //Добавляем на карту города
             agencyBillboards.Add(Billboard);
+            agencyDeposit -= Cost;
         }
 
         /// <summary>
@@ -61,11 +65,18 @@ namespace Yaisp3
         /// </summary>
         public void PassDay()
         {
-            MainUnitProcessor.CityBillboardsBuildToEnd();
+            agencyFreeBillboards += MainUnitProcessor.CityBillboardsBuildToEnd();
             int Temp = agencyDeposit;
+            while (agencyFreeBillboards > 0 && !MainUnitProcessor.QueueIsNull())
+            {
+                FillBillboard(MainUnitProcessor.QueueTakeOrder());
+                agencyFreeBillboards--;
+            }
+
+            agencyDeposit -= agencyStaffCount * 10;                        //Заплатить стаффу
             for (int i = 0; i < agencyBillboards.Count; i++)
                 agencyDeposit += agencyBillboards[i].BillboardGetMoney();  //Собрать деньги с биллбордов
-            agencyProfitCoeff = agencyDeposit / (double)Temp;              //Рассчитать коэффициент дохода
+            agencySummary.Add(new double[] { agencySummary.Count *2, agencyDeposit / 10000.0 });
         }
 
         /// <summary>
@@ -86,13 +97,9 @@ namespace Yaisp3
             return agencyDeposit;
         }
 
-        /// <summary>
-        /// Возвращает коэффициент дохода агентства
-        /// </summary>
-        /// <returns>Возвращает вещественное значение</returns>
-        public double GetAgencyProfitCoeff()
+        public List<double[]> GetAgencySummary()
         {
-            return agencyProfitCoeff;
+            return agencySummary;
         }
     }
 }
