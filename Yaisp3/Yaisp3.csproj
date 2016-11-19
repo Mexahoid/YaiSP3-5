@@ -58,7 +58,7 @@
     <Compile Include="Logics\StructureCity\Element.cs" />
     <Compile Include="Logics\StructureCity\Matrices.cs" />
     <Compile Include="Logics\StructureQueue\QueueClass.cs" />
-    <Compile Include="Logics\StructureStrategy\Strategies.cs" />
+    <Compile Include="Logics\StructureStrategy\Strategy.cs" />
     <Compile Include="Logics\StructureQueue\StructureClient\Client.cs" />
     <Compile Include="Logics\MiscLogics\TextStorage\TextStorageClass.cs" />
     <Compile Include="Logics\MiscLogics\Templates\MainLogicsTemplate.cs" />
@@ -74,23 +74,23 @@
     <Compile Include="Logics\StructureCity\CityRedactorLogicsClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Logics\StructureAgency\_FormAgency.cs">
+    <Compile Include="Logics\StructureAgency\FormAgency.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\StructureAgency\_FormAgency.Designer.cs">
-      <DependentUpon>_FormAgency.cs</DependentUpon>
+    <Compile Include="Logics\StructureAgency\FormAgency.Designer.cs">
+      <DependentUpon>FormAgency.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logics\StructureCity\_FormCity.cs">
+    <Compile Include="Logics\StructureCity\FormCity.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\StructureCity\_FormCity.Designer.cs">
-      <DependentUpon>_FormCity.cs</DependentUpon>
+    <Compile Include="Logics\StructureCity\FormCity.Designer.cs">
+      <DependentUpon>FormCity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logics\MiscLogics\MainForm\_FormMain.cs">
+    <Compile Include="Logics\MiscLogics\MainForm\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\MiscLogics\MainForm\_FormMain.Designer.cs">
-      <DependentUpon>_FormMain.cs</DependentUpon>
+    <Compile Include="Logics\MiscLogics\MainForm\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.resx">
       <DependentUpon>FormProximity.cs</DependentUpon>
@@ -105,14 +105,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Logics\StructureAgency\_FormAgency.resx">
-      <DependentUpon>_FormAgency.cs</DependentUpon>
+    <EmbeddedResource Include="Logics\StructureAgency\FormAgency.resx">
+      <DependentUpon>FormAgency.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logics\StructureCity\_FormCity.resx">
-      <DependentUpon>_FormCity.cs</DependentUpon>
+    <EmbeddedResource Include="Logics\StructureCity\FormCity.resx">
+      <DependentUpon>FormCity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logics\MiscLogics\MainForm\_FormMain.resx">
-      <DependentUpon>_FormMain.cs</DependentUpon>
+    <EmbeddedResource Include="Logics\MiscLogics\MainForm\FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -127,7 +127,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Logics\MiscLogics\TextStorage\BillboardsTexts.txt" />
+    <Content Include="Logics\MiscLogics\TextStorage\CompanyNames.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

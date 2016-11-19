@@ -70,5 +70,12 @@ namespace Yaisp3
                 }
             }
         }
+
+        private void FormProximity_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            proximityLogic.DestroyCreator();
+            proximityLogic = null;
+            loaded = false;
+        }
     }
 }

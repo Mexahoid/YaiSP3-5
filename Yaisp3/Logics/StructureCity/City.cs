@@ -16,6 +16,7 @@ namespace Yaisp3
         /// </summary>
         private Matrices.MatrixElements cityMatrix;
 
+
         /// <summary>
         /// Главный конструктор города
         /// </summary>
@@ -66,6 +67,11 @@ namespace Yaisp3
             cityMatrix.PlaceBillboard(Billboard);
         }
 
+        public void DeleteBillboards()
+        {
+            cityMatrix.DeleteBillboards();
+        }
+
         /// <summary>
         /// Заполняет случайный биллборд заказом клиента
         /// </summary>
@@ -78,12 +84,16 @@ namespace Yaisp3
         /// <summary>
         /// Возвращает массив с элементами, заполненными определённым цветом
         /// </summary>
-        /// <returns>Возвращает массив цветов</returns>
+        /// <returns>Возвращает матрицу цветовых значений</returns>
         public System.Drawing.Color[,] GetDrawingData()
         {
             return cityMatrix.GetDrawingData();
         }
 
+        /// <summary>
+        /// Возвращает цветовую матрицу коэффициентов
+        /// </summary>
+        /// <returns>Возвращает матрицу цветовых значений</returns>
         public System.Drawing.Color[,] GetProximityMap()
         {
             return cityMatrix.GetCoeffMapColors();

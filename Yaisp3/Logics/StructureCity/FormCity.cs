@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Yaisp3
 {
-    public partial class _FormCity : Form
+    public partial class FormCity : Form
     {
         private bool moving = false;
         private bool drawing = false;
@@ -17,27 +17,27 @@ namespace Yaisp3
         private MouseEventArgs e0;
         private CityRedactorLogicsClass CityCreationKit;
 
-        public _FormCity()
+        public FormCity()
         {
             InitializeComponent();
-            MouseWheel += new MouseEventHandler(_ctrlPicBxMap_MouseScroll);
+            MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
         }
-        private void _ctrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
+        private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
         {
             if (CityCreationKit != null)
                 CityCreationKit.ZoomImage(e.X, e.Y, e.Delta);
         }
 
-        private void _ctrlButMark_Click(object sender, EventArgs e)
+        private void CtrlButMarkClick(object sender, EventArgs e)
         {
-            MainUnitProcessor.CityCreate(_ctrlTxbCityName.Text, (int)(_ctrlNumCityHeight.Value),
-              (int)(_ctrlNumCityWidth.Value));
+            MainUnitProcessor.CityCreate(CtrlTxbCityName.Text, (int)(CtrlNumCityHeight.Value),
+              (int)(CtrlNumCityWidth.Value));
 
-            CityCreationKit = new CityRedactorLogicsClass(_ctrlPicBxCity);
-            _ctrlButSave.Enabled = true;
+            CityCreationKit = new CityRedactorLogicsClass(CtrlPicBxCity);
+            CtrlButSave.Enabled = true;
         }
 
-        private void _ctrlPicBxCity_MouseDown(object sender, MouseEventArgs e)
+        private void CtrlPicBxCity_MouseDown(object sender, MouseEventArgs e)
         {
             if (CityCreationKit != null)
             {
@@ -47,7 +47,7 @@ namespace Yaisp3
                         if (drawing)
                         {
                             CityCreationKit.AddElementToMatrix(e.X, e.Y,
-                              (int)(_ctrlNumHouseWidth.Value), (int)(_ctrlNumHouseHeigth.Value));
+                              (int)(CtrlNumHouseWidth.Value), (int)(CtrlNumHouseHeigth.Value));
                             drawing = false;
                         }
                         break;
@@ -61,11 +61,11 @@ namespace Yaisp3
                 }
             }
         }
-        private void _ctrlPicBxCity_MouseUp(object sender, MouseEventArgs e)
+        private void CtrlPicBxCity_MouseUp(object sender, MouseEventArgs e)
         {
             moving = false;
         }
-        private void _ctrlPicBxCity_MouseMove(object sender, MouseEventArgs e)
+        private void CtrlPicBxCity_MouseMove(object sender, MouseEventArgs e)
         {
             if (CityCreationKit != null)
             {
@@ -75,40 +75,37 @@ namespace Yaisp3
                     e0 = e;
                 }
                 if (drawing)
-                    CityCreationKit.DrawCurrentObject(e.X, e.Y, (int)_ctrlNumHouseWidth.Value, (int)_ctrlNumHouseHeigth.Value);
+                    CityCreationKit.DrawCurrentObject(e.X, e.Y, (int)CtrlNumHouseWidth.Value, (int)CtrlNumHouseHeigth.Value);
             }
         }
 
-        private void _ctrlButHouse_Click(object sender, EventArgs e)
+        private void CtrlButHouseClick(object sender, EventArgs e)
         {
             drawing = true;
         }
-        private void _ctrlReset_Click(object sender, EventArgs e)
+        private void CtrlResetClick(object sender, EventArgs e)
         {
             CityCreationKit.DestroyCreator();
         }
-        private void _ctrlButReady_Click(object sender, EventArgs e)
+        private void CtrlButReadyClick(object sender, EventArgs e)
         {
-            CityCreationKit.DestroyCreator();
-            CityCreationKit = null;
-            loaded = false;
             Close();
         }
 
-        private void _FormCity_Load(object sender, EventArgs e)
+        private void FormCity_Load(object sender, EventArgs e)
         {
             if (MainUnitProcessor.CityIsPresent())
             {
                 if (!loaded)
                 {
-                    CityCreationKit = new CityRedactorLogicsClass(_ctrlPicBxCity);
+                    CityCreationKit = new CityRedactorLogicsClass(CtrlPicBxCity);
                     loaded = true;
                 }
-                _ctrlButSave.Enabled = true;
+                CtrlButSave.Enabled = true;
             }
         }
 
-        private void _ctrlButSave_Click(object sender, EventArgs e)
+        private void CtrlButSaveClick(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
             if (sfd.ShowDialog() == DialogResult.OK)
@@ -118,17 +115,23 @@ namespace Yaisp3
                     sw.Close();
                 }
         }
-
-        private void _ctrlButLoad_Click(object sender, EventArgs e)
+        private void CtrlButLoadClick(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
                 using (System.IO.StreamReader sr = new System.IO.StreamReader(ofd.FileName))
                 {
-                    CityCreationKit = new CityRedactorLogicsClass(_ctrlPicBxCity, sr.ReadToEnd());
-                    _ctrlButSave.Enabled = true;
+                    CityCreationKit = new CityRedactorLogicsClass(CtrlPicBxCity, sr.ReadToEnd());
+                    CtrlButSave.Enabled = true;
                     sr.Close();
                 }
+        }
+
+        private void FormCity_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CityCreationKit.DestroyCreator();
+            CityCreationKit = null;
+            loaded = false;
         }
     }
 }

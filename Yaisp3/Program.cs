@@ -7,9 +7,9 @@ namespace Yaisp3
 {
     static class Program
     {
-        public static _FormAgency formCreateAgency;
-        public static _FormMain formMain;
-        public static _FormCity formCity;
+        public static FormAgency formCreateAgency;
+        public static FormMain formMain;
+        public static FormCity formCity;
         public static FormProximity formProximity;
         /// <summary>
         /// The main entry point for the application.
@@ -19,9 +19,9 @@ namespace Yaisp3
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            formMain = new _FormMain();
-            formCreateAgency = new _FormAgency();
-            formCity = new _FormCity();
+            formMain = new FormMain();
+            formCreateAgency = new FormAgency();
+            formCity = new FormCity();
             formProximity = new FormProximity();
             Application.Run(formMain);
         }

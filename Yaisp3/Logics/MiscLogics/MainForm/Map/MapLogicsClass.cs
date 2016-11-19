@@ -31,20 +31,20 @@ namespace Yaisp3
         /// <summary>
         /// Отрисовывает все заполненные клетки
         /// </summary>
-        protected virtual void DrawElements()
+        protected void DrawElements()
         {
             int Rows = colorMatrix.GetLength(0), Cols = colorMatrix.GetLength(1);
             for (int i = 0; i < Rows; i++)
                 for (int j = 0; j < Cols; j++)
                     if (colorMatrix[i, j] != null)
-                        ((CityRedactorDrawingClass)drawingKit).DrawCityElement(i, j, colorMatrix[i, j]);
+                        ((MapDrawingClass)drawingKit).DrawCityElement(i, j, colorMatrix[i, j]);
         }
         /// <summary>
         /// Рисует сетку города
         /// </summary>
         protected void DrawGrid()
         {
-            ((CityRedactorDrawingClass)drawingKit).DrawGrid();
+            ((MapDrawingClass)drawingKit).DrawGrid();
         }
         /// <summary>
         /// Полная отрисовка изображения на канвас

@@ -28,8 +28,6 @@ namespace Yaisp3
             drawingKit.DrawImage();
         }
 
-
-
         private void DrawProximityMap()
         {
             int Rows = colorMatrix.GetLength(0), Cols = colorMatrix.GetLength(1);

@@ -37,7 +37,7 @@
             this.CtrlPicBx.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.CtrlPicBx.Location = new System.Drawing.Point(12, 12);
             this.CtrlPicBx.Name = "CtrlPicBx";
-            this.CtrlPicBx.Size = new System.Drawing.Size(506, 433);
+            this.CtrlPicBx.Size = new System.Drawing.Size(500, 500);
             this.CtrlPicBx.TabIndex = 0;
             this.CtrlPicBx.TabStop = false;
             this.CtrlPicBx.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBx_MouseDown);
@@ -48,10 +48,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(530, 457);
+            this.ClientSize = new System.Drawing.Size(525, 521);
             this.Controls.Add(this.CtrlPicBx);
             this.Name = "FormProximity";
-            this.Text = "Коэффициенты заполнения";
+            this.Text = "Зоны покрытия";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormProximity_FormClosed);
             this.Load += new System.EventHandler(this.FormProximity_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBx)).EndInit();
             this.ResumeLayout(false);

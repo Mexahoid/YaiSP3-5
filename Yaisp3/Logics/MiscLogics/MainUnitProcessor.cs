@@ -11,12 +11,19 @@ namespace Yaisp3
         private static City City = null;
         private static DateTime CurrentDate = new DateTime(1970, 1, 1);
         private static Random Sychev = new Random();
+        private static Strategy Strategy;
+        private static QueueClass Queue;
 
         public static void MainReset()
         {
             Agency = null;
             City = null;
             CurrentDate = new DateTime(1970, 1, 1);
+        }
+
+        public static void MainParseTexts()
+        {
+            TextStorageClass.ParseTextData();
         }
 
         /// <summary>
@@ -52,14 +59,18 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает матрицу города для дальнейших операций
+        /// Возвращает матрицу цветов элементов города
         /// </summary>
-        /// <returns>Возвращает матрицу целочисленных значений</returns>
+        /// <returns>Возвращает матрицу цветовых значений</returns>
         public static System.Drawing.Color[,] CityGetDrawingData()
         {
             return City.GetDrawingData();
         }
 
+        /// <summary>
+        /// Возвращает цветовую матрицу коэффициентов
+        /// </summary>
+        /// <returns>Возвращает матрицу цветовых значений</returns>
         public static System.Drawing.Color[,] CityGetProximityMap()
         {
             return City.GetProximityMap();
@@ -124,16 +135,34 @@ namespace Yaisp3
         /// <param name="Billboards">Количество рекламных щитов</param>
         /// <param name="Strategy">Стратегия агентства</param>
         /// <returns></returns>
-        public static bool AgencyCreate(string Name, int Money, int Billboards, int Strategy)
+        public static bool AgencyCreate(string Name, int Money, int Billboards, int StrategyType)
         {
             if (Name != null && Name != "")
             {
-                Agency = new Agency(Name, Money, Billboards, (Agency.Strategies)Strategy);
+                Agency = new Agency(Name, Money, Billboards);
+                switch (StrategyType)
+                {
+                    case 0:
+                        Strategy = new StrategyNormal();
+                        break;
+                    case 1:
+                        Strategy = new StrategyConservative();
+                        break;
+                    case 2:
+                        Strategy = new StrategyAggressive();
+                        break;
+                }
                 return true;
             }
             else
                 return false;
         }
+
+        public static Strategy.StrategyType AgencyGetStrategy()
+        {
+            return Strategy.ReturnStrategyType();
+        }
+
         /// <summary>
         /// Возвращает True, если агентство создано
         /// </summary>
@@ -147,13 +176,14 @@ namespace Yaisp3
         /// </summary>
         public static void AgencyDestroy()
         {
+            City.DeleteBillboards();
             Agency = null;
         }
         /// <summary>
         /// Возвращает кортеж данных агентства
         /// </summary>
         /// <returns></returns>
-        public static Tuple<string, int, int, Agency.Strategies> AgencyGetData()
+        public static Tuple<string, int, int> AgencyGetData()
         {
             return Agency.GetData();
         }
@@ -162,9 +192,9 @@ namespace Yaisp3
         /// </summary>
         /// <param name="Name">Новое название агентства</param>
         /// <param name="Strategy">Новая стратегия агентства</param>
-        public static void AgencyChangeData(string Name, int Strategy)
+        public static void AgencyChangeData(string Name)
         {
-            Agency.ChangeMainData(Name, (Agency.Strategies)Strategy);
+            Agency.ChangeName(Name);
         }
 
         /// <summary>
@@ -174,6 +204,7 @@ namespace Yaisp3
         {
             CurrentDate = CurrentDate.AddDays(1);
         }
+
         /// <summary>
         /// Возвращает дату строкой вида DD.MM.YYYY.
         /// </summary>
@@ -182,6 +213,7 @@ namespace Yaisp3
         {
             return CurrentDate.ToShortDateString();
         }
+
         /// <summary>
         /// Возвращает True, если по дате будний день.
         /// </summary>
@@ -190,6 +222,35 @@ namespace Yaisp3
         {
             return CurrentDate.DayOfWeek != DayOfWeek.Saturday &&
             CurrentDate.DayOfWeek != DayOfWeek.Sunday;
+        }
+
+        public static void QueueCreate()
+        {
+            Queue = new QueueClass();
+        }
+
+        public static string QueueGetText()
+        {
+            return Queue.GetQueueOrders();
+        }
+
+        public static void QueueAddRand(int Seed)
+        {
+            Client Cl = null;
+            Client.Rank Rnk = (Client.Rank)GetRandomValue(2, 4);
+            switch (Rnk)
+            {
+                case Client.Rank.Person:
+                    Cl = new ClientPerson(TextStorageClass.GetRandomData((byte)Rnk));
+                    break;
+                case Client.Rank.Company:
+                    Cl = new ClientCompany(TextStorageClass.GetRandomData((byte)Rnk));
+                    break;
+                case Client.Rank.Government:
+                    Cl = new ClientGovernment(TextStorageClass.GetRandomData((byte)Rnk));
+                    break;
+            }
+            Queue.QueueAdd(Cl);
         }
     }
 }

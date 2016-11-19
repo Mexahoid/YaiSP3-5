@@ -7,24 +7,14 @@ namespace Yaisp3
 {
     public class Agency
     {
-        /// <summary>
-        /// Стратегии агентства
-        /// </summary>
-        public enum Strategies
-        {
-            Conservative = 1,
-            Normal,
-            Aggressive
-        }
-
-        private Strategies agencyStrategy;
         private string agencyName;
         private int agencyDeposit;
         private List<Billboard> agencyBillboards;
         private int agencyFreeBillboards;
+        private double agencyProfitCoeff;
 
         //Первичные методы
-        public Agency(string Name, int Money, int Billboards, Strategies Strategy)
+        public Agency(string Name, int Money, int Billboards)
         {
             agencyName = Name;
             agencyDeposit = Money;
@@ -33,16 +23,15 @@ namespace Yaisp3
             agencyFreeBillboards = Billboards;
             for (int i = 0; i < agencyFreeBillboards; i++)
                 PlaceBillboardRnd();
-            agencyStrategy = Strategy;
         }
 
         /// <summary>
         /// Возвращает кортеж, состоящий из названия агентства, депозита, кол-ва щитов и стратегии
         /// </summary>
         /// <returns></returns>
-        public Tuple<string, int, int, Strategies> GetData()
+        public Tuple<string, int, int> GetData()
         {
-            return Tuple.Create(agencyName, agencyDeposit, 10, agencyStrategy);
+            return Tuple.Create(agencyName, agencyDeposit, agencyBillboards.Count);
         }
 
         /// <summary>
@@ -50,10 +39,9 @@ namespace Yaisp3
         /// </summary>
         /// <param name="Name">Новое имя агентства</param>
         /// <param name="Strategy">Стратегия агентства</param>
-        public void ChangeMainData(string Name, Strategies Strategy)
+        public void ChangeName(string Name)
         {
             agencyName = Name;
-            agencyStrategy = Strategy;
         }
 
         //Методы интерфейса
@@ -74,9 +62,19 @@ namespace Yaisp3
         public void PassDay()
         {
             MainUnitProcessor.CityBillboardsBuildToEnd();
+            int Temp = agencyDeposit;
             for (int i = 0; i < agencyBillboards.Count; i++)
-                agencyDeposit += agencyBillboards[i].BillboardGetMoney();
-            PlaceBillboardRnd();
+                agencyDeposit += agencyBillboards[i].BillboardGetMoney();  //Собрать деньги с биллбордов
+            agencyProfitCoeff = agencyDeposit / (double)Temp;              //Рассчитать коэффициент дохода
+        }
+
+        /// <summary>
+        /// Заполняет случайный биллборд заказом клиента
+        /// </summary>
+        /// <param name="ClientDesire">Кортеж желания клиента</param>
+        public void FillBillboard(Tuple<string, int, byte> ClientDesire)
+        {
+            MainUnitProcessor.CityBillboardFillRandom(ClientDesire);
         }
 
         /// <summary>
@@ -86,6 +84,15 @@ namespace Yaisp3
         public int GetAgencyDeposit()
         {
             return agencyDeposit;
+        }
+
+        /// <summary>
+        /// Возвращает коэффициент дохода агентства
+        /// </summary>
+        /// <returns>Возвращает вещественное значение</returns>
+        public double GetAgencyProfitCoeff()
+        {
+            return agencyProfitCoeff;
         }
     }
 }

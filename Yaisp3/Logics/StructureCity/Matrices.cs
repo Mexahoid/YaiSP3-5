@@ -29,7 +29,8 @@ namespace Yaisp3
             /// </summary>
             private MatrixCoefficients cityMatrixProximity;
 
-            public MatrixElements(int Rows, int Cols) : base(Rows, Cols)
+            public MatrixElements(int Rows, int Cols)
+                : base(Rows, Cols)
             {
                 currentHouseGroup = 0;
                 matrix = new Element[rows, cols];
@@ -37,13 +38,13 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Проверяет возможность установки элемента
+            /// Проверяет возможность установки элемента.
             /// </summary>
             /// <param name="Row">Х верхней левой точки элемента</param>
             /// <param name="Col">Y верхней левой точки элемента</param>
             /// <param name="RightWidth">Ширина элемента</param>
             /// <param name="DownDepth">Высота (вниз) элемента</param>
-            /// <returns></returns>
+            /// <returns>Возвращает логическое значение</returns>
             private bool TryToPlaceElement(int Row, int Col, int RightWidth, int DownDepth)
             {
                 if (Row + DownDepth > rows || Col + RightWidth > cols)
@@ -127,38 +128,39 @@ namespace Yaisp3
                             ((Billboard)((Element[,])matrix)[i, j]).BillboardFill(ClientDesire);
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
             public System.Drawing.Color[,] GetCoeffMapColors()
             {
                 return cityMatrixProximity.GetCoeffMap();
+            }
+
+            public void DeleteBillboards()
+            {
+                for (int i = 0; i < rows; i++)
+                    for (int j = 0; j < cols; j++)
+                        if (((Element[,])matrix)[i, j]!= null && 
+                            ((Element[,])matrix)[i, j].GetType() == typeof(Billboard))
+                            ((Element[,])matrix)[i, j] = null;
+                cityMatrixProximity.DeleteBillboardCoefficients();
             }
         }
         public class MatrixCoefficients : Matrix
         {
             /// <summary>
-            /// Направления обхода матрицы
+            /// Конструктор, создающий матрицу из нулей
             /// </summary>
-            enum Destinations
+            /// <param name="Rows">Высота матрицы</param>
+            /// <param name="Cols">Ширина матрицы</param>
+            public MatrixCoefficients(int Rows, int Cols)
+                : base(Rows, Cols)
             {
-                /// <summary>
-                /// Нет движения (начальная точка движения)
-                /// </summary>
-                None,
-                /// <summary>
-                /// Вверх
-                /// </summary>
-                Up,
-                /// <summary>
-                /// Вниз
-                /// </summary>
-                Down,
-                /// <summary>
-                /// Налево
-                /// </summary>
-                Left,
-                /// <summary>
-                /// Направо
-                /// </summary>
-                Right
+                matrix = new int[rows, cols];
+                for (int i = 0; i < rows; i++)
+                    for (int j = 0; j < cols; j++)
+                        ((int[,])matrix)[i, j] = 0;
             }
 
             /// <summary>
@@ -167,29 +169,16 @@ namespace Yaisp3
             /// <returns>Возвращает массив целочисленных значений</returns>
             public int[] GetRandomFreeSpace()
             {
-                double minCoeff = GetCoeff(true);
+                int minCoeff = GetCoeff(true);
 
                 List<int[]> FreeSpaces = new List<int[]>();
 
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
-                        if (((double[,])matrix)[i, j] == minCoeff)  //Если находим точку с минимальным коэффициентом...
+                        if (((int[,])matrix)[i, j] == minCoeff)  //Если находим точку с минимальным коэффициентом...
                             FreeSpaces.Add(new int[] { i, j });     //Добавляем ее в список
 
                 return FreeSpaces[MainUnitProcessor.GetRandomValue(0, FreeSpaces.Count - 1)];
-            }
-
-            /// <summary>
-            /// Конструктор, создающий матрицу из нулей
-            /// </summary>
-            /// <param name="Rows">Высота матрицы</param>
-            /// <param name="Cols">Ширина матрицы</param>
-            public MatrixCoefficients(int Rows, int Cols) : base(Rows, Cols)
-            {
-                matrix = new double[rows, cols];
-                for (int i = 0; i < rows; i++)
-                    for (int j = 0; j < cols; j++)
-                        ((double[,])matrix)[i, j] = 0;
             }
 
             /// <summary>
@@ -199,7 +188,7 @@ namespace Yaisp3
             /// <param name="Col">Столбец матрицы</param>
             public void PlaceBillboard(int Row, int Col)
             {
-                RecursionCoefficients(Row, Col, 1, Destinations.None);
+                RecursionCoefficients(Row, Col, 10);
             }
 
             /// <summary>
@@ -211,28 +200,28 @@ namespace Yaisp3
             /// <param name="Width">Ширина дома</param>
             public void PlaceCityElement(int Row, int Col)
             {
-                ((double[,])matrix)[Row, Col] = 1000;
+                ((int[,])matrix)[Row, Col] = 1000;
             }
 
-             /// <summary>
+            /// <summary>
             /// Возвращает необходимое значение коэффициента.
             /// </summary>
             /// <param name="Min">True - поиск минимального, False - поиск максимального</param>
             /// <returns></returns>
-            private double GetCoeff(bool Min)
+            private int GetCoeff(bool Min)
             {
-                double neededCoeff = Min ? double.MaxValue : double.MinValue;
+                int neededCoeff = Min ? int.MaxValue : int.MinValue;
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
                         if (Min)
                         {
-                            if (neededCoeff > ((double[,])matrix)[i, j])
-                                neededCoeff = ((double[,])matrix)[i, j];
+                            if (neededCoeff > ((int[,])matrix)[i, j])
+                                neededCoeff = ((int[,])matrix)[i, j];
                         }
                         else
                         {
-                            if (((double[,])matrix)[i, j] < 1000 && neededCoeff < ((double[,])matrix)[i, j])
-                                neededCoeff = ((double[,])matrix)[i, j];
+                            if (((int[,])matrix)[i, j] < 1000 && neededCoeff < ((int[,])matrix)[i, j])
+                                neededCoeff = ((int[,])matrix)[i, j];
                         }
                 return neededCoeff;
             }
@@ -244,45 +233,32 @@ namespace Yaisp3
             /// <param name="Col">Рабочий столбец матрицы</param>
             /// <param name="Coeff">Добавляемый в ячейку коэффициент</param>
             /// <param name="Dest">Направление предыдущего хода</param>
-            private void RecursionCoefficients(int Row, int Col, double Coeff, Destinations Dest)
+            private void RecursionCoefficients(int Row, int Col, int Coeff)
             {
-                if (Row != rows && 
-                    Row >= 0 &&
-                    Col != cols &&
-                    Col >= 0 &&
-                    Coeff >= 0)
+                if (Row != rows && Row >= 0 && Col != cols && Col >= 0)
                 {
-                    ((double[,])matrix)[Row, Col] += Coeff;
-                    switch (Dest)
+                    if (Coeff > 0)
                     {
-                        case Destinations.None:
-                            RecursionCoefficients(Row - 1, Col, Coeff - 0.1, Destinations.Up);
-                            RecursionCoefficients(Row + 1, Col, Coeff - 0.1, Destinations.Down);
-                            RecursionCoefficients(Row, Col - 1, Coeff - 0.1, Destinations.Left);
-                            RecursionCoefficients(Row, Col + 1, Coeff - 0.1, Destinations.Right);
-                            break;
-                        case Destinations.Up:
-                            RecursionCoefficients(Row - 1, Col, Coeff - 0.1, Destinations.Up);
-                            RecursionCoefficients(Row, Col - 1, Coeff - 0.1, Destinations.Left);
-                            RecursionCoefficients(Row, Col + 1, Coeff - 0.1, Destinations.Right);
-                            break;
-                        case Destinations.Down:
-                            RecursionCoefficients(Row + 1, Col, Coeff - 0.1, Destinations.Down);
-                            RecursionCoefficients(Row, Col - 1, Coeff - 0.1, Destinations.Left);
-                            RecursionCoefficients(Row, Col + 1, Coeff - 0.1, Destinations.Right);
-                            break;
-                        case Destinations.Left:
-                            RecursionCoefficients(Row - 1, Col, Coeff - 0.1, Destinations.Up);
-                            RecursionCoefficients(Row + 1, Col, Coeff - 0.1, Destinations.Down);
-                            RecursionCoefficients(Row, Col - 1, Coeff - 0.1, Destinations.Left);
-                            break;
-                        case Destinations.Right:
-                            RecursionCoefficients(Row - 1, Col, Coeff - 0.1, Destinations.Up);
-                            RecursionCoefficients(Row + 1, Col, Coeff - 0.1, Destinations.Down);
-                            RecursionCoefficients(Row, Col + 1, Coeff - 0.1, Destinations.Right);
-                            break;
+                        if (((int[,])matrix)[Row, Col] < Coeff)
+                        {
+                            ((int[,])matrix)[Row, Col] = Coeff;
+                        }
+
+                        RecursionCoefficients(Row - 1, Col, Coeff - 1);
+                        RecursionCoefficients(Row, Col - 1, Coeff - 1);
+                        RecursionCoefficients(Row + 1, Col, Coeff - 1);
+                        RecursionCoefficients(Row, Col + 1, Coeff - 1);
+
                     }
                 }
+            }
+
+            public void DeleteBillboardCoefficients()
+            {
+                for (int i = 0; i < rows; i++)
+                    for (int j = 0; j < cols; j++)
+                        if (((int[,])matrix)[i, j] < 1000)
+                            ((int[,])matrix)[i, j] = 0;
             }
 
             /// <summary>
@@ -292,16 +268,21 @@ namespace Yaisp3
             public System.Drawing.Color[,] GetCoeffMap()
             {
                 System.Drawing.Color[,] Out = new System.Drawing.Color[rows, cols];
-                double MaxCoeff = GetCoeff(false);
+                int MaxCoeff = GetCoeff(false);
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
-                        if (((double[,])matrix)[i, j] < 100)
-                            Out[i, j] = System.Drawing.Color.FromArgb(
-                                (int)(255 * ((double[,])matrix)[i, j] / MaxCoeff),
-                                (int)(165 * ((double[,])matrix)[i, j] / MaxCoeff),
-                                0);
+                        if (((int[,])matrix)[i, j] < 1000)
+                        {
+                            if (((int[,])matrix)[i, j] > 0)
+                                Out[i, j] = System.Drawing.Color.FromArgb(
+                                    255 * ((int[,])matrix)[i, j] / MaxCoeff,
+                                    165 * ((int[,])matrix)[i, j] / MaxCoeff,
+                                    0);
+                            else
+                                Out[i, j] = System.Drawing.Color.Black;
+                        }
                         else
-                            Out[i, j] = System.Drawing.Color.DarkGreen;
+                            Out[i, j] = System.Drawing.Color.Red;
                 return Out;
             }
         }
