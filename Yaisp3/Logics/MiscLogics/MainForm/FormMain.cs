@@ -12,27 +12,27 @@ using System.Windows.Forms;
 
 Показать процесс развития рекламного агенства с учетом движения денежных средств. Изначально 
 у рекламного агенства есть несколько рекламных щитов и некая сумма денег на счету.  
-//Лимит денег ввести
+//Лимит денег ввести Ееее, безопаснееее
 
 При старте процесса появляются клиенты (физические, юридические лица, госструктуры), которые 
 заказывают размещение своей рекламы на баннерах организации. 
-//Очередь структур клиентов
+//Очередь структур клиентов   Готово
 
 Госструктуры могут иметь приоритет и "заказывать" социальную рекламу, за которую они не платят.
-//С приоритетом
+//С приоритетом     Готово
 
 Учесть, что обслуживание баннеров, содержание штата фирмы, постройка новых
 баннеров требует вложений денежных средств со счета организации.  
 //Каждый баннер == затраты
- * На каждый баннер добавляется N человек. Стройка за 1 тик.
+ * На каждый баннер добавляется N человек. Стройка за 1 тик.     Hit
 
 Реализовать различные стратегии поведения фирмы (агрессивная -- частое строительство новых баннеров,
 умеренная -- строительство баннеров при большом росте счета, консервативная -- крайне редкое 
-строительство новых баннеров).   
+строительство новых баннеров).    Осталось это
 //Радиобатоны
 
 На форме показать размещение баннеров в городе, очередь клиентов, пожелания клиентов,
-динамику поведения счета.  
+динамику поведения счета.      Еее, готвоо
 //Графики посуточно
  */
 namespace Yaisp3
@@ -82,8 +82,6 @@ namespace Yaisp3
             }
         }
 
-
-
         private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
         {
             if (Program.formCreateAgency.ShowDialog() == DialogResult.OK)
@@ -115,8 +113,7 @@ namespace Yaisp3
             CtrlLblDate.Text = "Дата: " + MainUnitProcessor.DateGetAsString();
             MainUnitProcessor.QueueAddRand(CtrlTBQueueQuantity.Value, CtrlTBQueueIntense.Value);
             CtrlTxbOrders.Text = MainUnitProcessor.QueueGetText();
-            MainUnitProcessor.DateNewDay();
-            MainUnitProcessor.AgencyPassDay();
+            MainUnitProcessor.PassDay();
             mainLogic.MoveMap(0, 0, 0, 0);
         }
 
@@ -151,6 +148,13 @@ namespace Yaisp3
         private void CtrlTSMIGraph_Click(object sender, EventArgs e)
         {
             Program.formGraph.ShowDialog();
+        }
+
+        private void CtrlTSMIDrop_Click(object sender, EventArgs e)
+        {
+            CtrlTimer.Enabled = false;
+            if (CtrlTimer.Enabled)
+                CtrlButTimerPause.Text = "Пауза";
         }
     }
 }

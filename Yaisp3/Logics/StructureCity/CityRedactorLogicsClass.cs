@@ -29,9 +29,9 @@ namespace Yaisp3
         /// </summary>
         /// <param name="Control">Контрол, на котором производится рисование</param>
         /// <param name="Input">Входная на парсер строка</param>
-        public CityRedactorLogicsClass(Control Control, string Input) : base()
+        /*public CityRedactorLogicsClass(Control Control, string Input) : base()
         {
-            /*try
+            try
             {
               string[] Arr = Input.Split(new string[] { "\n", "\n\r" }, StringSplitOptions.RemoveEmptyEntries);
               cityName = Arr[0];
@@ -49,8 +49,8 @@ namespace Yaisp3
               cityName = "";
               cityMatrix = null;
               drawingKit = null;
-            }*/
-        }
+            }
+        }*/
 
         /// <summary>
         /// Сохранение карты города

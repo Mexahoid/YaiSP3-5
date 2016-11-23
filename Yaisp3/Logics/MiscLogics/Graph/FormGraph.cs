@@ -56,7 +56,8 @@ namespace Yaisp3
 
         private void FormGraph_FormClosed(object sender, FormClosedEventArgs e)
         {
-            graphLogic.DestroyCreator();
+            if (graphLogic != null)
+                graphLogic.DestroyCreator();
             graphLogic = null;
             loaded = false;
         }
@@ -68,7 +69,7 @@ namespace Yaisp3
                 if (!loaded)
                 {
                     graphLogic = new GraphLogicsClass(CtrlPicBxGraph, MainUnitProcessor.AgencyGetSummary());
-                   
+
                     loaded = true;
                 }
             }

@@ -7,9 +7,17 @@ namespace Yaisp3
     /// </summary>
     public class Element
     {
+        /// <summary>
+        /// Ширина элемента
+        /// </summary>
         protected int elementWidth;
+        /// <summary>
+        /// Высота элемента
+        /// </summary>
         protected int elementHeight;
-
+        /// <summary>
+        /// True, если элемент - дом, False - если биллборд
+        /// </summary>
         protected bool elementType;
 
         /// <summary>
@@ -28,7 +36,7 @@ namespace Yaisp3
     public class House : Element
     {
         /// <summary>
-        /// Группа, к которой принадлежит город
+        /// Группа, к которой принадлежит дом
         /// </summary>
         private int houseElementGroup;
 

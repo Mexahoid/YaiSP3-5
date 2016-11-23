@@ -5,8 +5,13 @@ using System.Text;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Главный класс-процессор
+    /// </summary>
     public static class MainUnitProcessor
     {
+        #region Поля
+
         private static Agency Agency = null;
         private static City City = null;
         private static DateTime CurrentDate = new DateTime(1970, 1, 1);
@@ -14,7 +19,10 @@ namespace Yaisp3
         private static Strategy Strategy;
         private static QueueClass Queue;
 
+        #endregion
+
         #region Главные методы
+
         /// <summary>
         /// Полный сброс всей программы
         /// </summary>
@@ -39,13 +47,22 @@ namespace Yaisp3
         /// <param name="Min">Минимальное случайное число</param>
         /// <param name="Max">Максимальное случайное число</param>
         /// <returns></returns>
-        public static int GetRandomValue(int Min, int Max)
+        public static int MainGetRandomValue(int Min, int Max)
         {
             return Sychev.Next(Min, Max);
         }
+
+        public static void PassDay()
+        {
+            AgencyPassDay();
+            Strategy.Action();
+            DateNewDay();
+        }
+
         #endregion
 
         #region Город
+
         /// <summary>
         /// Создает новый экземпляр города
         /// </summary>
@@ -140,9 +157,36 @@ namespace Yaisp3
         {
             return City.GetProximityMap();
         }
+
         #endregion
 
+        /// <summary>
+        /// Возвращает тип стратегии агентства
+        /// </summary>
+        /// <returns></returns>
+        public static Strategy.StrategyType StrategyGetType()
+        {
+            return Strategy.ReturnStrategyType();
+        }
+
+        public static void StrategyChange(Strategy.StrategyType Type)
+        {
+            switch (Type)
+            {
+                case Strategy.StrategyType.Normal:
+                    Strategy = new StrategyNormal();
+                    break;
+                case Strategy.StrategyType.Conservative:
+                    Strategy = new StrategyConservative();
+                    break;
+                case Strategy.StrategyType.Aggressive:
+                    Strategy = new StrategyAggressive();
+                    break;
+            }
+        }
+
         #region Агентство  
+
         /// <summary>
         /// Создает новый экземпляр агентства
         /// </summary>
@@ -172,15 +216,6 @@ namespace Yaisp3
             }
             else
                 return false;
-        }
-
-        /// <summary>
-        /// Возвращает тип стратегии агентства
-        /// </summary>
-        /// <returns></returns>
-        public static Strategy.StrategyType AgencyGetStrategy()
-        {
-            return Strategy.ReturnStrategyType();
         }
 
         /// <summary>
@@ -236,9 +271,34 @@ namespace Yaisp3
         {
             return Agency.GetAgencySummary();
         }
+
+        /// <summary>
+        /// Устанавливает биллборд
+        /// </summary>
+        public static void AgencyPlaceRandBillboard()
+        {
+            Agency.PlaceBillboardRnd();
+        }
+        
+        /// <summary>
+        /// Возвращает число позволяемых установиться биллбордов
+        /// </summary>
+        /// <param name="Count">Количество заказов в очереди</param>
+        /// <returns></returns>
+        public static int AgencyCanAffordBillboards(int Count)
+        {
+            return Agency.HowMuchCanWeAfford(Count);
+        }
+
+        public static int AgencyFreeCount()
+        {
+            return Agency.GetFreeBillboardsCount();
+        }
+
         #endregion
 
         #region Дата
+
         /// <summary>
         /// Добавляет один день к дате.
         /// </summary>
@@ -265,9 +325,11 @@ namespace Yaisp3
             return CurrentDate.DayOfWeek != DayOfWeek.Saturday &&
             CurrentDate.DayOfWeek != DayOfWeek.Sunday;
         }
+
         #endregion
 
         #region Очередь клиентов
+
         /// <summary>
         /// Создает очередь
         /// </summary>
@@ -317,12 +379,12 @@ namespace Yaisp3
         public static void QueueAddRand(int Quantity, int Intensity)
         {
             Client Cl = null;
-            int Quant = GetRandomValue(0, Quantity);
+            int Quant = MainGetRandomValue(0, Quantity);
             Client.Rank Rnk;
 
             for (int i = 0; i < Quant; i++)
             {
-                Rnk = (Client.Rank)GetRandomValue(2, 4);
+                Rnk = (Client.Rank)MainGetRandomValue(2, 4);
                 switch (Rnk)
                 {
                     case Client.Rank.Person:
@@ -339,6 +401,16 @@ namespace Yaisp3
             }
 
         }
+
+        /// <summary>
+        /// Возвращает количество заказов в очереди
+        /// </summary>
+        /// <returns></returns>
+        public static int QueueCount()
+        {
+            return Queue.GetQueueQount();
+        }
+
         #endregion
     }
 }

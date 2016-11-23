@@ -144,6 +144,7 @@ namespace Yaisp3
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
                         if (((Element[,])matrix)[i, j] != null &&
+                            ((Element[,])matrix)[i, j].GetType() == typeof(Billboard) &&
                             ((Billboard)((Element[,])matrix)[i, j]).BillboardIsBuilding())
                         {
                             ((Billboard)((Element[,])matrix)[i, j]).BillboardBuildToEnd();
@@ -161,6 +162,7 @@ namespace Yaisp3
                 for (int i = 0; i < rows; i++)
                     for (int j = 0; j < cols; j++)
                         if (((Element[,])matrix)[i, j] != null &&
+                            ((Element[,])matrix)[i, j].GetType() == typeof(Billboard) &&
                             ((Billboard)((Element[,])matrix)[i, j]).BillboardIsFilled())
                         {
                             ((Billboard)((Element[,])matrix)[i, j]).BillboardFill(ClientDesire);
@@ -226,7 +228,7 @@ namespace Yaisp3
                         if (((int[,])matrix)[i, j] == minCoeff)  //Если находим точку с минимальным коэффициентом...
                             FreeSpaces.Add(new int[] { i, j });     //Добавляем ее в список
 
-                return FreeSpaces[MainUnitProcessor.GetRandomValue(0, FreeSpaces.Count - 1)];
+                return FreeSpaces[MainUnitProcessor.MainGetRandomValue(0, FreeSpaces.Count - 1)];
             }
 
             /// <summary>

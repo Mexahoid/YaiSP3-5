@@ -7,8 +7,14 @@ using System.Drawing;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Класс рисования графика роста бюджета
+    /// </summary>
     class GraphDrawingClass : MainDrawingTemplate
     {
+        /// <summary>
+        /// Точки на графике
+        /// </summary>
         private List<double[]> graphPoints;
 
         /// <summary>

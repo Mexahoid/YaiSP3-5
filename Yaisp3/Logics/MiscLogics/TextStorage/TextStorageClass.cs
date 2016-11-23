@@ -42,10 +42,10 @@ namespace Yaisp3
         public static string[] GetRandomData(byte Rank)
         {
             return new string[] {
-          Rank == 2 ? ClientNames[MainUnitProcessor.GetRandomValue(0, ClientNames.Length)] :
-          Rank == 3 ? CompanyNames[MainUnitProcessor.GetRandomValue(0, CompanyNames.Length)] :
-          GovernNames[MainUnitProcessor.GetRandomValue(0, GovernNames.Length)],
-        BillboardTexts[MainUnitProcessor.GetRandomValue(0, BillboardTexts.Length)] };
+          Rank == 2 ? ClientNames[MainUnitProcessor.MainGetRandomValue(0, ClientNames.Length)] :
+          Rank == 3 ? CompanyNames[MainUnitProcessor.MainGetRandomValue(0, CompanyNames.Length)] :
+          GovernNames[MainUnitProcessor.MainGetRandomValue(0, GovernNames.Length)],
+        BillboardTexts[MainUnitProcessor.MainGetRandomValue(0, BillboardTexts.Length)] };
         }
     }
 }

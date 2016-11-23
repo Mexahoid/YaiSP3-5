@@ -39,6 +39,7 @@
             this.CtrlTSMIAgencyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTSMIAgencyDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTSMIProximityMap = new System.Windows.Forms.ToolStripMenuItem();
+            this.CtrlTSMIGraph = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTimer = new System.Windows.Forms.Timer(this.components);
             this.CtrlButTimerPause = new System.Windows.Forms.Button();
             this.CtrlButTimerStart = new System.Windows.Forms.Button();
@@ -57,7 +58,6 @@
             this.CtrlLblMisc4 = new System.Windows.Forms.Label();
             this.CtrlTBQueueQuantity = new System.Windows.Forms.TrackBar();
             this.CtrlTxbOrders = new System.Windows.Forms.TextBox();
-            this.CtrlTSMIGraph = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxGraph)).BeginInit();
             this.CtrlMainStrip.SuspendLayout();
@@ -130,6 +130,7 @@
             this.CtrlTSMIDrop.Size = new System.Drawing.Size(54, 22);
             this.CtrlTSMIDrop.Text = "Меню";
             this.CtrlTSMIDrop.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.CtrlTSMIDrop.Click += new System.EventHandler(this.CtrlTSMIDrop_Click);
             // 
             // CtrlTSMICreateCity
             // 
@@ -160,6 +161,13 @@
             this.CtrlTSMIProximityMap.Size = new System.Drawing.Size(174, 22);
             this.CtrlTSMIProximityMap.Text = "Зоны покрытия";
             this.CtrlTSMIProximityMap.Click += new System.EventHandler(this.CtrlTSMIProximityMapClick);
+            // 
+            // CtrlTSMIGraph
+            // 
+            this.CtrlTSMIGraph.Name = "CtrlTSMIGraph";
+            this.CtrlTSMIGraph.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMIGraph.Text = "График бюджета";
+            this.CtrlTSMIGraph.Click += new System.EventHandler(this.CtrlTSMIGraph_Click);
             // 
             // CtrlTimer
             // 
@@ -342,13 +350,6 @@
             this.CtrlTxbOrders.ReadOnly = true;
             this.CtrlTxbOrders.Size = new System.Drawing.Size(232, 119);
             this.CtrlTxbOrders.TabIndex = 14;
-            // 
-            // CtrlTSMIGraph
-            // 
-            this.CtrlTSMIGraph.Name = "CtrlTSMIGraph";
-            this.CtrlTSMIGraph.Size = new System.Drawing.Size(174, 22);
-            this.CtrlTSMIGraph.Text = "График бюджета";
-            this.CtrlTSMIGraph.Click += new System.EventHandler(this.CtrlTSMIGraph_Click);
             // 
             // FormMain
             // 

@@ -121,7 +121,7 @@ namespace Yaisp3
             if (ofd.ShowDialog() == DialogResult.OK)
                 using (System.IO.StreamReader sr = new System.IO.StreamReader(ofd.FileName))
                 {
-                    CityCreationKit = new CityRedactorLogicsClass(CtrlPicBxCity, sr.ReadToEnd());
+                    //CityCreationKit = new CityRedactorLogicsClass(CtrlPicBxCity, sr.ReadToEnd());
                     CtrlButSave.Enabled = true;
                     sr.Close();
                 }

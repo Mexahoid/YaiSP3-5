@@ -7,9 +7,19 @@ using System.Windows.Forms;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Класс рисования карты города на главной форме
+    /// </summary>
     class MapDrawingClass : MainDrawingTemplate
     {
-        protected int CityWidth, CityHeight;
+        /// <summary>
+        /// Ширина города
+        /// </summary>
+        protected int CityWidth;
+        /// <summary>
+        /// Высота города
+        /// </summary>
+        protected int CityHeight;
 
         /// <summary>
         /// Создает новый экземпляр отрисовщика города для главной формы

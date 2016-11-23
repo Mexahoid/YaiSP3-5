@@ -57,7 +57,7 @@ namespace Yaisp3
         {
             clientName = Name;
             clientDesire = Desire;
-            clientOffering = MainUnitProcessor.GetRandomValue(100, 2000);
+            clientOffering = MainUnitProcessor.MainGetRandomValue(100, 2000);
         }
 
         /// <summary>

@@ -8,7 +8,13 @@ namespace Yaisp3
 {
     class MapLogicsClass : MainLogicsTemplate
     {
+        /// <summary>
+        /// Цветовая матрица элементов города
+        /// </summary>
         protected System.Drawing.Color[,] colorMatrix;
+        /// <summary>
+        /// Название города
+        /// </summary>
         protected string cityName;
 
         /// <summary>
@@ -22,10 +28,6 @@ namespace Yaisp3
             drawingKit = new CityRedactorDrawingClass(Control, colorMatrix.GetLength(1), colorMatrix.GetLength(0));
             ClearImage();
             MainDraw();
-        }
-        public MapLogicsClass()
-        {
-
         }
 
         /// <summary>

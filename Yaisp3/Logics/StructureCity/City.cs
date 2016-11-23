@@ -5,12 +5,16 @@ using System.Text;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Класс города
+    /// </summary>
     public class City
     {
         /// <summary>
         /// Название города
         /// </summary>
         private string cityName;
+
         /// <summary>
         /// Главная матрица элементов
         /// </summary>

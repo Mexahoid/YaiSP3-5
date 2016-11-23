@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Класс агентства
+    /// </summary>
     public class Agency
     {
         private string agencyName;
@@ -15,6 +18,12 @@ namespace Yaisp3
         private List<double[]> agencySummary;
 
         //Первичные методы
+        /// <summary>
+        /// Конструктор агентства
+        /// </summary>
+        /// <param name="Name">Название агентства</param>
+        /// <param name="Money">Начальный депозит</param>
+        /// <param name="Billboards">Кол-во биллбордов</param>
         public Agency(string Name, int Money, int Billboards)
         {
             agencyName = Name;
@@ -53,7 +62,7 @@ namespace Yaisp3
         /// </summary>
         public void PlaceBillboardRnd()
         {
-            int Cost = 10000 + MainUnitProcessor.GetRandomValue(-1000, 1000);
+            int Cost = 10000 + MainUnitProcessor.MainGetRandomValue(-1000, 1000);
             Billboard Billboard = new Billboard(Cost);
             MainUnitProcessor.CityBillboardPlace(Billboard);   //Добавляем на карту города
             agencyBillboards.Add(Billboard);
@@ -76,7 +85,7 @@ namespace Yaisp3
             agencyDeposit -= agencyStaffCount * 10;                        //Заплатить стаффу
             for (int i = 0; i < agencyBillboards.Count; i++)
                 agencyDeposit += agencyBillboards[i].BillboardGetMoney();  //Собрать деньги с биллбордов
-            agencySummary.Add(new double[] { agencySummary.Count *2, agencyDeposit / 10000.0 });
+            agencySummary.Add(new double[] { agencySummary.Count * 0.2, agencyDeposit / 10000.0 });
         }
 
         /// <summary>
@@ -97,9 +106,36 @@ namespace Yaisp3
             return agencyDeposit;
         }
 
+        /// <summary>
+        /// Возвращает число позволяемых установиться биллбордов
+        /// </summary>
+        /// <param name="OrderCount">Количество заказов в очереди</param>
+        /// <returns></returns>
+        public int HowMuchCanWeAfford(int OrderCount)
+        {
+            int temp = agencyDeposit;
+            int i;
+            for (i = 0; i < OrderCount && temp > 0; i++)
+                temp -= 11000;
+            return i;
+        }
+
+        /// <summary>
+        /// Возвращает список из подневных значений счета агентства
+        /// </summary>
+        /// <returns>Возвращает список массивов вещественных значений</returns>
         public List<double[]> GetAgencySummary()
         {
             return agencySummary;
+        }
+
+        /// <summary>
+        /// Возвращает количество свободных биллбордов.
+        /// </summary>
+        /// <returns>Возвращает целое значение.</returns>
+        public int GetFreeBillboardsCount()
+        {
+            return agencyFreeBillboards;
         }
     }
 }

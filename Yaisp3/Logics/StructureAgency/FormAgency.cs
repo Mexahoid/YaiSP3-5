@@ -11,7 +11,6 @@ namespace Yaisp3
 {
     public partial class FormAgency : Form
     {
-        private int StrategyType;
         public FormAgency()
         {
             InitializeComponent();
@@ -19,11 +18,16 @@ namespace Yaisp3
 
         private void CtrlButCreateClick(object sender, EventArgs e)
         {
-            if (!MainUnitProcessor.AgencyCreate(CtrlTxbName.Text, (int)CtrlNumDeposit.Value, (int)CtrlNumBillboards.Value, StrategyType))
+            if (!MainUnitProcessor.AgencyCreate(CtrlTxbName.Text, 
+                (int)CtrlNumDeposit.Value, 
+                (int)CtrlNumBillboards.Value,
+                (CtrlRadConserv.Checked ? 1 : CtrlRadNormal.Checked ? 0 : 2)
+                ))
                 MessageBox.Show("Вы ввели недопустимое значение в каком-то из полей. Проверьте правильность информации.", "Ошибка значений", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else
                 Close();
         }
+
         private void CtrlButEditClick(object sender, EventArgs e)
         {
             MainUnitProcessor.AgencyChangeData(CtrlTxbName.Text);
@@ -42,7 +46,7 @@ namespace Yaisp3
                 CtrlNumDeposit.Value = T.Item2;
                 CtrlTxbName.Text = T.Item1;
 
-                switch (MainUnitProcessor.AgencyGetStrategy())
+                switch (MainUnitProcessor.StrategyGetType())
                 {
                     case Strategy.StrategyType.Conservative:
                         CtrlRadConserv.Checked = true;
@@ -64,7 +68,7 @@ namespace Yaisp3
 
         private void ChangeStrategyEvent(object sender, EventArgs e)
         {
-            StrategyType = Convert.ToInt32((sender as RadioButton).Tag);
+            MainUnitProcessor.StrategyChange((Strategy.StrategyType)(Convert.ToByte((sender as RadioButton).Tag)));
         }
     }
 }

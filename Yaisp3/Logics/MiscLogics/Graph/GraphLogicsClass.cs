@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Логический класс рисования графика
+    /// </summary>
     class GraphLogicsClass : MainLogicsTemplate
     {
         /// <summary>
@@ -17,6 +20,9 @@ namespace Yaisp3
             drawingKit = new GraphDrawingClass(Control, graphPoints);
         }
 
+        /// <summary>
+        /// Главный метод рисования графика
+        /// </summary>
         protected override void MainDraw()
         {
             ((GraphDrawingClass)drawingKit).DrawGraph();
