@@ -133,5 +133,10 @@ namespace Yaisp3
             CityCreationKit = null;
             loaded = false;
         }
+
+        private void CtrlPicBxCity_Click(object sender, EventArgs e)
+        {
+            CtrlPicBxCity.Focus();
+        }
     }
 }

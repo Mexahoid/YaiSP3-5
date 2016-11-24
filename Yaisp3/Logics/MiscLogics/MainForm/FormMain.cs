@@ -155,5 +155,10 @@ namespace Yaisp3
             CtrlTimer.Enabled = false;
             CtrlButTimerPause.Text = "Продолжить";
         }
+
+        private void CtrlPicBxMap_Click(object sender, EventArgs e)
+        {
+            CtrlPicBxMap.Focus();
+        }
     }
 }

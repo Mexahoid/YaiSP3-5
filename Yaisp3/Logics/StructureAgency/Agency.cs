@@ -40,7 +40,7 @@ namespace Yaisp3
         /// <summary>
         /// Список из подневных коэффициентов бюджета.
         /// </summary>
-        private List<double[]> agencySummary;
+        private List<Tuple<double,double>> agencySummary;
 
         #endregion
 
@@ -57,7 +57,7 @@ namespace Yaisp3
             agencyName = Name;
             agencyDeposit = Money;
             agencyBillboards = new List<Billboard>();
-            agencySummary = new List<double[]>();
+            agencySummary = new List<Tuple<double, double>>();
             agencyStaffCount = 1 + Billboards * 3;  //Глава + обслуга
 
             agencyFreeBillboards = 0;
@@ -111,7 +111,7 @@ namespace Yaisp3
             agencyDeposit -= agencyStaffCount * 10;                        //Заплатить стаффу
             for (int i = 0; i < agencyBillboards.Count; i++)
                 agencyDeposit += agencyBillboards[i].BillboardGetMoney();  //Собрать деньги с биллбордов
-            agencySummary.Add(new double[] { agencySummary.Count * 0.2, agencyDeposit / 10000.0 });
+            agencySummary.Add(Tuple.Create(agencySummary.Count * 0.2, agencyDeposit / 10000.0 ));
         }
 
         /// <summary>
@@ -149,8 +149,8 @@ namespace Yaisp3
         /// <summary>
         /// Возвращает список из подневных значений счета агентства.
         /// </summary>
-        /// <returns>Возвращает список массивов вещественных значений.</returns>
-        public List<double[]> GetAgencySummary()
+        /// <returns>Возвращает кортеж вещественных значений.</returns>
+        public List<Tuple<double, double>> GetAgencySummary()
         {
             return agencySummary;
         }

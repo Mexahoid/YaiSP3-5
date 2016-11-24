@@ -77,6 +77,7 @@
             this.CtrlPicBxMap.Size = new System.Drawing.Size(635, 635);
             this.CtrlPicBxMap.TabIndex = 0;
             this.CtrlPicBxMap.TabStop = false;
+            this.CtrlPicBxMap.Click += new System.EventHandler(this.CtrlPicBxMap_Click);
             this.CtrlPicBxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseDown);
             this.CtrlPicBxMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseMove);
             this.CtrlPicBxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseUp);
@@ -127,7 +128,7 @@
             this.CtrlTSMIProximityMap,
             this.CtrlTSMIGraph});
             this.CtrlTSMIDrop.Name = "CtrlTSMIDrop";
-            this.CtrlTSMIDrop.Size = new System.Drawing.Size(54, 22);
+            this.CtrlTSMIDrop.Size = new System.Drawing.Size(49, 22);
             this.CtrlTSMIDrop.Text = "Меню";
             this.CtrlTSMIDrop.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.CtrlTSMIDrop.Click += new System.EventHandler(this.CtrlTSMIDrop_Click);
@@ -135,7 +136,7 @@
             // CtrlTSMICreateCity
             // 
             this.CtrlTSMICreateCity.Name = "CtrlTSMICreateCity";
-            this.CtrlTSMICreateCity.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMICreateCity.Size = new System.Drawing.Size(184, 22);
             this.CtrlTSMICreateCity.Text = "Создать город";
             this.CtrlTSMICreateCity.Click += new System.EventHandler(this.CtrlTSMICreateCityClick);
             // 
@@ -143,7 +144,7 @@
             // 
             this.CtrlTSMIAgencyMenu.Enabled = false;
             this.CtrlTSMIAgencyMenu.Name = "CtrlTSMIAgencyMenu";
-            this.CtrlTSMIAgencyMenu.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMIAgencyMenu.Size = new System.Drawing.Size(184, 22);
             this.CtrlTSMIAgencyMenu.Text = "Меню агентства";
             this.CtrlTSMIAgencyMenu.Click += new System.EventHandler(this.CtrlTSMIAgencyMenuClick);
             // 
@@ -151,21 +152,21 @@
             // 
             this.CtrlTSMIAgencyDelete.Enabled = false;
             this.CtrlTSMIAgencyDelete.Name = "CtrlTSMIAgencyDelete";
-            this.CtrlTSMIAgencyDelete.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMIAgencyDelete.Size = new System.Drawing.Size(184, 22);
             this.CtrlTSMIAgencyDelete.Text = "Удалить агентство";
             this.CtrlTSMIAgencyDelete.Click += new System.EventHandler(this.CtrlTSMIAgencyDeleteClick);
             // 
             // CtrlTSMIProximityMap
             // 
             this.CtrlTSMIProximityMap.Name = "CtrlTSMIProximityMap";
-            this.CtrlTSMIProximityMap.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMIProximityMap.Size = new System.Drawing.Size(184, 22);
             this.CtrlTSMIProximityMap.Text = "Зоны покрытия";
             this.CtrlTSMIProximityMap.Click += new System.EventHandler(this.CtrlTSMIProximityMapClick);
             // 
             // CtrlTSMIGraph
             // 
             this.CtrlTSMIGraph.Name = "CtrlTSMIGraph";
-            this.CtrlTSMIGraph.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMIGraph.Size = new System.Drawing.Size(184, 22);
             this.CtrlTSMIGraph.Text = "График бюджета";
             this.CtrlTSMIGraph.Click += new System.EventHandler(this.CtrlTSMIGraph_Click);
             // 
@@ -234,7 +235,7 @@
             this.CtrlTBSpeed.Minimum = 1;
             this.CtrlTBSpeed.Name = "CtrlTBSpeed";
             this.CtrlTBSpeed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.CtrlTBSpeed.Size = new System.Drawing.Size(218, 45);
+            this.CtrlTBSpeed.Size = new System.Drawing.Size(218, 42);
             this.CtrlTBSpeed.TabIndex = 8;
             this.CtrlTBSpeed.Value = 10;
             this.CtrlTBSpeed.Scroll += new System.EventHandler(this.CtrlTBSpeed_Scroll);
@@ -311,7 +312,7 @@
             this.CtrlTBQueueIntense.Maximum = 12;
             this.CtrlTBQueueIntense.Name = "CtrlTBQueueIntense";
             this.CtrlTBQueueIntense.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.CtrlTBQueueIntense.Size = new System.Drawing.Size(218, 45);
+            this.CtrlTBQueueIntense.Size = new System.Drawing.Size(218, 42);
             this.CtrlTBQueueIntense.TabIndex = 12;
             this.CtrlTBQueueIntense.Value = 1;
             // 
@@ -338,7 +339,7 @@
             this.CtrlTBQueueQuantity.Location = new System.Drawing.Point(6, 19);
             this.CtrlTBQueueQuantity.Maximum = 12;
             this.CtrlTBQueueQuantity.Name = "CtrlTBQueueQuantity";
-            this.CtrlTBQueueQuantity.Size = new System.Drawing.Size(218, 45);
+            this.CtrlTBQueueQuantity.Size = new System.Drawing.Size(218, 42);
             this.CtrlTBQueueQuantity.TabIndex = 9;
             this.CtrlTBQueueQuantity.Value = 1;
             // 

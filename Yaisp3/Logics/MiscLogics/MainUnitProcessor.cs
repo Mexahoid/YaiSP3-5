@@ -299,8 +299,8 @@ namespace Yaisp3
         /// <summary>
         /// Возвращает список-отчет роста бюджета.
         /// </summary>
-        /// <returns>Возвращает список массивов вещественных чисел.</returns>
-        public static List<double[]> AgencyGetSummary()
+        /// <returns>Возвращает кортеж вещественных чисел.</returns>
+        public static List<Tuple<double, double>> AgencyGetSummary()
         {
             return Agency.GetAgencySummary();
         }

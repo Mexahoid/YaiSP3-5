@@ -16,7 +16,7 @@ namespace Yaisp3
         /// </summary>
         /// <param name="Control">Элемент управления, на котором производится рисование.</param>
         /// <param name="GraphPoints">Набор точек для отрисовки графика.</param>
-        public GraphLogicsClass(Control Control, List<double[]> GraphPoints)
+        public GraphLogicsClass(Control Control, List<Tuple<double, double>> GraphPoints)
         {
             drawingKit = new GraphDrawingClass(Control, GraphPoints);
         }
