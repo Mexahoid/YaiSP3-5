@@ -45,60 +45,68 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logics\MiscLogics\Graph\FormGraph.cs">
+    <Compile Include="Logics\MiscLogics\GraphForm\Form\FormGraph.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\MiscLogics\Graph\FormGraph.Designer.cs">
+    <Compile Include="Logics\MiscLogics\GraphForm\Form\FormGraph.Designer.cs">
       <DependentUpon>FormGraph.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logics\MiscLogics\Graph\GraphDrawingClass.cs" />
-    <Compile Include="Logics\MiscLogics\Graph\GraphLogicsClass.cs" />
-    <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.cs">
+    <Compile Include="Logics\MiscLogics\GraphForm\DrawingLogics\GraphDrawingClass.cs" />
+    <Compile Include="Logics\MiscLogics\GraphForm\DrawingLogics\GraphLogicsClass.cs" />
+    <Compile Include="Logics\MiscLogics\MainForm\Proximity\Form\FormProximity.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.Designer.cs">
+    <Compile Include="Logics\MiscLogics\MainForm\Proximity\Form\FormProximity.Designer.cs">
       <DependentUpon>FormProximity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\ProximityLogicsClass.cs" />
-    <Compile Include="Logics\StructureCity\Element.cs" />
-    <Compile Include="Logics\StructureCity\Matrices.cs" />
-    <Compile Include="Logics\StructureQueue\QueueClass.cs" />
-    <Compile Include="Logics\StructureStrategy\Strategy.cs" />
-    <Compile Include="Logics\StructureQueue\StructureClient\Client.cs" />
-    <Compile Include="Logics\MiscLogics\TextStorage\TextStorageClass.cs" />
+    <Compile Include="Logics\MiscLogics\MainForm\Proximity\DrawingLogics\ProximityLogicsClass.cs" />
+    <Compile Include="Logics\StructureCity\Elements\Billboard.cs" />
+    <Compile Include="Logics\StructureCity\ElementTemplate\TemplateElement.cs" />
+    <Compile Include="Logics\StructureCity\Elements\House.cs" />
+    <Compile Include="Logics\StructureCity\Matrix\MatrixCoefficients.cs" />
+    <Compile Include="Logics\StructureQueue\Clients\ClientCompany.cs" />
+    <Compile Include="Logics\StructureQueue\Clients\ClientGovernment.cs" />
+    <Compile Include="Logics\StructureQueue\Clients\ClientPerson.cs" />
+    <Compile Include="Logics\StructureQueue\Queue\QueueClass.cs" />
+    <Compile Include="Logics\StructureStrategy\Template\TemplateStrategy.cs" />
+    <Compile Include="Logics\StructureQueue\ClientTemplate\TemplateClient.cs" />
+    <Compile Include="Logics\MiscLogics\TextStorage\Logics\TextStorageClass.cs" />
     <Compile Include="Logics\MiscLogics\Templates\MainLogicsTemplate.cs" />
-    <Compile Include="Logics\MiscLogics\MainForm\Map\MapDrawingClass.cs" />
-    <Compile Include="Logics\MiscLogics\MainForm\Map\MapLogicsClass.cs" />
+    <Compile Include="Logics\MiscLogics\MainForm\DrawingLogics\MapDrawingClass.cs" />
+    <Compile Include="Logics\MiscLogics\MainForm\DrawingLogics\MapLogicsClass.cs" />
     <Compile Include="Logics\MiscLogics\Templates\MainDrawingTemplate.cs" />
-    <Compile Include="Logics\MiscLogics\MainUnitProcessor.cs" />
-    <Compile Include="Logics\StructureAgency\Agency.cs" />
-    <Compile Include="Logics\StructureCity\City.cs" />
-    <Compile Include="Logics\StructureCity\CityRedactorDrawingClass.cs" />
-    <Compile Include="Logics\StructureCity\CityRedactorLogicsClass.cs" />
+    <Compile Include="Logics\MainLogics\MainUnitProcessor.cs" />
+    <Compile Include="Logics\StructureAgency\Logics\Agency.cs" />
+    <Compile Include="Logics\StructureCity\City\City.cs" />
+    <Compile Include="Logics\StructureCity\Redactor\DrawingLogics\CityRedactorDrawingClass.cs" />
+    <Compile Include="Logics\StructureCity\Redactor\DrawingLogics\CityRedactorLogicsClass.cs" />
+    <Compile Include="Logics\StructureStrategy\Strategies\StrategyAggressive.cs" />
+    <Compile Include="Logics\StructureStrategy\Strategies\StrategyConservative.cs" />
+    <Compile Include="Logics\StructureStrategy\Strategies\StrategyNormal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Logics\StructureAgency\FormAgency.cs">
+    <Compile Include="Logics\StructureAgency\Form\FormAgency.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\StructureAgency\FormAgency.Designer.cs">
+    <Compile Include="Logics\StructureAgency\Form\FormAgency.Designer.cs">
       <DependentUpon>FormAgency.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logics\StructureCity\FormCity.cs">
+    <Compile Include="Logics\StructureCity\Redactor\Form\FormCity.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\StructureCity\FormCity.Designer.cs">
+    <Compile Include="Logics\StructureCity\Redactor\Form\FormCity.Designer.cs">
       <DependentUpon>FormCity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logics\MiscLogics\MainForm\FormMain.cs">
+    <Compile Include="Logics\MiscLogics\MainForm\Form\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\MiscLogics\MainForm\FormMain.Designer.cs">
+    <Compile Include="Logics\MiscLogics\MainForm\Form\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Logics\MiscLogics\Graph\FormGraph.resx">
+    <EmbeddedResource Include="Logics\MiscLogics\GraphForm\Form\FormGraph.resx">
       <DependentUpon>FormGraph.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logics\MiscLogics\MainForm\Map\ProximityHelper\FormProximity.resx">
+    <EmbeddedResource Include="Logics\MiscLogics\MainForm\Proximity\Form\FormProximity.resx">
       <DependentUpon>FormProximity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -111,13 +119,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Logics\StructureAgency\FormAgency.resx">
+    <EmbeddedResource Include="Logics\StructureAgency\Form\FormAgency.resx">
       <DependentUpon>FormAgency.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logics\StructureCity\FormCity.resx">
+    <EmbeddedResource Include="Logics\StructureCity\Redactor\Form\FormCity.resx">
       <DependentUpon>FormCity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logics\MiscLogics\MainForm\FormMain.resx">
+    <EmbeddedResource Include="Logics\MiscLogics\MainForm\Form\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -134,9 +142,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Logics\MiscLogics\TextStorage\BillboardsTexts.txt" />
-    <Content Include="Logics\MiscLogics\TextStorage\CompanyNames.txt" />
+    <Content Include="Logics\MiscLogics\TextStorage\Texts\BillboardsTexts.txt" />
+    <Content Include="Logics\MiscLogics\TextStorage\Texts\CompanyNames.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
