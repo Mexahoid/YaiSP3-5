@@ -7,19 +7,21 @@ using System.Windows.Forms;
 namespace Yaisp3
 {
     /// <summary>
-    /// Логический класс рисования зон покрытия
+    /// Логический класс рисования зон покрытия.
     /// </summary>
     class ProximityLogicsClass : MainLogicsTemplate
     {
+        #region Методы
+
         /// <summary>
-        /// Цветовая матрица коэффициентов
+        /// Цветовая матрица коэффициентов.
         /// </summary>
         private System.Drawing.Color[,] colorMatrix;
 
         /// <summary>
-        /// Конструктор логического класса рисования
+        /// Конструктор логического класса рисования.
         /// </summary>
-        /// <param name="Control">Элемент, на котором производится рисование</param>
+        /// <param name="Control">Элемент, на котором производится рисование.</param>
         public ProximityLogicsClass(Control Control)
         {
             colorMatrix = MainUnitProcessor.CityGetProximityMap();
@@ -29,7 +31,7 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Полная отрисовка изображения на канвас
+        /// Полная отрисовка изображения на канвас.
         /// </summary>
         protected override void MainDraw()
         {
@@ -40,7 +42,7 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Отрисовка карты покрытия
+        /// Отрисовка карты покрытия.
         /// </summary>
         private void DrawProximityMap()
         {
@@ -49,5 +51,7 @@ namespace Yaisp3
                 for (int j = 0; j < Cols; j++)
                     ((MapDrawingClass)drawingKit).DrawCityElement(i, j, colorMatrix[i, j]);
         }
+
+        #endregion
     }
 }

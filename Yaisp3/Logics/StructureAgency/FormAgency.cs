@@ -30,7 +30,7 @@ namespace Yaisp3
 
         private void CtrlButEditClick(object sender, EventArgs e)
         {
-            MainUnitProcessor.AgencyChangeData(CtrlTxbName.Text);
+            MainUnitProcessor.AgencyChangeName(CtrlTxbName.Text);
             Close();
         }
 
@@ -68,7 +68,9 @@ namespace Yaisp3
 
         private void ChangeStrategyEvent(object sender, EventArgs e)
         {
-            MainUnitProcessor.StrategyChange((Strategy.StrategyType)(Convert.ToByte((sender as RadioButton).Tag)));
+            MainUnitProcessor.StrategyChange(
+                (Strategy.StrategyType)(Convert.ToByte(
+                    (sender as RadioButton).Tag)));
         }
     }
 }

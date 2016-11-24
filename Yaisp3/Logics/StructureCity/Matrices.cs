@@ -6,21 +6,24 @@ using System.Text;
 namespace Yaisp3
 {
     /// <summary>
-    /// Класс матриц
+    /// Класс матриц.
     /// </summary>
     static class Matrices
     {
         /// <summary>
-        /// Родительский класс матрицы
+        /// Родительский класс матрицы.
         /// </summary>
-        internal class Matrix
+        public class Matrix
         {
+            #region Поля
+
             /// <summary>
-            /// Кол-во строк матрицы
+            /// Кол-во строк матрицы.
             /// </summary>
             protected int rows;
+
             /// <summary>
-            /// Кол-во столбцов матрицы
+            /// Кол-во столбцов матрицы.
             /// </summary>
             protected int cols;
 
@@ -29,38 +32,50 @@ namespace Yaisp3
             /// </summary>
             protected object matrix;
 
+            #endregion
+
+            #region Методы
+
             /// <summary>
-            /// Конструктор матрицы
+            /// Конструктор матрицы.
             /// </summary>
-            /// <param name="Rows">Кол-во строк матрицы</param>
-            /// <param name="Cols">Кол-во столбцов матрицы</param>
+            /// <param name="Rows">Кол-во строк матрицы.</param>
+            /// <param name="Cols">Кол-во столбцов матрицы.</param>
             protected Matrix(int Rows, int Cols)
             {
                 rows = Rows;
                 cols = Cols;
             }
+
+            #endregion
         }
 
         /// <summary>
-        /// Класс матрицы элементов города
+        /// Класс матрицы элементов города.
         /// </summary>
         public class MatrixElements : Matrix
         {
+            #region Поля
+
             /// <summary>
-            /// Нынешняя группа добавляемого дома
+            /// Нынешняя группа добавляемого дома.
             /// </summary>
             private int currentHouseGroup;
 
             /// <summary>
-            /// Матрица города для расчетов эпицентров и волн коэффициентов удаления
+            /// Матрица города для расчетов зон покрытия биллбордов.
             /// </summary>
             private MatrixCoefficients cityMatrixProximity;
 
+            #endregion
+
+            #region Методы
+
             /// <summary>
-            /// Конструктор матрицы элементов
+            /// Конструктор матрицы элементов.
             /// </summary>
-            /// <param name="Rows">Кол-во строк</param>
-            /// <param name="Cols">Кол-во столбцов</param>
+            /// <param name="Rows">Кол-во строк.</param>
+            /// <param name="Cols">Кол-во столбцов.</param>
             public MatrixElements(int Rows, int Cols)
                 : base(Rows, Cols)
             {
@@ -72,11 +87,11 @@ namespace Yaisp3
             /// <summary>
             /// Проверяет возможность установки элемента.
             /// </summary>
-            /// <param name="Row">Х верхней левой точки элемента</param>
-            /// <param name="Col">Y верхней левой точки элемента</param>
-            /// <param name="RightWidth">Ширина элемента</param>
-            /// <param name="DownDepth">Высота (вниз) элемента</param>
-            /// <returns>Возвращает логическое значение</returns>
+            /// <param name="Row">Х верхней левой точки элемента.</param>
+            /// <param name="Col">Y верхней левой точки элемента.</param>
+            /// <param name="RightWidth">Ширина элемента.</param>
+            /// <param name="DownDepth">Высота элемента.</param>
+            /// <returns>Возвращает логическое значение.</returns>
             private bool TryToPlaceElement(int Row, int Col, int RightWidth, int DownDepth)
             {
                 if (Row + DownDepth > rows || Col + RightWidth > cols)
@@ -89,9 +104,9 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Возвращает массив с элементами, заполненными определённым цветом
+            /// Возвращает массив с элементами, заполненными определённым цветом.
             /// </summary>
-            /// <returns>Возвращает массив цветов</returns>
+            /// <returns>Возвращает двумерный массив цветов.</returns>
             public System.Drawing.Color[,] GetDrawingData()
             {
                 System.Drawing.Color[,] Colors = new System.Drawing.Color[rows, cols];
@@ -106,12 +121,12 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Устанавливает новый дом
+            /// Устанавливает новый дом.
             /// </summary>
-            /// <param name="Row">Строка верхнего левого квадрата дома</param>
-            /// <param name="Col">Столбец верхнего левого квадрата дома</param>
-            /// <param name="RightWidth">Ширина дома</param>
-            /// <param name="DownDepth">Высота дома</param>
+            /// <param name="Row">Строка верхнего левого квадрата дома.</param>
+            /// <param name="Col">Столбец верхнего левого квадрата дома.</param>
+            /// <param name="RightWidth">Ширина дома.</param>
+            /// <param name="DownDepth">Высота дома.</param>
             public void PlaceHouse(int Row, int Col, int RightWidth, int DownDepth)
             {
                 House NewHouse = new House(++currentHouseGroup, RightWidth, DownDepth);
@@ -125,9 +140,9 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Устанавливает биллборд на случайном месте
+            /// Устанавливает биллборд на случайном месте.
             /// </summary>
-            /// <param name="Billboard">Соответствующий биллборд</param>
+            /// <param name="Billboard">Соответствующий биллборд.</param>
             public void PlaceBillboard(Billboard Billboard)
             {
                 int[] Position = cityMatrixProximity.GetRandomFreeSpace();
@@ -136,7 +151,7 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Заканчивает строительство всех недостроенных биллбордов
+            /// Заканчивает строительство всех недостроенных биллбордов.
             /// </summary>
             public int BuildAllBillboardsToEnd()
             {
@@ -154,9 +169,10 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Заполняет биллборд заказом клиента
+            /// Заполняет биллборд заказом клиента.
             /// </summary>
-            /// <param name="ClientDesire">Кортеж из текста рекламы, цены за аренду и уровня заказчика</param>
+            /// <param name="ClientDesire">Кортеж из текста рекламы, цены за аренду и уровня заказчика.</param>
+            /// <returns>Возвращает логическое значение.</returns>
             public bool FillRandomBillboard(Tuple<string, int, byte> ClientDesire)
             {
                 for (int i = 0; i < rows; i++)
@@ -172,16 +188,16 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Возвращает карту коэффициентов
+            /// Возвращает карту коэффициентов.
             /// </summary>
-            /// <returns></returns>
+            /// <returns>Возвращает двумерный массив цветов.</returns>
             public System.Drawing.Color[,] GetCoeffMapColors()
             {
                 return cityMatrixProximity.GetCoeffMap();
             }
 
             /// <summary>
-            /// Удаляет все биллборды с карты
+            /// Удаляет все биллборды с карты.
             /// </summary>
             public void DeleteBillboards()
             {
@@ -192,18 +208,22 @@ namespace Yaisp3
                             ((Element[,])matrix)[i, j] = null;
                 cityMatrixProximity.DeleteBillboardCoefficients();
             }
+
+            #endregion
         }
 
         /// <summary>
-        /// Класс матрицы коэффициентов
+        /// Класс матрицы коэффициентов.
         /// </summary>
-        public class MatrixCoefficients : Matrix
+        private class MatrixCoefficients : Matrix
         {
+            #region Методы
+
             /// <summary>
-            /// Конструктор, создающий матрицу из нулей
+            /// Конструктор, создающий матрицу из нулей.
             /// </summary>
-            /// <param name="Rows">Высота матрицы</param>
-            /// <param name="Cols">Ширина матрицы</param>
+            /// <param name="Rows">Высота матрицы.</param>
+            /// <param name="Cols">Ширина матрицы.</param>
             public MatrixCoefficients(int Rows, int Cols)
                 : base(Rows, Cols)
             {
@@ -214,9 +234,9 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Возвращает случайную позицию с минимальным коэффициентом
+            /// Возвращает случайную позицию с минимальным коэффициентом.
             /// </summary>
-            /// <returns>Возвращает массив целочисленных значений</returns>
+            /// <returns>Возвращает массив целочисленных значений.</returns>
             public int[] GetRandomFreeSpace()
             {
                 int minCoeff = GetCoeff(true);
@@ -232,22 +252,22 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Устанавливает биллборд с расчетом коэффициентов
+            /// Устанавливает биллборд с расчетом коэффициентов.
             /// </summary>
-            /// <param name="Row">Ряд матрицы</param>
-            /// <param name="Col">Столбец матрицы</param>
+            /// <param name="Row">Ряд матрицы.</param>
+            /// <param name="Col">Столбец матрицы.</param>
             public void PlaceBillboard(int Row, int Col)
             {
                 RecursionCoefficients(Row, Col, 10);
             }
 
             /// <summary>
-            /// Устанавливает элемент дома с большим числом коэффициента
+            /// Устанавливает элемент дома с большим числом коэффициента.
             /// </summary>
-            /// <param name="Row">Ряд матрицы</param>
-            /// <param name="Col">Столбец матрицы</param>
-            /// <param name="Height">Высота дома</param>
-            /// <param name="Width">Ширина дома</param>
+            /// <param name="Row">Ряд матрицы.</param>
+            /// <param name="Col">Столбец матрицы.</param>
+            /// <param name="Height">Высота дома.</param>
+            /// <param name="Width">Ширина дома.</param>
             public void PlaceCityElement(int Row, int Col)
             {
                 ((int[,])matrix)[Row, Col] = 1000;
@@ -257,7 +277,7 @@ namespace Yaisp3
             /// Возвращает необходимое значение коэффициента.
             /// </summary>
             /// <param name="Min">True - поиск минимального, False - поиск максимального</param>
-            /// <returns></returns>
+            /// <returns>Возвращает целочисленное значение.</returns>
             private int GetCoeff(bool Min)
             {
                 int neededCoeff = Min ? int.MaxValue : int.MinValue;
@@ -277,12 +297,12 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Рекурсивный перерасчет коэффициентов
+            /// Рекурсивный перерасчет коэффициентов.
             /// </summary>
-            /// <param name="Row">Рабочий ряд матрицы</param>
-            /// <param name="Col">Рабочий столбец матрицы</param>
-            /// <param name="Coeff">Добавляемый в ячейку коэффициент</param>
-            /// <param name="Dest">Направление предыдущего хода</param>
+            /// <param name="Row">Рабочий ряд матрицы.</param>
+            /// <param name="Col">Рабочий столбец матрицы.</param>
+            /// <param name="Coeff">Добавляемый в ячейку коэффициент.</param>
+            /// <param name="Dest">Направление предыдущего хода.</param>
             private void RecursionCoefficients(int Row, int Col, int Coeff)
             {
                 if (Row != rows && Row >= 0 && Col != cols && Col >= 0)
@@ -304,7 +324,7 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Удаляет коэффициенты биллбордов
+            /// Удаляет коэффициенты биллбордов.
             /// </summary>
             public void DeleteBillboardCoefficients()
             {
@@ -315,9 +335,9 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Возвращает карту цветов коэффициентов
+            /// Возвращает карту цветов коэффициентов.
             /// </summary>
-            /// <returns>Возвращает массив цветов</returns>
+            /// <returns>Возвращает массив цветов.</returns>
             public System.Drawing.Color[,] GetCoeffMap()
             {
                 System.Drawing.Color[,] Out = new System.Drawing.Color[rows, cols];
@@ -338,6 +358,8 @@ namespace Yaisp3
                             Out[i, j] = System.Drawing.Color.Red;
                 return Out;
             }
+
+            #endregion
         }
     }
 }

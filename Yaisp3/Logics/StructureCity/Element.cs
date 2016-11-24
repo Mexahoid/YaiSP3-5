@@ -3,22 +3,30 @@
 namespace Yaisp3
 {
     /// <summary>
-    /// Класс базового элемента города
+    /// Класс базового элемента города.
     /// </summary>
     public class Element
     {
+        #region Поля
+
         /// <summary>
-        /// Ширина элемента
+        /// Ширина элемента.
         /// </summary>
         protected int elementWidth;
+
         /// <summary>
-        /// Высота элемента
+        /// Высота элемента.
         /// </summary>
         protected int elementHeight;
+
         /// <summary>
-        /// True, если элемент - дом, False - если биллборд
+        /// True, если элемент - дом, False - если биллборд.
         /// </summary>
         protected bool elementType;
+
+        #endregion
+
+        #region Методы
 
         /// <summary>
         /// Возвращает состояние элемента
@@ -28,33 +36,41 @@ namespace Yaisp3
         {
             return elementType;
         }
+
+        #endregion
     }
 
     /// <summary>
-    /// Класс элемента дома
+    /// Класс элемента дома.
     /// </summary>
     public class House : Element
     {
+        #region Поля
+
         /// <summary>
-        /// Группа, к которой принадлежит дом
+        /// Группа, к которой принадлежит дом.
         /// </summary>
         private int houseElementGroup;
 
+        #endregion
+
+        #region Методы
+
         /// <summary>
-        /// Возвращает кортеж с размером дома
+        /// Возвращает кортеж с размером дома.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает кортеж из двух целочисленных значений.</returns>
         public Tuple<int, int> GetHouseSize()
         {
             return Tuple.Create(elementWidth, elementHeight);
         }
 
         /// <summary>
-        /// Создает элемент города заданной группы элементов
+        /// Создает элемент города заданной группы элементов.
         /// </summary>
-        /// <param name="Width">Ширина дома</param>
-        /// <param name="Group">Группа элементов</param>
-        /// <param name="Height">Высота дома</param>
+        /// <param name="Width">Ширина дома.</param>
+        /// <param name="Group">Группа элементов.</param>
+        /// <param name="Height">Высота дома.</param>
         public House(int Group, int Width, int Height)
         {
             houseElementGroup = Group;
@@ -62,67 +78,74 @@ namespace Yaisp3
             elementHeight = Height;
             elementType = true;
         }
+
+        #endregion
+
     }
 
     /// <summary>
-    /// Класс биллборда
+    /// Класс биллборда.
     /// </summary>
     public class Billboard : Element
     {
-        #region Переменные
+        #region Поля
+
         /// <summary>
-        /// Состояние биллборда
+        /// Состояние биллборда.
         /// </summary>
         enum State : byte
         {
             /// <summary>
-            /// Биллборд строится
+            /// Биллборд строится.
             /// </summary>
             Building,
             /// <summary>
-            /// Биллборд построен, но не заполнен
+            /// Биллборд построен, но не заполнен.
             /// </summary>
             Free,
             /// <summary>
-            /// На биллборде размещена реклама частного лица
+            /// На биллборде размещена реклама частного лица.
             /// </summary>
             Personal,
             /// <summary>
-            /// На биллборде размещена реклама компании
+            /// На биллборде размещена реклама компании.
             /// </summary>
             Company,
             /// <summary>
-            /// На биллборде размещена социальная реклама
+            /// На биллборде размещена социальная реклама.
             /// </summary>
             Government
         }
 
         /// <summary>
-        /// Сумма, которую стоит обслуживание этого биллборда
+        /// Сумма, которую стоит обслуживание этого биллборда за день.
         /// </summary>
         private int billboardCostPerDay;
 
         /// <summary>
-        /// Сумма, которую приносит этот биллборд в день
+        /// Сумма, которую приносит этот биллборд в день.
         /// </summary>
         private int billboardProfitPerDay;
 
         /// <summary>
-        /// Текст рекламы, записанной на биллборде
+        /// Текст рекламы, записанной на биллборде.
         /// </summary>
         private string billboardText;
 
         /// <summary>
-        /// Состояние биллборда
+        /// Состояние биллборда.
         /// </summary>
         private State billboardType;
+
         #endregion
+
+        #region Методы
 
         /// <summary>
         /// Создает новый биллборд.
         /// </summary>
-        /// <param name="Position">Позиция установки</param>
-        /// <param name="AllCost">Ощая цена постройки биллборда</param>
+        /// <param name="Position">Позиция установки.</param>
+        /// <param name="AllCost">Ощая цена постройки биллборда.</param>
         public Billboard(int AllCost)
         {
             billboardProfitPerDay = 0;
@@ -141,27 +164,27 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает значение True, Если биллборд ещё строится
+        /// Возвращает информацию о том, строится ли ещё биллборд.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает логическое значение.</returns>
         public bool BillboardIsBuilding()
         {
             return billboardType == State.Building;
         }
 
         /// <summary>
-        /// Возвращает значение True, если биллборд свободен
+        /// Возвращает информацию о том, есть ли реклама на биллборде.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает логическое значение.</returns>
         public bool BillboardIsFilled()
         {
             return billboardType == State.Free && billboardType != State.Building;  //Это просто защита
         }
 
         /// <summary>
-        /// Заполняет биллборд заказом клиента
+        /// Заполняет биллборд заказом клиента.
         /// </summary>
-        /// <param name="ClientDesire">Кортеж из текста рекламы, цены за аренду и уровня заказчика</param>
+        /// <param name="ClientDesire">Кортеж из текста рекламы, цены за аренду и уровня заказчика.</param>
         public void BillboardFill(Tuple<string, int, byte> ClientDesire)
         {
             billboardText = ClientDesire.Item1;
@@ -170,9 +193,9 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает соответствующий цвет для отрисовки биллборда на карте
+        /// Возвращает соответствующий цвет для отрисовки биллборда на карте.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает цвет.</returns>
         public System.Drawing.Color BillboardGetColor()
         {
             switch (billboardType)
@@ -191,12 +214,14 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает дневной доход с биллборда
+        /// Возвращает дневной доход с биллборда.
         /// </summary>
-        /// <returns>Возвращает положительное или отрицательное целое число</returns>
+        /// <returns>Возвращает целочисленное значение.</returns>
         public int BillboardGetMoney()
         {
             return billboardProfitPerDay - billboardCostPerDay;
         }
+
+        #endregion
     }
 }

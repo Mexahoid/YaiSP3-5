@@ -310,6 +310,7 @@
             this.CtrlTBQueueIntense.Location = new System.Drawing.Point(6, 70);
             this.CtrlTBQueueIntense.Maximum = 12;
             this.CtrlTBQueueIntense.Name = "CtrlTBQueueIntense";
+            this.CtrlTBQueueIntense.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.CtrlTBQueueIntense.Size = new System.Drawing.Size(218, 45);
             this.CtrlTBQueueIntense.TabIndex = 12;
             this.CtrlTBQueueIntense.Value = 1;

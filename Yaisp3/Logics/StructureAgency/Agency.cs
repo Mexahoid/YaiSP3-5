@@ -6,24 +6,52 @@ using System.Text;
 namespace Yaisp3
 {
     /// <summary>
-    /// Класс агентства
+    /// Класс агентства.
     /// </summary>
     public class Agency
     {
+        #region Поля
+
+        /// <summary>
+        /// Название агентства.
+        /// </summary>
         private string agencyName;
+
+        /// <summary>
+        /// Бюджет агентства.
+        /// </summary>
         private int agencyDeposit;
+
+        /// <summary>
+        /// Список биллбордов агентства.
+        /// </summary>
         private List<Billboard> agencyBillboards;
+
+        /// <summary>
+        /// Количество свободных построенных(!) биллбордов.
+        /// </summary>
         private int agencyFreeBillboards;
+
+        /// <summary>
+        /// Количество рабочего персонала.
+        /// </summary>
         private int agencyStaffCount;
+
+        /// <summary>
+        /// Список из подневных коэффициентов бюджета.
+        /// </summary>
         private List<double[]> agencySummary;
 
-        //Первичные методы
+        #endregion
+
+        #region Методы
+        
         /// <summary>
-        /// Конструктор агентства
+        /// Конструктор агентства.
         /// </summary>
-        /// <param name="Name">Название агентства</param>
-        /// <param name="Money">Начальный депозит</param>
-        /// <param name="Billboards">Кол-во биллбордов</param>
+        /// <param name="Name">Название агентства.</param>
+        /// <param name="Money">Начальный депозит.</param>
+        /// <param name="Billboards">Кол-во биллбордов.</param>
         public Agency(string Name, int Money, int Billboards)
         {
             agencyName = Name;
@@ -38,27 +66,25 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает кортеж, состоящий из названия агентства, депозита, кол-ва щитов и стратегии
+        /// Возвращает кортеж, состоящий из названия агентства, депозита, кол-ва щитов и стратегии.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает кортеж из строки и двух целочисленных значений.</returns>
         public Tuple<string, int, int> GetData()
         {
             return Tuple.Create(agencyName, agencyDeposit, agencyBillboards.Count);
         }
 
         /// <summary>
-        /// Меняет название агентства
+        /// Меняет название агентства.
         /// </summary>
-        /// <param name="Name">Новое имя агентства</param>
+        /// <param name="Name">Новое имя агентства.</param>
         public void ChangeName(string Name)
         {
             agencyName = Name;
         }
 
-        //Методы интерфейса
-
         /// <summary>
-        /// Устанавливает биллборд на случайном месте
+        /// Устанавливает биллборд на случайном месте.
         /// </summary>
         public void PlaceBillboardRnd()
         {
@@ -89,9 +115,9 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Заполняет случайный биллборд заказом клиента
+        /// Заполняет случайный биллборд заказом клиента.
         /// </summary>
-        /// <param name="ClientDesire">Кортеж желания клиента</param>
+        /// <param name="ClientDesire">Кортеж желания клиента.</param>
         public void FillBillboard(Tuple<string, int, byte> ClientDesire)
         {
             MainUnitProcessor.CityBillboardFillRandom(ClientDesire);
@@ -107,10 +133,10 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает число позволяемых установиться биллбордов
+        /// Возвращает число позволяемых установиться биллбордов.
         /// </summary>
-        /// <param name="OrderCount">Количество заказов в очереди</param>
-        /// <returns></returns>
+        /// <param name="OrderCount">Количество заказов в очереди.</param>
+        /// <returns>Возвращает целочисленное значение.</returns>
         public int HowMuchCanWeAfford(int OrderCount)
         {
             int temp = agencyDeposit;
@@ -121,9 +147,9 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает список из подневных значений счета агентства
+        /// Возвращает список из подневных значений счета агентства.
         /// </summary>
-        /// <returns>Возвращает список массивов вещественных значений</returns>
+        /// <returns>Возвращает список массивов вещественных значений.</returns>
         public List<double[]> GetAgencySummary()
         {
             return agencySummary;
@@ -137,5 +163,7 @@ namespace Yaisp3
         {
             return agencyFreeBillboards;
         }
+
+        #endregion
     }
 }

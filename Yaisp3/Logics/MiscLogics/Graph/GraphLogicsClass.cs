@@ -7,21 +7,22 @@ using System.Windows.Forms;
 namespace Yaisp3
 {
     /// <summary>
-    /// Логический класс рисования графика
+    /// Логический класс рисования графика.
     /// </summary>
     class GraphLogicsClass : MainLogicsTemplate
     {
         /// <summary>
-        /// Создает экземпляр логики графика
+        /// Создает набор рисования графика.
         /// </summary>
-        /// <param name="Control"></param>
-        public GraphLogicsClass(Control Control, List<double[]> graphPoints)
+        /// <param name="Control">Элемент управления, на котором производится рисование.</param>
+        /// <param name="GraphPoints">Набор точек для отрисовки графика.</param>
+        public GraphLogicsClass(Control Control, List<double[]> GraphPoints)
         {
-            drawingKit = new GraphDrawingClass(Control, graphPoints);
+            drawingKit = new GraphDrawingClass(Control, GraphPoints);
         }
 
         /// <summary>
-        /// Главный метод рисования графика
+        /// Главный метод рисования графика.
         /// </summary>
         protected override void MainDraw()
         {

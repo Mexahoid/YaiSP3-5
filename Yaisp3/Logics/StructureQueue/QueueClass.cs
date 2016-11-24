@@ -6,29 +6,29 @@ using System.Text;
 namespace Yaisp3
 {
     /// <summary>
-    /// Класс очереди клиентов
+    /// Класс очереди клиентов.
     /// </summary>
     class QueueClass
     {
         /// <summary>
-        /// Класс узла очереди
+        /// Класс узла очереди.
         /// </summary>
         class QueueNodeClass
         {
             #region Поля
 
             /// <summary>
-            /// Клиент узла
+            /// Клиент узла.
             /// </summary>
             private Client nodeClient;
 
             /// <summary>
-            /// Следующий узел
+            /// Следующий узел.
             /// </summary>
             private QueueNodeClass nodeNext;
 
             /// <summary>
-            /// Клиент узла
+            /// Клиент узла.
             /// </summary>
             public Client NodeClient
             {
@@ -44,7 +44,7 @@ namespace Yaisp3
             }
 
             /// <summary>
-            /// Следующий узел
+            /// Следующий узел.
             /// </summary>
             public QueueNodeClass NodeNext
             {
@@ -62,10 +62,10 @@ namespace Yaisp3
             #endregion
 
             /// <summary>
-            /// Конструктор узла очереди
+            /// Конструктор узла очереди.
             /// </summary>
-            /// <param name="Data">Клиент в узле</param>
-            /// <param name="Next">Указатель на следующего клиента</param>
+            /// <param name="Data">Клиент в узле.</param>
+            /// <param name="Next">Указатель на следующего клиента.</param>
             public QueueNodeClass(Client Data, QueueNodeClass Next)
             {
                 NodeClient = Data;
@@ -97,9 +97,9 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Добавляет клиента в хвост очереди
+        /// Добавляет клиента в хвост очереди.
         /// </summary>
-        /// <param name="Data">Добавляемый клиент</param>
+        /// <param name="Data">Добавляемый клиент.</param>
         public void QueueAdd(Client Data)
         {
             QueueNodeClass NewNode = new QueueNodeClass(Data, null);
@@ -113,18 +113,18 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Пустая ли очередь
+        /// Пустая ли очередь.
         /// </summary>
-        /// <returns>Возвращает логическое значение</returns>
+        /// <returns>Возвращает логическое значение.</returns>
         public bool QueueIsNull()
         {
             return queueHead == null;
         }
 
         /// <summary>
-        /// Выдача обычного клиента из очереди
+        /// Выдача обычного клиента из очереди.
         /// </summary>
-        /// <returns>Возвращает экземпляр клиента</returns>
+        /// <returns>Возвращает экземпляр клиента.</returns>
         public Client QueuePushNormal()
         {
             QueueNodeClass Out = queueHead;
@@ -133,9 +133,9 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Есть ли в очереди высокоприоритетный клиент
+        /// Есть ли в очереди высокоприоритетный клиент.
         /// </summary>
-        /// <returns>Возвращает логическое значение</returns>
+        /// <returns>Возвращает логическое значение.</returns>
         public bool QueueHasHighPriority()
         {
             QueueNodeClass Q = queueHead;
@@ -154,9 +154,9 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Выдача высокоприоритетного клиента из очереди
+        /// Выдача высокоприоритетного клиента из очереди.
         /// </summary>
-        /// <returns>Возвращает экземпляр клиента</returns>
+        /// <returns>Возвращает экземпляр клиента.</returns>
         public Client QueuePushHighPriority()
         {
             QueueNodeClass Q = queueHead;
@@ -175,9 +175,9 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Выдача информации о клиентах одной строкой
+        /// Выдача информации о клиентах одной строкой.
         /// </summary>
-        /// <returns>Возвращает строку</returns>
+        /// <returns>Возвращает строку.</returns>
         public string GetQueueOrders()
         {
             string Out = "";
@@ -196,7 +196,11 @@ namespace Yaisp3
             return Out;
         }
 
-        public int GetQueueQount()
+        /// <summary>
+        /// Возвращает количество клиентов в очереди.
+        /// </summary>
+        /// <returns>Возвращает целочисленное значений.</returns>
+        public int GetQueueCount()
         {
             if (!QueueIsNull())
             {

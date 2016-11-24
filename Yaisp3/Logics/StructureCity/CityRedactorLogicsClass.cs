@@ -6,18 +6,19 @@ using System.Windows.Forms;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Класс логики редактора города.
+    /// </summary>
     class CityRedactorLogicsClass : MapLogicsClass
     {
+        #region Методы
+
         /// <summary>
-        /// Конструктор для создания города с нуля
+        /// Конструктор для создания города с нуля.
         /// </summary>
-        /// <param name="Control">Контрол, на котором производится рисование</param>
-        /// <param name="Height">Высота города (в у.е.)</param>
-        /// <param name="Width">Ширина города (в у.е.)</param>
-        /// <param name="Name">Название города</param>
+        /// <param name="Control">Контрол, на котором производится рисование.</param>
         public CityRedactorLogicsClass(Control Control) : base(Control)
         {
-            cityName = MainUnitProcessor.CityGetName();
             colorMatrix = MainUnitProcessor.CityGetDrawingData();
             drawingKit = new CityRedactorDrawingClass(Control, colorMatrix.GetLength(1), colorMatrix.GetLength(0));
             ClearImage();
@@ -53,14 +54,14 @@ namespace Yaisp3
         }*/
 
         /// <summary>
-        /// Сохранение карты города
+        /// Сохранение карты города.
         /// </summary>
-        /// <returns>Возвращает строку-данные города</returns>
+        /// <returns>Возвращает строку-данные города.</returns>
         public string Save()
         {
             //int Height = cityMatrix.GetLength(0);
             //int Width = cityMatrix.GetLength(1);
-            string Out = cityName + '\n';
+            string Out = "";//cityName + '\n';
             /*  Height + '\n' +
               Width + '\n';
             for (int i = 0; i < Height; i++)
@@ -73,12 +74,12 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Отрисовка устанавливаемого элемента
+        /// Отрисовка устанавливаемого элемента.
         /// </summary>
-        /// <param name="X">Х указателя мыши</param>
-        /// <param name="Y">Y указателя мыши</param>
-        /// <param name="Width">Ширина устанавливаемого элемента (в у.е.)</param>
-        /// <param name="Height">Высота устанавливаемого элемента (в у.е.)</param>
+        /// <param name="X">Х указателя мыши.</param>
+        /// <param name="Y">Y указателя мыши.</param>
+        /// <param name="Width">Ширина устанавливаемого элемента.</param>
+        /// <param name="Height">Высота устанавливаемого элемента.</param>
         public void DrawCurrentObject(int X, int Y, int Width, int Height)
         {
             drawingKit.ClearCanvas();
@@ -89,12 +90,12 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Добавление устанавливаемого объекта на карту города
+        /// Добавление устанавливаемого объекта на карту города.
         /// </summary>
-        /// <param name="X">Х указателя мыши</param>
-        /// <param name="Y">Y указателя мыши</param>
-        /// <param name="Width">Ширина устанавливаемого элемента (в у.е.)</param>
-        /// <param name="Height">Высота устанавливаемого элемента (в у.е.)</param>
+        /// <param name="X">Х указателя мыши.</param>
+        /// <param name="Y">Y указателя мыши.</param>
+        /// <param name="Width">Ширина устанавливаемого элемента.</param>
+        /// <param name="Height">Высота устанавливаемого элемента.</param>
         public void AddElementToMatrix(int X, int Y, int Width, int Height)
         {
             int Row, Col;
@@ -103,5 +104,7 @@ namespace Yaisp3
             ClearImage();
             MainDraw();
         }
+
+        #endregion
     }
 }

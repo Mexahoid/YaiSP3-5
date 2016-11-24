@@ -6,17 +6,38 @@ using System.Text;
 namespace Yaisp3
 {
     /// <summary>
-    /// Класс работы с текстами заказчиков
+    /// Класс работы с текстами заказчиков.
     /// </summary>
     public static class TextStorageClass
     {
-        private static string[] BillboardTexts;
-        private static string[] ClientNames;
-        private static string[] CompanyNames;
-        private static string[] GovernNames;
+        #region Поля
 
         /// <summary>
-        /// Считывает и сохраняет в память все имена и тексты
+        /// Тексты заказов.
+        /// </summary>
+        private static string[] BillboardTexts;
+
+        /// <summary>
+        /// Названия частных клиентов.
+        /// </summary>
+        private static string[] ClientNames;
+
+        /// <summary>
+        /// Названия компаний.
+        /// </summary>
+        private static string[] CompanyNames;
+
+        /// <summary>
+        /// Названия правительственных организаций.
+        /// </summary>
+        private static string[] GovernNames;
+
+        #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Считывает и сохраняет в память все имена и тексты.
         /// </summary>
         public static void ParseTextData()
         {
@@ -36,16 +57,18 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает случаное название и текст для биллборда
+        /// Возвращает случаное название и текст для биллборда.
         /// </summary>
-        /// <returns></returns>
-        public static string[] GetRandomData(byte Rank)
+        /// <returns>Возвращает кортеж из двух строк</returns>
+        public static Tuple<string, string> GetRandomData(byte Rank)
         {
-            return new string[] {
+            return Tuple.Create(
           Rank == 2 ? ClientNames[MainUnitProcessor.MainGetRandomValue(0, ClientNames.Length)] :
           Rank == 3 ? CompanyNames[MainUnitProcessor.MainGetRandomValue(0, CompanyNames.Length)] :
           GovernNames[MainUnitProcessor.MainGetRandomValue(0, GovernNames.Length)],
-        BillboardTexts[MainUnitProcessor.MainGetRandomValue(0, BillboardTexts.Length)] };
+        BillboardTexts[MainUnitProcessor.MainGetRandomValue(0, BillboardTexts.Length)]);
         }
+
+        #endregion
     }
 }

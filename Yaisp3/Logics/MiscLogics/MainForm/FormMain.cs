@@ -41,7 +41,7 @@ namespace Yaisp3
     {
         private bool drawingMap = false;
         private MouseEventArgs eOld;
-        private MainFormLogicClass mainLogic;
+        private MapLogicsClass mainLogic;
 
         public FormMain()
         {
@@ -52,9 +52,9 @@ namespace Yaisp3
         private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
         {
             if (mainLogic != null)
-                mainLogic.ZoomMap(e.X, e.Y, e.Delta);
+                mainLogic.ZoomImage(e.X, e.Y, e.Delta);
         }
-       
+
         private void CtrlPicBxMap_MouseDown(object sender, MouseEventArgs e)
         {
             if (mainLogic != null)
@@ -65,7 +65,7 @@ namespace Yaisp3
                         drawingMap = true;
                         break;
                     case MouseButtons.Middle:
-                        mainLogic.SetNormalZoomMap();
+                        mainLogic.SetNormalZoom();
                         break;
                 }
         }
@@ -77,7 +77,7 @@ namespace Yaisp3
         {
             if (drawingMap)
             {
-                mainLogic.MoveMap(e.X, e.Y, eOld.X, eOld.Y);
+                mainLogic.MoveImage(e.X, e.Y, eOld.X, eOld.Y);
                 eOld = e;
             }
         }
@@ -100,7 +100,7 @@ namespace Yaisp3
         {
             if (Program.formCity.ShowDialog() == DialogResult.OK)
             {
-                mainLogic = new MainFormLogicClass(CtrlPicBxMap, CtrlPicBxGraph);
+                mainLogic = new MapLogicsClass(CtrlPicBxMap);
                 CtrlChBIndCity.Checked = true;
                 CtrlTSMIAgencyDelete.Enabled = CtrlTSMIAgencyMenu.Enabled = true;
                 if (CtrlChBIndAgen.Checked)
@@ -114,7 +114,7 @@ namespace Yaisp3
             MainUnitProcessor.QueueAddRand(CtrlTBQueueQuantity.Value, CtrlTBQueueIntense.Value);
             CtrlTxbOrders.Text = MainUnitProcessor.QueueGetText();
             MainUnitProcessor.PassDay();
-            mainLogic.MoveMap(0, 0, 0, 0);
+            mainLogic.MoveImage(0, 0, 0, 0);
         }
 
         private void CtrlButTimerStartClick(object sender, EventArgs e)
@@ -153,8 +153,7 @@ namespace Yaisp3
         private void CtrlTSMIDrop_Click(object sender, EventArgs e)
         {
             CtrlTimer.Enabled = false;
-            if (CtrlTimer.Enabled)
-                CtrlButTimerPause.Text = "Пауза";
+            CtrlButTimerPause.Text = "Продолжить";
         }
     }
 }

@@ -8,20 +8,27 @@ using System.Drawing;
 namespace Yaisp3
 {
     /// <summary>
-    /// Класс рисования графика роста бюджета
+    /// Класс рисования графика роста бюджета.
     /// </summary>
     class GraphDrawingClass : MainDrawingTemplate
     {
-        /// <summary>
-        /// Точки на графике
-        /// </summary>
-        private List<double[]> graphPoints;
+        #region Поля
 
         /// <summary>
-        /// Создает новый экземпляр отрисовщика графика
+        /// Точки на графике.
         /// </summary>
-        /// <param name="Control"></param>
-        public GraphDrawingClass(Control Control, List<double[]> graphPoints)
+        private List<Tuple<double, double>> graphPoints;
+
+        #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Создает новый экземпляр отрисовщика графика.
+        /// </summary>
+        /// <param name="Control">Элемент управления, на котором производится рисование.</param>
+        /// <param name="graphPoints">Список точек графика.</param>
+        public GraphDrawingClass(Control Control, List<Tuple<double, double>> graphPoints)
         {
             x1p = -3; y1p = -10; x2p = 10; y2p = 3;
             x1old = -3; y1old = -10; x2old = 10; y2old = 3;
@@ -34,7 +41,7 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Рисует график роста бюджета
+        /// Рисует график роста бюджета.
         /// </summary>
         public void DrawGraph()
         {
@@ -45,17 +52,19 @@ namespace Yaisp3
             if (L != 0)
             {
                 _CanvasLogics.DrawLine(Pens.Green, new Point(GetScreenX(0), GetScreenY(0)),
-                  new Point(GetScreenX(graphPoints[0][0]), GetScreenY(-graphPoints[0][1])));
+                  new Point(GetScreenX(graphPoints[0].Item1), GetScreenY(-graphPoints[0].Item2)));
                 Pen P;
                 for (int i = 1; i < L; i++)
                 {
-                    P = graphPoints[i - 1][1] < graphPoints[i][1] ? Pens.Green : Pens.Red;
+                    P = graphPoints[i - 1].Item2 < graphPoints[i].Item2 ? Pens.Green : Pens.Red;
                     _CanvasLogics.DrawLine(P,
-                        new Point(GetScreenX(graphPoints[i - 1][0]), GetScreenY(-graphPoints[i - 1][1])),
-                         new Point(GetScreenX(graphPoints[i][0]), GetScreenY(-graphPoints[i][1])));
+                        new Point(GetScreenX(graphPoints[i - 1].Item1), GetScreenY(-graphPoints[i - 1].Item2)),
+                         new Point(GetScreenX(graphPoints[i].Item1), GetScreenY(-graphPoints[i].Item2)));
                 }
             }
             DrawImage();
         }
+
+        #endregion
     }
 }

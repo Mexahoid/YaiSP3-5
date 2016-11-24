@@ -8,25 +8,32 @@ using System.Windows.Forms;
 namespace Yaisp3
 {
     /// <summary>
-    /// Класс рисования карты города на главной форме
+    /// Класс рисования карты города на главной форме.
     /// </summary>
     class MapDrawingClass : MainDrawingTemplate
     {
+        #region Поля
+
         /// <summary>
-        /// Ширина города
+        /// Ширина города.
         /// </summary>
         protected int CityWidth;
+
         /// <summary>
-        /// Высота города
+        /// Высота города.
         /// </summary>
         protected int CityHeight;
 
+        #endregion
+
+        #region Методы
+
         /// <summary>
-        /// Создает новый экземпляр отрисовщика города для главной формы
+        /// Создает новый экземпляр отрисовщика города для главной формы.
         /// </summary>
-        /// <param name="Control">Контрол, на котором отрисовывается город</param>
-        /// <param name="CWidth">Ширина города (в у.е.)</param>
-        /// <param name="CHeight">Высота города (в у.е.)</param>
+        /// <param name="Control">Контрол, на котором отрисовывается город.</param>
+        /// <param name="CWidth">Ширина города.</param>
+        /// <param name="CHeight">Высота города.</param>
         public MapDrawingClass(Control Control, int CWidth, int CHeight)
         {
             CanvasControl = Control.CreateGraphics();
@@ -39,7 +46,7 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Рисует сетку города
+        /// Рисует сетку города.
         /// </summary>
         public void DrawGrid()
         {
@@ -54,11 +61,11 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Рисует элемент города из соответствующих координат
+        /// Рисует элемент города из соответствующих координат.
         /// </summary>
-        /// <param name="MatrRow">Строка матрицы</param>
-        /// <param name="MatrCol">Столбец матрицы</param>
-        /// <param name="House">1 - дом, 2 - щит, не 1\2 - занятый щит</param>
+        /// <param name="MatrRow">Строка матрицы.</param>
+        /// <param name="MatrCol">Столбец матрицы.</param>
+        /// <param name="Color">Цвет заполняемой клетки.</param>
         public void DrawCityElement(int MatrRow, int MatrCol, Color Color)
         {
             int ScrX = GetScreenX(5 * MatrCol);
@@ -70,5 +77,7 @@ namespace Yaisp3
             SolidBrush Br = new SolidBrush(Color);
             _CanvasLogics.FillRectangle(Br, ScrX, ScrY, LastX - ScrX, Math.Abs(LastY - ScrY));
         }
+
+        #endregion
     }
 }

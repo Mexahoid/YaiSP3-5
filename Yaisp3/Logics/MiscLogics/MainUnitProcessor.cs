@@ -6,17 +6,40 @@ using System.Text;
 namespace Yaisp3
 {
     /// <summary>
-    /// Главный класс-процессор
+    /// Главный класс-процессор.
     /// </summary>
     public static class MainUnitProcessor
     {
         #region Поля
 
+        /// <summary>
+        /// Экземпляр агентства.
+        /// </summary>
         private static Agency Agency = null;
+
+        /// <summary>
+        /// Экземпляр города.
+        /// </summary>
         private static City City = null;
+
+        /// <summary>
+        /// Экземпляр даты.
+        /// </summary>
         private static DateTime CurrentDate = new DateTime(1970, 1, 1);
+
+        /// <summary>
+        /// Генератор случайных чисел.
+        /// </summary>
         private static Random Sychev = new Random();
+
+        /// <summary>
+        /// Экземпляр стратегии.
+        /// </summary>
         private static Strategy Strategy;
+
+        /// <summary>
+        /// Экземпляр очереди клиентов.
+        /// </summary>
         private static QueueClass Queue;
 
         #endregion
@@ -24,7 +47,7 @@ namespace Yaisp3
         #region Главные методы
 
         /// <summary>
-        /// Полный сброс всей программы
+        /// Полный сброс всей программы.
         /// </summary>
         public static void MainReset()
         {
@@ -34,7 +57,7 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Считывает тексты в память
+        /// Считывает тексты в память.
         /// </summary>
         public static void MainParseTexts()
         {
@@ -42,16 +65,19 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает случайное целое число от Min до Max
+        /// Возвращает случайное целое число от Min до Max.
         /// </summary>
-        /// <param name="Min">Минимальное случайное число</param>
-        /// <param name="Max">Максимальное случайное число</param>
-        /// <returns></returns>
+        /// <param name="Min">Минимальное случайное число.</param>
+        /// <param name="Max">Максимальное случайное число.</param>
+        /// <returns>Возвращает целочисленное значение.</returns>
         public static int MainGetRandomValue(int Min, int Max)
         {
             return Sychev.Next(Min, Max);
         }
 
+        /// <summary>
+        /// Проходит один день.
+        /// </summary>
         public static void PassDay()
         {
             AgencyPassDay();
@@ -160,15 +186,21 @@ namespace Yaisp3
 
         #endregion
 
+        #region Стратегия
+
         /// <summary>
-        /// Возвращает тип стратегии агентства
+        /// Возвращает тип стратегии агентства.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает тип стратегии.</returns>
         public static Strategy.StrategyType StrategyGetType()
         {
             return Strategy.ReturnStrategyType();
         }
 
+        /// <summary>
+        /// Изменяет стратегию.
+        /// </summary>
+        /// <param name="Type">Тип новой стратегии.</param>
         public static void StrategyChange(Strategy.StrategyType Type)
         {
             switch (Type)
@@ -185,16 +217,18 @@ namespace Yaisp3
             }
         }
 
+        #endregion
+
         #region Агентство  
 
         /// <summary>
-        /// Создает новый экземпляр агентства
+        /// Создает новый экземпляр агентства.
         /// </summary>
-        /// <param name="Name">Название агентства</param>
-        /// <param name="Money">Начальный депозит</param>
-        /// <param name="Billboards">Количество рекламных щитов</param>
-        /// <param name="Strategy">Стратегия агентства</param>
-        /// <returns></returns>
+        /// <param name="Name">Название агентства.</param>
+        /// <param name="Money">Начальный депозит.</param>
+        /// <param name="Billboards">Количество рекламных щитов.</param>
+        /// <param name="StrategyType">Стратегия агентства</param>
+        /// <returns>Возвращает логическое значение.</returns>
         public static bool AgencyCreate(string Name, int Money, int Billboards, int StrategyType)
         {
             if (Name != null && Name != "")
@@ -219,16 +253,16 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает True, если агентство создано
+        /// Возвращает True, если агентство создано.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает логическое значение.</returns>
         public static bool AgencyIsPresent()
         {
             return Agency != null;
         }
 
         /// <summary>
-        /// Уничтожает агентство
+        /// Уничтожает агентство.
         /// </summary>
         public static void AgencyDestroy()
         {
@@ -237,26 +271,25 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает кортеж данных агентства
+        /// Возвращает кортеж данных агентства/
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает кортеж из строки и двух целочисленных значений.</returns>
         public static Tuple<string, int, int> AgencyGetData()
         {
             return Agency.GetData();
         }
 
         /// <summary>
-        /// Меняет данные агентства
+        /// Меняет название агентства.
         /// </summary>
-        /// <param name="Name">Новое название агентства</param>
-        /// <param name="Strategy">Новая стратегия агентства</param>
-        public static void AgencyChangeData(string Name)
+        /// <param name="Name">Новое название агентства.</param>
+        public static void AgencyChangeName(string Name)
         {
             Agency.ChangeName(Name);
         }
 
         /// <summary>
-        /// Проводит один день работы агентства
+        /// Проводит один день работы агентства.
         /// </summary>
         public static void AgencyPassDay()
         {
@@ -264,32 +297,36 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает список-отчет роста бюджета
+        /// Возвращает список-отчет роста бюджета.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает список массивов вещественных чисел.</returns>
         public static List<double[]> AgencyGetSummary()
         {
             return Agency.GetAgencySummary();
         }
 
         /// <summary>
-        /// Устанавливает биллборд
+        /// Устанавливает биллборд.
         /// </summary>
         public static void AgencyPlaceRandBillboard()
         {
             Agency.PlaceBillboardRnd();
         }
-        
+
         /// <summary>
-        /// Возвращает число позволяемых установиться биллбордов
+        /// Возвращает число возможных к установке биллбордов.
         /// </summary>
-        /// <param name="Count">Количество заказов в очереди</param>
-        /// <returns></returns>
+        /// <param name="Count">Максимальное количество устанавливаемых биллбордов.</param>
+        /// <returns>Возвращает целочисленное значение.</returns>
         public static int AgencyCanAffordBillboards(int Count)
         {
             return Agency.HowMuchCanWeAfford(Count);
         }
 
+        /// <summary>
+        /// Возвращает количество свободных построенных биллбордов.
+        /// </summary>
+        /// <returns>Возвращает целочисленное значение.</returns>
         public static int AgencyFreeCount()
         {
             return Agency.GetFreeBillboardsCount();
@@ -302,7 +339,7 @@ namespace Yaisp3
         /// <summary>
         /// Добавляет один день к дате.
         /// </summary>
-        public static void DateNewDay()
+        private static void DateNewDay()
         {
             CurrentDate = CurrentDate.AddDays(1);
         }
@@ -310,28 +347,19 @@ namespace Yaisp3
         /// <summary>
         /// Возвращает дату строкой вида DD.MM.YYYY.
         /// </summary>
-        /// <returns>Возвращает строку</returns>
+        /// <returns>Возвращает строку.</returns>
         public static string DateGetAsString()
         {
             return CurrentDate.ToShortDateString();
         }
 
-        /// <summary>
-        /// Возвращает True, если по дате будний день.
-        /// </summary>
-        /// <returns></returns>
-        public static bool DateIsWorkday()
-        {
-            return CurrentDate.DayOfWeek != DayOfWeek.Saturday &&
-            CurrentDate.DayOfWeek != DayOfWeek.Sunday;
-        }
 
         #endregion
 
         #region Очередь клиентов
 
         /// <summary>
-        /// Создает очередь
+        /// Создает очередь.
         /// </summary>
         public static void QueueCreate()
         {
@@ -339,18 +367,18 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает желания всех клиентов
+        /// Возвращает желания всех клиентов.
         /// </summary>
-        /// <returns>Возвращает строку</returns>
+        /// <returns>Возвращает строку.</returns>
         public static string QueueGetText()
         {
             return Queue.GetQueueOrders();
         }
 
         /// <summary>
-        /// Возвращает кортеж заказчика
+        /// Возвращает кортеж заказчика.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает кортеж из строки и двух целочисленных значений.</returns>
         public static Tuple<string, int, byte> QueueTakeOrder()
         {
             Client Cl;
@@ -363,52 +391,54 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает True, если очередь пуста
+        /// Возвращает True, если очередь пуста.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает логическое значение.</returns>
         public static bool QueueIsNull()
         {
             return Queue.QueueIsNull();
         }
 
         /// <summary>
-        /// Добавляет в очередь случайное количество случайных клиентов
+        /// Добавляет в очередь случайное количество случайных клиентов.
         /// </summary>
-        /// <param name="Quantity">Максимальное количество клиентов</param>
-        /// <param name="Intensity"></param>
+        /// <param name="Quantity">Максимальное количество клиентов.</param>
+        /// <param name="Intensity">Частота появления клиентов.</param>
         public static void QueueAddRand(int Quantity, int Intensity)
         {
-            Client Cl = null;
-            int Quant = MainGetRandomValue(0, Quantity);
-            Client.Rank Rnk;
-
-            for (int i = 0; i < Quant; i++)
+            if (Intensity / 2 == MainGetRandomValue(0, Intensity))
             {
-                Rnk = (Client.Rank)MainGetRandomValue(2, 4);
-                switch (Rnk)
-                {
-                    case Client.Rank.Person:
-                        Cl = new ClientPerson(TextStorageClass.GetRandomData((byte)Rnk));
-                        break;
-                    case Client.Rank.Company:
-                        Cl = new ClientCompany(TextStorageClass.GetRandomData((byte)Rnk));
-                        break;
-                    case Client.Rank.Government:
-                        Cl = new ClientGovernment(TextStorageClass.GetRandomData((byte)Rnk));
-                        break;
-                }
-                Queue.QueueAdd(Cl);
-            }
+                Client Cl = null;
+                int Quant = MainGetRandomValue(0, Quantity);
+                Client.Rank Rnk;
 
+                for (int i = 0; i < Quant; i++)
+                {
+                    Rnk = (Client.Rank)MainGetRandomValue(2, 4);
+                    switch (Rnk)
+                    {
+                        case Client.Rank.Person:
+                            Cl = new ClientPerson(TextStorageClass.GetRandomData((byte)Rnk));
+                            break;
+                        case Client.Rank.Company:
+                            Cl = new ClientCompany(TextStorageClass.GetRandomData((byte)Rnk));
+                            break;
+                        case Client.Rank.Government:
+                            Cl = new ClientGovernment(TextStorageClass.GetRandomData((byte)Rnk));
+                            break;
+                    }
+                    Queue.QueueAdd(Cl);
+                }
+            }
         }
 
         /// <summary>
-        /// Возвращает количество заказов в очереди
+        /// Возвращает количество заказов в очереди.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Возвращает целочисленное значение.</returns>
         public static int QueueCount()
         {
-            return Queue.GetQueueQount();
+            return Queue.GetQueueCount();
         }
 
         #endregion

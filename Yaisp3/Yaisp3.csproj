@@ -70,8 +70,6 @@
     <Compile Include="Logics\MiscLogics\MainForm\Map\MapDrawingClass.cs" />
     <Compile Include="Logics\MiscLogics\MainForm\Map\MapLogicsClass.cs" />
     <Compile Include="Logics\MiscLogics\Templates\MainDrawingTemplate.cs" />
-    <Compile Include="Logics\MiscLogics\Templates\Interfaces.cs" />
-    <Compile Include="Logics\MiscLogics\MainForm\MainFormLogicClass.cs" />
     <Compile Include="Logics\MiscLogics\MainUnitProcessor.cs" />
     <Compile Include="Logics\StructureAgency\Agency.cs" />
     <Compile Include="Logics\StructureCity\City.cs" />
