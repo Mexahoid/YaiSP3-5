@@ -26,15 +26,14 @@ namespace Yaisp3
         public override void Action()
         {
             BuildOrderedBillboards();
-            List<Tuple<double, double>> Summary = MainUnitProcessor.AgencyGetSummary();
+            List<Tuple<double, double>> Summary = agency.GetAgencySummary();
             if (Summary.Count > 15)
             {
                 double coeff = Summary[Summary.Count - 1].Item1 / Summary[Summary.Count - 16].Item1;
                 if (coeff > 1.5)
-                    if (MainUnitProcessor.AgencyCanAffordBillboards(1) == 1)
-                        MainUnitProcessor.AgencyPlaceRandBillboard();
+                    if (agency.HowMuchCanWeAfford(1) == 1)
+                        agency.PlaceBillboardRnd();
             }
-
         }
 
         #endregion

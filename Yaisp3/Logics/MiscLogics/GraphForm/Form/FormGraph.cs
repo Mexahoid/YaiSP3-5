@@ -12,24 +12,29 @@ namespace Yaisp3
     public partial class FormGraph : Form
     {
         private bool drawingGraph = false;
-        private GraphLogicsClass graphLogic;
+        private GraphDrawingClass graphDrawer;
         private MouseEventArgs eOld;
-        private bool loaded;
 
-        public FormGraph()
+        public FormGraph(List<Tuple<double, double>> graphPoints)
         {
             InitializeComponent();
+            graphDrawer = new GraphDrawingClass(CtrlPicBxGraph, graphPoints);
             CtrlPicBxGraph.MouseWheel += new MouseEventHandler(CtrlPicBxGraph_MouseScroll);
-            loaded = false;
+            graphDrawer.DrawGraph();
         }
+
         private void CtrlPicBxGraph_MouseScroll(object sender, MouseEventArgs e)
         {
-            if (graphLogic != null)
-                graphLogic.ZoomImage(e.X, e.Y, e.Delta);
+            if (graphDrawer != null)
+            {
+                graphDrawer.Zoom(e.X, e.Y, e.Delta);
+                graphDrawer.DrawGraph();
+            }
         }
         private void CtrlPicBxGraph_MouseDown(object sender, MouseEventArgs e)
         {
-            if (graphLogic != null)
+            if (graphDrawer != null)
+            {
                 switch (e.Button)
                 {
                     case MouseButtons.Left:
@@ -37,41 +42,24 @@ namespace Yaisp3
                         drawingGraph = true;
                         break;
                     case MouseButtons.Middle:
-                        graphLogic.SetNormalZoom();
+                        graphDrawer.SetNormalZoom();
                         break;
                 }
+                graphDrawer.DrawGraph();
+            }
         }
         private void CtrlPicBxGraph_MouseUp(object sender, MouseEventArgs e)
         {
             drawingGraph = false;
+            graphDrawer.DrawGraph();
         }
         private void CtrlPicBxGraph_MouseMove(object sender, MouseEventArgs e)
         {
             if (drawingGraph)
             {
-                graphLogic.MoveImage(e.X, e.Y, eOld.X, eOld.Y);
+                graphDrawer.Move(e.X, e.Y, eOld.X, eOld.Y);
                 eOld = e;
-            }
-        }
-
-        private void FormGraph_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (graphLogic != null)
-                graphLogic.DestroyCreator();
-            graphLogic = null;
-            loaded = false;
-        }
-
-        private void FormGraph_Load(object sender, EventArgs e)
-        {
-            if (MainUnitProcessor.AgencyIsPresent())
-            {
-                if (!loaded)
-                {
-                    graphLogic = new GraphLogicsClass(CtrlPicBxGraph, MainUnitProcessor.AgencyGetSummary());
-
-                    loaded = true;
-                }
+                graphDrawer.DrawGraph();
             }
         }
     }

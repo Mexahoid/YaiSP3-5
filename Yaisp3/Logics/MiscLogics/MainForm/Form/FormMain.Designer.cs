@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.CtrlPicBxMap = new System.Windows.Forms.PictureBox();
-            this.CtrlPicBxGraph = new System.Windows.Forms.PictureBox();
             this.CtrlLblMisc1 = new System.Windows.Forms.Label();
             this.CtrlLblDate = new System.Windows.Forms.Label();
             this.CtrlMainStrip = new System.Windows.Forms.ToolStrip();
@@ -43,7 +42,7 @@
             this.CtrlTimer = new System.Windows.Forms.Timer(this.components);
             this.CtrlButTimerPause = new System.Windows.Forms.Button();
             this.CtrlButTimerStart = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CtrlGrBTime = new System.Windows.Forms.GroupBox();
             this.CtrlLblMisc3 = new System.Windows.Forms.Label();
             this.CtrlLblMisc2 = new System.Windows.Forms.Label();
             this.CtrlTBSpeed = new System.Windows.Forms.TrackBar();
@@ -59,9 +58,8 @@
             this.CtrlTBQueueQuantity = new System.Windows.Forms.TrackBar();
             this.CtrlTxbOrders = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxMap)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxGraph)).BeginInit();
             this.CtrlMainStrip.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.CtrlGrBTime.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlTBSpeed)).BeginInit();
             this.CtrlGrbIndic.SuspendLayout();
             this.CtrlGrBQueue.SuspendLayout();
@@ -78,17 +76,10 @@
             this.CtrlPicBxMap.TabIndex = 0;
             this.CtrlPicBxMap.TabStop = false;
             this.CtrlPicBxMap.Click += new System.EventHandler(this.CtrlPicBxMap_Click);
+            this.CtrlPicBxMap.Paint += new System.Windows.Forms.PaintEventHandler(this.CtrlPicBxMap_Paint);
             this.CtrlPicBxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseDown);
             this.CtrlPicBxMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseMove);
             this.CtrlPicBxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseUp);
-            // 
-            // CtrlPicBxGraph
-            // 
-            this.CtrlPicBxGraph.Location = new System.Drawing.Point(0, 0);
-            this.CtrlPicBxGraph.Name = "CtrlPicBxGraph";
-            this.CtrlPicBxGraph.Size = new System.Drawing.Size(100, 22);
-            this.CtrlPicBxGraph.TabIndex = 15;
-            this.CtrlPicBxGraph.TabStop = false;
             // 
             // CtrlLblMisc1
             // 
@@ -197,19 +188,19 @@
             this.CtrlButTimerStart.UseVisualStyleBackColor = true;
             this.CtrlButTimerStart.Click += new System.EventHandler(this.CtrlButTimerStartClick);
             // 
-            // groupBox1
+            // CtrlGrBTime
             // 
-            this.groupBox1.Controls.Add(this.CtrlLblMisc3);
-            this.groupBox1.Controls.Add(this.CtrlLblMisc2);
-            this.groupBox1.Controls.Add(this.CtrlTBSpeed);
-            this.groupBox1.Controls.Add(this.CtrlButTimerPause);
-            this.groupBox1.Controls.Add(this.CtrlLblDate);
-            this.groupBox1.Location = new System.Drawing.Point(668, 41);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(230, 101);
-            this.groupBox1.TabIndex = 9;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Управление временем";
+            this.CtrlGrBTime.Controls.Add(this.CtrlLblMisc3);
+            this.CtrlGrBTime.Controls.Add(this.CtrlLblMisc2);
+            this.CtrlGrBTime.Controls.Add(this.CtrlTBSpeed);
+            this.CtrlGrBTime.Controls.Add(this.CtrlButTimerPause);
+            this.CtrlGrBTime.Controls.Add(this.CtrlLblDate);
+            this.CtrlGrBTime.Location = new System.Drawing.Point(668, 41);
+            this.CtrlGrBTime.Name = "CtrlGrBTime";
+            this.CtrlGrBTime.Size = new System.Drawing.Size(230, 101);
+            this.CtrlGrBTime.TabIndex = 9;
+            this.CtrlGrBTime.TabStop = false;
+            this.CtrlGrBTime.Text = "Управление временем";
             // 
             // CtrlLblMisc3
             // 
@@ -363,19 +354,17 @@
             this.Controls.Add(this.CtrlGrBQueue);
             this.Controls.Add(this.CtrlGrbIndic);
             this.Controls.Add(this.CtrlButTimerStart);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.CtrlGrBTime);
             this.Controls.Add(this.CtrlMainStrip);
             this.Controls.Add(this.CtrlLblMisc1);
-            this.Controls.Add(this.CtrlPicBxGraph);
             this.Controls.Add(this.CtrlPicBxMap);
             this.Name = "FormMain";
             this.Text = "Рекламное баннерное агентство";
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxMap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxGraph)).EndInit();
             this.CtrlMainStrip.ResumeLayout(false);
             this.CtrlMainStrip.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.CtrlGrBTime.ResumeLayout(false);
+            this.CtrlGrBTime.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlTBSpeed)).EndInit();
             this.CtrlGrbIndic.ResumeLayout(false);
             this.CtrlGrbIndic.PerformLayout();
@@ -391,34 +380,33 @@
         #endregion
 
         private System.Windows.Forms.PictureBox CtrlPicBxMap;
-        private System.Windows.Forms.PictureBox CtrlPicBxGraph;
-        private System.Windows.Forms.Label CtrlLblMisc1;
-        private System.Windows.Forms.Label CtrlLblDate;
         private System.Windows.Forms.ToolStrip CtrlMainStrip;
         private System.Windows.Forms.ToolStripDropDownButton CtrlTSMIDrop;
+        private System.Windows.Forms.ToolStripMenuItem CtrlTSMICreateCity;
         private System.Windows.Forms.ToolStripMenuItem CtrlTSMIAgencyMenu;
         private System.Windows.Forms.ToolStripMenuItem CtrlTSMIAgencyDelete;
-        private System.Windows.Forms.ToolStripMenuItem CtrlTSMICreateCity;
+        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIProximityMap;
+        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIGraph;
         private System.Windows.Forms.Timer CtrlTimer;
         private System.Windows.Forms.Button CtrlButTimerPause;
         private System.Windows.Forms.Button CtrlButTimerStart;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TrackBar CtrlTBSpeed;
         private System.Windows.Forms.CheckBox CtrlChBIndCity;
         private System.Windows.Forms.CheckBox CtrlChBIndAgen;
+        private System.Windows.Forms.GroupBox CtrlGrBTime;
         private System.Windows.Forms.GroupBox CtrlGrbIndic;
-        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIProximityMap;
         private System.Windows.Forms.GroupBox CtrlGrBQueue;
+        private System.Windows.Forms.TextBox CtrlTxbOrders;
+        private System.Windows.Forms.Label CtrlLblDate;
+        private System.Windows.Forms.Label CtrlLblMisc1;
         private System.Windows.Forms.Label CtrlLblMisc3;
         private System.Windows.Forms.Label CtrlLblMisc2;
         private System.Windows.Forms.Label CtrlLblMisc5;
         private System.Windows.Forms.Label CtrlLblMisc4;
-        private System.Windows.Forms.TrackBar CtrlTBQueueQuantity;
-        private System.Windows.Forms.TextBox CtrlTxbOrders;
         private System.Windows.Forms.Label CtrlLblMisc7;
         private System.Windows.Forms.Label CtrlLblMisc6;
+        private System.Windows.Forms.TrackBar CtrlTBSpeed;
+        private System.Windows.Forms.TrackBar CtrlTBQueueQuantity;
         private System.Windows.Forms.TrackBar CtrlTBQueueIntense;
-        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIGraph;
     }
 }
 

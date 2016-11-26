@@ -44,9 +44,6 @@
             this.CtrlTxbCityName = new System.Windows.Forms.TextBox();
             this.CtrlLblMisc5 = new System.Windows.Forms.Label();
             this.CtrlButReady = new System.Windows.Forms.Button();
-            this.CtrlReset = new System.Windows.Forms.Button();
-            this.CtrlButSave = new System.Windows.Forms.Button();
-            this.CtrlButLoad = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxCity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumCityHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumCityWidth)).BeginInit();
@@ -249,45 +246,11 @@
             this.CtrlButReady.UseVisualStyleBackColor = true;
             this.CtrlButReady.Click += new System.EventHandler(this.CtrlButReadyClick);
             // 
-            // CtrlReset
-            // 
-            this.CtrlReset.Location = new System.Drawing.Point(468, 290);
-            this.CtrlReset.Name = "CtrlReset";
-            this.CtrlReset.Size = new System.Drawing.Size(113, 23);
-            this.CtrlReset.TabIndex = 11;
-            this.CtrlReset.Text = "Сброс";
-            this.CtrlReset.UseVisualStyleBackColor = true;
-            this.CtrlReset.Click += new System.EventHandler(this.CtrlResetClick);
-            // 
-            // CtrlButSave
-            // 
-            this.CtrlButSave.Enabled = false;
-            this.CtrlButSave.Location = new System.Drawing.Point(468, 407);
-            this.CtrlButSave.Name = "CtrlButSave";
-            this.CtrlButSave.Size = new System.Drawing.Size(113, 23);
-            this.CtrlButSave.TabIndex = 12;
-            this.CtrlButSave.Text = "Сохранить";
-            this.CtrlButSave.UseVisualStyleBackColor = true;
-            this.CtrlButSave.Click += new System.EventHandler(this.CtrlButSaveClick);
-            // 
-            // CtrlButLoad
-            // 
-            this.CtrlButLoad.Location = new System.Drawing.Point(468, 436);
-            this.CtrlButLoad.Name = "CtrlButLoad";
-            this.CtrlButLoad.Size = new System.Drawing.Size(113, 23);
-            this.CtrlButLoad.TabIndex = 13;
-            this.CtrlButLoad.Text = "Загрузить";
-            this.CtrlButLoad.UseVisualStyleBackColor = true;
-            this.CtrlButLoad.Click += new System.EventHandler(this.CtrlButLoadClick);
-            // 
             // FormCity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 471);
-            this.Controls.Add(this.CtrlButLoad);
-            this.Controls.Add(this.CtrlButSave);
-            this.Controls.Add(this.CtrlReset);
             this.Controls.Add(this.CtrlButReady);
             this.Controls.Add(this.CtrlLblMisc5);
             this.Controls.Add(this.CtrlTxbCityName);
@@ -298,7 +261,6 @@
             this.MinimizeBox = false;
             this.Name = "FormCity";
             this.Text = "Редактор города";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormCity_FormClosed);
             this.Load += new System.EventHandler(this.FormCity_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxCity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumCityHeight)).EndInit();
@@ -332,8 +294,5 @@
     private System.Windows.Forms.TextBox CtrlTxbCityName;
     private System.Windows.Forms.Label CtrlLblMisc5;
     private System.Windows.Forms.Button CtrlButReady;
-    private System.Windows.Forms.Button CtrlReset;
-    private System.Windows.Forms.Button CtrlButSave;
-    private System.Windows.Forms.Button CtrlButLoad;
   }
 }

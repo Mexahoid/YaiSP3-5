@@ -63,10 +63,10 @@ namespace Yaisp3
         public static Tuple<string, string> GetRandomData(int Rank)
         {
             return Tuple.Create(
-          Rank == 2 ? ClientNames[MainUnitProcessor.MainGetRandomValue(0, ClientNames.Length)] :
-          Rank == 3 ? CompanyNames[MainUnitProcessor.MainGetRandomValue(0, CompanyNames.Length)] :
-          GovernNames[MainUnitProcessor.MainGetRandomValue(0, GovernNames.Length)],
-        BillboardTexts[MainUnitProcessor.MainGetRandomValue(0, BillboardTexts.Length)]);
+          Rank == 2 ? ClientNames[MiscellaneousLogics.MainGetRandomValue(0, ClientNames.Length)] :
+          Rank == 3 ? CompanyNames[MiscellaneousLogics.MainGetRandomValue(0, CompanyNames.Length)] :
+          GovernNames[MiscellaneousLogics.MainGetRandomValue(0, GovernNames.Length)],
+        BillboardTexts[MiscellaneousLogics.MainGetRandomValue(0, BillboardTexts.Length)]);
         }
 
         #endregion

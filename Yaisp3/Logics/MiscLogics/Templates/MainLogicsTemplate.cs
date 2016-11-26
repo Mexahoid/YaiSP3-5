@@ -8,7 +8,7 @@ namespace Yaisp3
     /// <summary>
     /// Главный темплейт логики рисования.
     /// </summary>
-    class MainLogicsTemplate
+    abstract class MainLogicsTemplate
     {
         #region Поля
 
@@ -32,22 +32,9 @@ namespace Yaisp3
         /// <summary>
         /// Полная отрисовка изображения на канвас.
         /// </summary>
-        protected virtual void MainDraw()
-        {
-            drawingKit.DrawImage();
-        }
+        protected abstract void MainDraw();
 
         //===============================   Доступный интерфейс
-
-        /// <summary>
-        /// Выгружает все канвасы из памяти.
-        /// </summary>
-        public void DestroyCreator()
-        {
-            drawingKit.ClearCanvas();
-            drawingKit.DrawImage();
-            drawingKit.DisposeBitmap();
-        }
 
         /// <summary>
         /// Двигает изображение из одной точки в другую.

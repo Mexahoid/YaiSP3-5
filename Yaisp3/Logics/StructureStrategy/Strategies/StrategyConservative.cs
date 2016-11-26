@@ -26,9 +26,9 @@ namespace Yaisp3
         public override void Action()
         {
             BuildOrderedBillboards();
-            if (MainUnitProcessor.MainGetRandomValue(0, 100) == 97)
-                if (MainUnitProcessor.AgencyCanAffordBillboards(1) == 1)
-                    MainUnitProcessor.AgencyPlaceRandBillboard();
+            if (MiscellaneousLogics.MainGetRandomValue(0, 100) == 97)
+                if (agency.HowMuchCanWeAfford(1) == 1)
+                    agency.PlaceBillboardRnd();
         }
 
         #endregion

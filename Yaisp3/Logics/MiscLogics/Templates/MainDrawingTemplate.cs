@@ -48,17 +48,7 @@ namespace Yaisp3
         #endregion
 
         #region Методы
-
-        /// <summary>
-        /// Выгружает канвасы из памяти.
-        /// </summary>
-        public void DisposeBitmap()
-        {
-            CanvasControl.Dispose();
-            _CanvasLogics.Dispose();
-            _CanvasImage.Dispose();
-        }
-
+        
         /// <summary>
         /// Отрисовывает изображение на канвас.
         /// </summary>

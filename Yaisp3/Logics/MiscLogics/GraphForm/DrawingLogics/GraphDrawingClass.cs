@@ -30,8 +30,6 @@ namespace Yaisp3
         /// <param name="graphPoints">Список точек графика.</param>
         public GraphDrawingClass(Control Control, List<Tuple<double, double>> graphPoints)
         {
-            x1p = -3; y1p = -10; x2p = 10; y2p = 3;
-            x1old = -3; y1old = -10; x2old = 10; y2old = 3;
             CanvasControl = Control.CreateGraphics();
             _CanvasImage = new Bitmap(Control.Width, Control.Height);
             I2 = Control.Width;
@@ -45,6 +43,7 @@ namespace Yaisp3
         /// </summary>
         public void DrawGraph()
         {
+            ClearCanvas();
             int L = graphPoints.Count;
 
             _CanvasLogics.DrawLine(Pens.Red, GetScreenX(0), GetScreenY(-500), GetScreenX(0), GetScreenY(500));

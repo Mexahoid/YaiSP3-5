@@ -52,8 +52,6 @@
             this.Controls.Add(this.CtrlPicBxGraph);
             this.Name = "FormGraph";
             this.Text = "График доходов";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormGraph_FormClosed);
-            this.Load += new System.EventHandler(this.FormGraph_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxGraph)).EndInit();
             this.ResumeLayout(false);
 

@@ -34,7 +34,6 @@ namespace Yaisp3
               (int)(CtrlNumCityWidth.Value));
 
             CityCreationKit = new CityRedactorLogicsClass(CtrlPicBxCity);
-            CtrlButSave.Enabled = true;
         }
 
         private void CtrlPicBxCity_MouseDown(object sender, MouseEventArgs e)
@@ -83,10 +82,7 @@ namespace Yaisp3
         {
             drawing = true;
         }
-        private void CtrlResetClick(object sender, EventArgs e)
-        {
-            CityCreationKit.DestroyCreator();
-        }
+
         private void CtrlButReadyClick(object sender, EventArgs e)
         {
             Close();
@@ -101,41 +97,9 @@ namespace Yaisp3
                     CityCreationKit = new CityRedactorLogicsClass(CtrlPicBxCity);
                     loaded = true;
                 }
-                CtrlButSave.Enabled = true;
             }
         }
-
-        private void CtrlButSaveClick(object sender, EventArgs e)
-        {
-            /*SaveFileDialog sfd = new SaveFileDialog();
-            if (sfd.ShowDialog() == DialogResult.OK)
-                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(sfd.FileName))
-                {
-                    sw.Write(CityCreationKit.Save());
-                    sw.Close();
-                }*/
-        }
-        private void CtrlButLoadClick(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == DialogResult.OK)
-                using (System.IO.StreamReader sr = new System.IO.StreamReader(ofd.FileName))
-                {
-                    //CityCreationKit = new CityRedactorLogicsClass(CtrlPicBxCity, sr.ReadToEnd());
-                    CtrlButSave.Enabled = true;
-                    sr.Close();
-                }
-        }
-
-        private void FormCity_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (CityCreationKit != null)
-            {
-                CityCreationKit.DestroyCreator();
-                CityCreationKit = null;
-            }
-            loaded = false;
-        }
+        
 
         private void CtrlPicBxCity_Click(object sender, EventArgs e)
         {

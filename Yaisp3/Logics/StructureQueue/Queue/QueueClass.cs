@@ -8,7 +8,7 @@ namespace Yaisp3
     /// <summary>
     /// Класс очереди клиентов.
     /// </summary>
-    class QueueClass
+    public class QueueClass
     {
         /// <summary>
         /// Класс узла очереди.
@@ -121,11 +121,12 @@ namespace Yaisp3
             return queueHead == null;
         }
 
+
         /// <summary>
         /// Выдача обычного клиента из очереди.
         /// </summary>
         /// <returns>Возвращает экземпляр клиента.</returns>
-        public TemplateClient QueuePushNormal()
+        private TemplateClient QueuePushNormal()
         {
             QueueNodeClass Out = queueHead;
             queueHead = queueHead.NodeNext;
@@ -136,7 +137,7 @@ namespace Yaisp3
         /// Есть ли в очереди высокоприоритетный клиент.
         /// </summary>
         /// <returns>Возвращает логическое значение.</returns>
-        public bool QueueHasHighPriority()
+        private bool QueueHasHighPriority()
         {
             QueueNodeClass Q = queueHead;
             if (Q.NodeClient.GetType() == typeof(ClientGovernment))
@@ -157,7 +158,7 @@ namespace Yaisp3
         /// Выдача высокоприоритетного клиента из очереди.
         /// </summary>
         /// <returns>Возвращает экземпляр клиента.</returns>
-        public TemplateClient QueuePushHighPriority()
+        private TemplateClient QueuePushHighPriority()
         {
             QueueNodeClass Q = queueHead;
             if (Q.NodeClient.GetType() == typeof(ClientGovernment))
@@ -174,6 +175,17 @@ namespace Yaisp3
             Q.NodeNext = P.NodeNext;
             return P.NodeClient;
         }
+
+
+        public TemplateClient QueueTakeClient()
+        {
+            if (QueueHasHighPriority())
+                return QueuePushHighPriority();
+            else
+                return QueuePushNormal();
+        }
+
+
 
         /// <summary>
         /// Выдача информации о клиентах одной строкой.

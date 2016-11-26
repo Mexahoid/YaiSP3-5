@@ -61,7 +61,7 @@ namespace Yaisp3
                     if (matrix[i, j] == minCoeff)  //Если находим точку с минимальным коэффициентом...
                         FreeSpaces.Add(Tuple.Create(i, j));     //Добавляем ее в список
 
-            return FreeSpaces[MainUnitProcessor.MainGetRandomValue(0, FreeSpaces.Count - 1)];
+            return FreeSpaces[MiscellaneousLogics.MainGetRandomValue(0, FreeSpaces.Count - 1)];
         }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace Yaisp3
         /// <param name="Control">Элемент управления, на котором производится рисование.</param>
         public MapLogicsClass(Control Control)
         {
-            colorTuple = MainUnitProcessor.CityGetDrawingData();
+            //colorTuple = MainUnitProcessor.CityGetDrawingData();
             Tuple<int, int> T = MainUnitProcessor.CityGetSize();
             drawingKit = new MapDrawingClass(Control, T.Item1, T.Item2);
             ClearImage();
@@ -63,7 +63,7 @@ namespace Yaisp3
         /// </summary>
         protected override void MainDraw()
         {
-            colorTuple = MainUnitProcessor.CityGetDrawingData();
+            //colorTuple = MainUnitProcessor.CityGetDrawingData();
             DrawElements();
             DrawGrid();
             drawingKit.DrawImage();

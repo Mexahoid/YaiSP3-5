@@ -27,7 +27,7 @@ namespace Yaisp3
         public StrategyAggressive()
         {
             strategy = StrategyType.Aggressive;
-            pastOrderCount = MainUnitProcessor.QueueCount();
+            pastOrderCount = agency.QueueCount();
         }
 
         /// <summary>
@@ -36,13 +36,13 @@ namespace Yaisp3
         public override void Action()
         {
             BuildOrderedBillboards();
-            if (MainUnitProcessor.AgencyFreeCount() == 0)
+            if (agency.GetFreeBillboardsCount() == 0)
             {
-                int Count = MainUnitProcessor.AgencyCanAffordBillboards(pastOrderCount);
+                int Count = agency.HowMuchCanWeAfford(pastOrderCount);
                 for (int i = 0; i < Count; i++)
-                    MainUnitProcessor.AgencyPlaceRandBillboard();
+                    agency.PlaceBillboardRnd();
             }
-            int Temp = MainUnitProcessor.QueueCount();
+            int Temp = agency.QueueCount();
             if (pastOrderCount < Temp)
                 pastOrderCount = Temp;
         }

@@ -36,6 +36,8 @@ namespace Yaisp3
         /// </summary>
         protected StrategyType strategy;
 
+        protected Agency agency;
+
         #endregion
 
         #region Методы
@@ -59,11 +61,11 @@ namespace Yaisp3
         /// </summary>
         protected void BuildOrderedBillboards()
         {
-            MainUnitProcessor.AgencyPassDay();
-            int Count = MainUnitProcessor.AgencyCanAffordBillboards(
-                    MainUnitProcessor.QueueCount());
+            agency.PassDay();
+            int Count = agency.HowMuchCanWeAfford(
+                    agency.QueueCount());
             for (int i = 0; i < Count; i++)
-                MainUnitProcessor.AgencyPlaceRandBillboard();
+                agency.PlaceBillboardRnd();
         }
 
         #endregion

@@ -61,6 +61,8 @@ namespace Yaisp3
             cityName = Name;
         }
 
+        #region Обмен информацией
+
         /// <summary>
         /// Возвращает размер города.
         /// </summary>
@@ -78,6 +80,10 @@ namespace Yaisp3
         {
             return cityName;
         }
+
+        #endregion
+
+        #region Установка элементов
 
         /// <summary>
         /// Проверяет возможность установки элемента.
@@ -127,6 +133,8 @@ namespace Yaisp3
             cityElements.Add(Billboard);
         }
 
+        #endregion
+
         /// <summary>
         /// Удаляет все биллборды.
         /// </summary>
@@ -138,38 +146,12 @@ namespace Yaisp3
                 {
                     cityElements[i] = null;
                     cityElements.RemoveAt(i);
+                    L--;
+                    i--;
                 }
             cityMatrixProximity.DeleteBillboardCoefficients();
         }
-
-        /// <summary>
-        /// Возвращает кортеж позиций определенных цветов.
-        /// </summary>
-        /// <returns>Возвращает матрицу цветовых значений.</returns>
-        public List<Tuple<System.Drawing.Color, int, int, int, int>> GetDrawingData()
-        {
-            List<Tuple<System.Drawing.Color, int, int, int, int>> T =
-                new List<Tuple<System.Drawing.Color, int, int, int, int>>();
-            Tuple<int, int> Pos;
-            Tuple<int, int> Size;
-            foreach (TemplateElement El in cityElements)
-            {
-                Pos = El.GetPosition();
-                Size = El.GetElementSize();
-                T.Add(Tuple.Create(El.GetDrawingColor(), Pos.Item1, Pos.Item2, Size.Item1, Size.Item2));
-            }
-            return T;
-        }
-
-        /// <summary>
-        /// Возвращает цветовую матрицу коэффициентов.
-        /// </summary>
-        /// <returns>Возвращает матрицу цветовых значений.</returns>
-        public System.Drawing.Color[,] GetProximityMap()
-        {
-            return cityMatrixProximity.GetCoeffMap();
-        }
-
+        
         #endregion
     }
 }

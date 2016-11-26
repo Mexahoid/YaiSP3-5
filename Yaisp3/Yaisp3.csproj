@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logics\MainLogics\MainDrawingProcessor.cs" />
+    <Compile Include="Logics\MainLogics\MiscellaneousLogics.cs" />
     <Compile Include="Logics\MiscLogics\GraphForm\Form\FormGraph.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -52,18 +54,23 @@
       <DependentUpon>FormGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="Logics\MiscLogics\GraphForm\DrawingLogics\GraphDrawingClass.cs" />
-    <Compile Include="Logics\MiscLogics\GraphForm\DrawingLogics\GraphLogicsClass.cs" />
-    <Compile Include="Logics\MiscLogics\MainForm\Proximity\Form\FormProximity.cs">
+    <Compile Include="Logics\MiscLogics\MainForm\Proximity\DrawingLogics\Form\FormProximity.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logics\MiscLogics\MainForm\Proximity\Form\FormProximity.Designer.cs">
+    <Compile Include="Logics\MiscLogics\MainForm\Proximity\DrawingLogics\Form\FormProximity.Designer.cs">
       <DependentUpon>FormProximity.cs</DependentUpon>
     </Compile>
     <Compile Include="Logics\MiscLogics\MainForm\Proximity\DrawingLogics\ProximityLogicsClass.cs" />
-    <Compile Include="Logics\StructureCity\Elements\Billboard.cs" />
-    <Compile Include="Logics\StructureCity\ElementTemplate\TemplateElement.cs" />
-    <Compile Include="Logics\StructureCity\Elements\House.cs" />
+    <Compile Include="Logics\MiscLogics\Templates\DrawingWrapperTemplate.cs" />
+    <Compile Include="Logics\StructureCity\Elements\Drawers\GridDrawer.cs" />
+    <Compile Include="Logics\StructureCity\Elements\Drawers\HouseDrawer.cs" />
+    <Compile Include="Logics\StructureCity\Elements\Elements\Billboard.cs" />
+    <Compile Include="Logics\StructureCity\Elements\Drawers\BillboardDrawer.cs" />
+    <Compile Include="Logics\StructureCity\Elements\Templates\TemplateElement.cs" />
+    <Compile Include="Logics\StructureCity\Elements\Elements\House.cs" />
+    <Compile Include="Logics\StructureCity\Elements\Templates\TemplateElementDrawer.cs" />
     <Compile Include="Logics\StructureCity\Matrix\MatrixCoefficients.cs" />
+    <Compile Include="Logics\StructureCity\Matrix\MatrixDrawingWrapper.cs" />
     <Compile Include="Logics\StructureQueue\Clients\ClientCompany.cs" />
     <Compile Include="Logics\StructureQueue\Clients\ClientGovernment.cs" />
     <Compile Include="Logics\StructureQueue\Clients\ClientPerson.cs" />
@@ -106,7 +113,7 @@
     <EmbeddedResource Include="Logics\MiscLogics\GraphForm\Form\FormGraph.resx">
       <DependentUpon>FormGraph.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Logics\MiscLogics\MainForm\Proximity\Form\FormProximity.resx">
+    <EmbeddedResource Include="Logics\MiscLogics\MainForm\Proximity\DrawingLogics\Form\FormProximity.resx">
       <DependentUpon>FormProximity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

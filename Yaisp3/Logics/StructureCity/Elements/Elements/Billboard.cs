@@ -12,6 +12,15 @@ namespace Yaisp3
     {
         #region Поля
 
+        public enum State
+        {
+            Building,
+            Free,
+            Personal,
+            Company,
+            Government
+        }
+
         /// <summary>
         /// Сумма, которую стоит обслуживание этого биллборда за день.
         /// </summary>
@@ -27,10 +36,7 @@ namespace Yaisp3
         /// </summary>
         private string billboardText;
 
-        /// <summary>
-        /// Состояние биллборда.
-        /// </summary>
-        private bool billboardBuilded;
+        private State billboardState;
 
         #endregion
 
@@ -43,6 +49,7 @@ namespace Yaisp3
         /// <param name="AllCost">Ощая цена постройки биллборда.</param>
         public Billboard(int AllCost)
         {
+            billboardState = State.Building;
             elementHeight = elementWidth = 1;
             billboardCostPerDay = AllCost / 100;
             elementColor = System.Drawing.Color.LightBlue;
@@ -55,7 +62,7 @@ namespace Yaisp3
         public void BillboardBuildToEnd()
         {
             elementColor = System.Drawing.Color.Aquamarine;
-            billboardBuilded = true;
+            billboardState = State.Free;
         }
 
         /// <summary>
@@ -64,7 +71,7 @@ namespace Yaisp3
         /// <returns>Возвращает логическое значение.</returns>
         public bool BillboardBuilded()
         {
-            return billboardBuilded;
+            return billboardState == State.Free;
         }
 
         /// <summary>
@@ -95,6 +102,11 @@ namespace Yaisp3
         public int BillboardPayMoney()
         {
             return billboardCostPerDay;
+        }
+
+        public State GetState()
+        {
+            return billboardState;
         }
 
         public int ClientPay()

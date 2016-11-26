@@ -27,10 +27,6 @@ namespace Yaisp3
         /// </summary>
         private static DateTime CurrentDate = new DateTime(1970, 1, 1);
 
-        /// <summary>
-        /// Генератор случайных чисел.
-        /// </summary>
-        private static Random Sychev = new Random();
 
         /// <summary>
         /// Экземпляр стратегии.
@@ -54,25 +50,6 @@ namespace Yaisp3
             Agency = null;
             City = null;
             CurrentDate = new DateTime(1970, 1, 1);
-        }
-
-        /// <summary>
-        /// Считывает тексты в память.
-        /// </summary>
-        public static void MainParseTexts()
-        {
-            TextStorageClass.ParseTextData();
-        }
-
-        /// <summary>
-        /// Возвращает случайное целое число от Min до Max.
-        /// </summary>
-        /// <param name="Min">Минимальное случайное число.</param>
-        /// <param name="Max">Максимальное случайное число.</param>
-        /// <returns>Возвращает целочисленное значение.</returns>
-        public static int MainGetRandomValue(int Min, int Max)
-        {
-            return Sychev.Next(Min, Max);
         }
 
         /// <summary>
@@ -156,24 +133,6 @@ namespace Yaisp3
             City.PlaceBillboard(Billboard);
         }
 
-        /// <summary>
-        /// Возвращает матрицу цветов элементов города
-        /// </summary>
-        /// <returns>Возвращает матрицу цветовых значений</returns>
-        public static List<Tuple<System.Drawing.Color, int, int, int, int>> CityGetDrawingData()
-        {
-            return City.GetDrawingData();
-        }
-
-        /// <summary>
-        /// Возвращает цветовую матрицу коэффициентов
-        /// </summary>
-        /// <returns>Возвращает матрицу цветовых значений</returns>
-        public static System.Drawing.Color[,] CityGetProximityMap()
-        {
-            return City.GetProximityMap();
-        }
-
         #endregion
 
         #region Стратегия
@@ -223,7 +182,7 @@ namespace Yaisp3
         {
             if (Name != null && Name != "")
             {
-                Agency = new Agency(Name, Money, Billboards);
+                Agency = new Agency(Name, Money, Billboards, null, null);
                 switch (StrategyType)
                 {
                     case 0:
@@ -366,18 +325,6 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает экземпляр заказчика.
-        /// </summary>
-        /// <returns>Возвращает экземпляр класса клиента.</returns>
-        public static TemplateClient QueueTakeClient()
-        {
-            if (Queue.QueueHasHighPriority())
-                return Queue.QueuePushHighPriority();
-            else
-                return Queue.QueuePushNormal();
-        }
-
-        /// <summary>
         /// Возвращает True, если очередь пуста.
         /// </summary>
         /// <returns>Возвращает логическое значение.</returns>
@@ -393,14 +340,14 @@ namespace Yaisp3
         /// <param name="Intensity">Частота появления клиентов.</param>
         public static void QueueAddRand(int Quantity, int Intensity)
         {
-            if (Intensity / 2 == MainGetRandomValue(0, Intensity))
+            if (Intensity / 2 == MiscellaneousLogics.MainGetRandomValue(0, Intensity))
             {
                 TemplateClient Cl = null;
-                int Quant = MainGetRandomValue(0, Quantity);
+                int Quant = MiscellaneousLogics.MainGetRandomValue(0, Quantity);
 
                 for (int i = 0; i < Quant; i++)
                 {
-                    int Rnk = MainGetRandomValue(0, 100);
+                    int Rnk = MiscellaneousLogics.MainGetRandomValue(0, 100);
                     if (Rnk < 50)
                         Cl = new ClientPerson(TextStorageClass.GetRandomData(2));
                     else

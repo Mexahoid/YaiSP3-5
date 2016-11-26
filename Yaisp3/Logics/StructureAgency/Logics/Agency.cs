@@ -42,6 +42,10 @@ namespace Yaisp3
         /// </summary>
         private List<Tuple<double, double>> agencySummary;
 
+        private City cityLink;
+
+        private QueueClass queueLink;
+
         #endregion
 
         #region Методы
@@ -52,8 +56,12 @@ namespace Yaisp3
         /// <param name="Name">Название агентства.</param>
         /// <param name="Money">Начальный депозит.</param>
         /// <param name="Billboards">Кол-во биллбордов.</param>
-        public Agency(string Name, int Money, int Billboards)
+        public Agency(string Name, int Money, int Billboards, City city, QueueClass queue)
         {
+            cityLink = city;
+            queueLink = queue;
+
+
             agencyName = Name;
             agencyDeposit = Money;
             agencyBillboards = new List<Billboard>();
@@ -64,6 +72,8 @@ namespace Yaisp3
             for (int i = 0; i < Billboards; i++)
                 PlaceBillboardRnd();
         }
+
+        #region Обмен информацией 
 
         /// <summary>
         /// Возвращает кортеж, состоящий из названия агентства, депозита, кол-ва щитов и стратегии.
@@ -83,14 +93,21 @@ namespace Yaisp3
             agencyName = Name;
         }
 
+        public int QueueCount()
+        {
+            return queueLink.GetQueueCount();
+        }
+
+        #endregion
+
         /// <summary>
         /// Устанавливает биллборд на случайном месте.
         /// </summary>
         public void PlaceBillboardRnd()
         {
-            int Cost = 10000 + MainUnitProcessor.MainGetRandomValue(-1000, 1000);
+            int Cost = 10000 + MiscellaneousLogics.MainGetRandomValue(-1000, 1000);
             Billboard Billboard = new Billboard(Cost);
-            MainUnitProcessor.CityBillboardPlace(Billboard);   //Добавляем на карту города
+            cityLink.PlaceBillboard(Billboard);   //Добавляем на карту города
             agencyBillboards.Add(Billboard);
             agencyDeposit -= Cost;
         }
@@ -107,9 +124,9 @@ namespace Yaisp3
                     agencyFreeBillboards += 1;
                 }
             int Temp = agencyDeposit;
-            while (agencyFreeBillboards > 0 && !MainUnitProcessor.QueueIsNull())
+            while (agencyFreeBillboards > 0 && !queueLink.QueueIsNull())
             {
-                FillBillboard(MainUnitProcessor.QueueTakeClient());
+                FillBillboard(queueLink.QueueTakeClient());
                 agencyFreeBillboards--;
             }
 
@@ -168,7 +185,7 @@ namespace Yaisp3
         {
             return agencyFreeBillboards;
         }
-        
+
         #endregion
     }
 }
