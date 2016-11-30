@@ -7,13 +7,32 @@ using System.Windows.Forms;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Главный класс-отрисовщик.
+    /// </summary>
     public class MainDrawingProcessor
     {
-        List<DrawingWrapperTemplate> Drawers;
+        #region Поля
 
-        Graphics CanvasControl;
-        Graphics CanvasDrawing;
-        Bitmap Bitmap;
+        /// <summary>
+        /// Список рисовальщиков.
+        /// </summary>
+        private List<DrawingWrapperTemplate> Drawers;
+
+        /// <summary>
+        /// Канва, связанная с элементом управления.
+        /// </summary>
+        private Graphics CanvasControl;
+
+        /// <summary>
+        /// Канва, связанная с изображением.
+        /// </summary>
+        private Graphics CanvasDrawing;
+
+        /// <summary>
+        /// Изображение, которым оперируют рисовальщики.
+        /// </summary>
+        private Bitmap Bitmap;
 
         /// <summary>
         /// Координаты изображения окна.
@@ -30,18 +49,32 @@ namespace Yaisp3
         /// </summary>
         protected const double x1old = -10, y1old = -100, x2old = 100, y2old = 10;
 
+        #endregion
 
+        #region Методы
+
+        /// <summary>
+        /// Конструктор процессора рисовальщиков.
+        /// </summary>
         public MainDrawingProcessor()
         {
             Drawers = new List<DrawingWrapperTemplate>();
         }
 
+        /// <summary>
+        /// Добавляет рисовальщик в лист.
+        /// </summary>
+        /// <param name="Drawer">Рисовальщик.</param>
         public void AddDrawer(DrawingWrapperTemplate Drawer)
         {
             Drawer.SetDims(Tuple.Create(I2, J2, x1p, y1p, x2p, y2p));
             Drawers.Add(Drawer);
         }
 
+        /// <summary>
+        /// Задает канву рисования.
+        /// </summary>
+        /// <param name="Control">Элемент управления, на котором осуществляется рисование.</param>
         public void SetCanvas(Control Control)
         {
             CanvasControl = Control.CreateGraphics();
@@ -52,23 +85,57 @@ namespace Yaisp3
             J2 = Control.Height;
         }
 
+        /// <summary>
+        /// Рисует всеми рисовальщиками на канве.
+        /// </summary>
         public void Draw()
         {
             CanvasDrawing.Clear(Color.White);
-            SetDimensions();
+
             int C = Drawers.Count;
+
             for (int i = C; i > 0; i--)     //Т.к. Grid должен рисоваться последним
+            {
+                Drawers[i - 1].SetDims(Tuple.Create(I2, J2, x1p, y1p, x2p, y2p));
                 Drawers[i - 1].Draw(CanvasDrawing);
+            }
             CanvasControl.DrawImage(Bitmap, 0, 0);
         }
 
-        public void SetDimensions()
+        /// <summary>
+        /// Проверяет все рисовальщики на валидность.
+        /// </summary>
+        public void CheckList()
         {
             int C = Drawers.Count;
-            for (int i = 0; i < C; i++)
-                Drawers[i].SetDims(Tuple.Create(I2, J2, x1p, y1p, x2p, y2p));
+
+            for (int i = 0; i < C; i++)       //проверка на пустоту
+                if (Drawers[i] == null)
+                {
+                    Drawers.RemoveAt(i--);
+                    C--;
+                }
         }
 
+        /// <summary>
+        /// Удаляет отрисовщики определённого типа.
+        /// </summary>
+        /// <param name="type">Тип удаляемых отрисовщиков.</param>
+        public void DeleteDrawers(Type type)
+        {
+            int C = Drawers.Count;
+            for (int i = 0; i < C; i++)       //проверка на пустоту
+                if (Drawers[i].GetType() == type)
+                {
+                    Drawers.RemoveAt(i--);
+                    C--;
+                }
+        }
+
+        /// <summary>
+        /// В общем случае заменяет рисовальщик добавляемого дома реальным домом.
+        /// </summary>
+        /// <param name="Drawer">Рисовальщик дома.</param>
         public void SetLastDrawer(DrawingWrapperTemplate Drawer)
         {
             Drawers[Drawers.Count - 1] = Drawer;
@@ -145,5 +212,7 @@ namespace Yaisp3
             y1p = y - (y - y1p) * coeff;
             y2p = y + (y2p - y) * coeff;
         }
+
+        #endregion
     }
 }

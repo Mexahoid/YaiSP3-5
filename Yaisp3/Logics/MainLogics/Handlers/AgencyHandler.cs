@@ -91,6 +91,5 @@ namespace Yaisp3
         {
             return Agency.GetAgencySummary();
         }
-
     }
 }

@@ -83,7 +83,7 @@ namespace Yaisp3
             City.DeleteBillboards();
         }
 
-        public MatrixDrawingWrapper CityGetCoeffsMap()
+        public MatrixDrawer CityGetCoeffsMap()
         {
             return City.GetProximityDrawer();
         }
