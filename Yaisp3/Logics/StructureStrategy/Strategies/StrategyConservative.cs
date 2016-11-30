@@ -15,8 +15,9 @@ namespace Yaisp3
         /// <summary>
         /// Конструктор класса стратегии.
         /// </summary>
-        public StrategyConservative()
+        public StrategyConservative(Agency agencyLink)
         {
+            agency = agencyLink;
             strategy = StrategyType.Conservative;
         }
 

@@ -81,6 +81,11 @@ namespace Yaisp3
             return cityName;
         }
 
+        public MatrixDrawingWrapper GetProximityDrawer()
+        {
+            return new MatrixDrawingWrapper(cityMatrixProximity);
+        }
+
         #endregion
 
         #region Установка элементов
@@ -110,27 +115,31 @@ namespace Yaisp3
         /// <param name="Col">Столбец верхнего левого квадрата дома.</param>
         /// <param name="RightWidth">Ширина дома.</param>
         /// <param name="DownDepth">Высота дома.</param>
-        public void PlaceHouse(int Row, int Col, int RightWidth, int DownDepth)
+        public HouseDrawer PlaceHouse(int Row, int Col, int RightWidth, int DownDepth)
         {
             if (TryToPlaceElement(Row, Col, RightWidth, DownDepth))
             {
                 House NewHouse = new House(++currentHouseGroup, RightWidth, DownDepth);
+                HouseDrawer Out = new HouseDrawer(NewHouse, cityHeight);
                 NewHouse.SetPosition(Row, Col);
                 cityMatrixProximity.PlaceCityElement(Row, Col, RightWidth, DownDepth);
                 cityElements.Add(NewHouse);
+                return Out;
             }
+            return null;
         }
 
         /// <summary>
         /// Устанавливает биллборд на случайной локации.
         /// </summary>
         /// <param name="Billboard">Устанавливаемый биллборд.</param>
-        public void PlaceBillboard(Billboard Billboard)
+        public BillboardDrawer PlaceBillboard(Billboard Billboard)
         {
             Tuple<int, int> Position = cityMatrixProximity.GetRandomFreeSpace();
             cityMatrixProximity.PlaceBillboard(Position.Item1, Position.Item2);
             Billboard.SetPosition(Position.Item1, Position.Item2);
             cityElements.Add(Billboard);
+            return new BillboardDrawer(Billboard, cityHeight);
         }
 
         #endregion

@@ -185,13 +185,11 @@ namespace Yaisp3
                 return QueuePushNormal();
         }
 
-
-
         /// <summary>
         /// Выдача информации о клиентах одной строкой.
         /// </summary>
         /// <returns>Возвращает строку.</returns>
-        public string GetQueueOrders()
+        public override string ToString()
         {
             string Out = "";
             if (!QueueIsNull())

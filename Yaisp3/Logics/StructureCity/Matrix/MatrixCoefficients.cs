@@ -147,28 +147,12 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает карту цветов коэффициентов.
+        /// Возвращает карту коэффициентов.
         /// </summary>
-        /// <returns>Возвращает массив цветов.</returns>
-        public System.Drawing.Color[,] GetCoeffMap()
+        /// <returns>Возвращает массив целочисленных значений.</returns>
+        public int[,] GetCoeffMap()
         {
-            System.Drawing.Color[,] Out = new System.Drawing.Color[rows, cols];
-            int MaxCoeff = GetCoeff(false);
-            for (int i = 0; i < rows; i++)
-                for (int j = 0; j < cols; j++)
-                    if (matrix[i, j] < 1000)
-                    {
-                        if (matrix[i, j] > 0)
-                            Out[i, j] = System.Drawing.Color.FromArgb(
-                                255 * matrix[i, j] / MaxCoeff,
-                                165 * matrix[i, j] / MaxCoeff,
-                                0);
-                        else
-                            Out[i, j] = System.Drawing.Color.Black;
-                    }
-                    else
-                        Out[i, j] = System.Drawing.Color.Red;
-            return Out;
+            return matrix;
         }
 
         #endregion

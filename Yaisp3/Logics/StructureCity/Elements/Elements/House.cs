@@ -32,7 +32,6 @@ namespace Yaisp3
             houseElementGroup = Group;
             elementWidth = Width;
             elementHeight = Height;
-            elementColor = System.Drawing.Color.Gray;
         }
         #endregion
     }

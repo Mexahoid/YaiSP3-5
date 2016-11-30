@@ -29,8 +29,8 @@ namespace Yaisp3
         public MapLogicsClass(Control Control)
         {
             //colorTuple = MainUnitProcessor.CityGetDrawingData();
-            Tuple<int, int> T = MainUnitProcessor.CityGetSize();
-            drawingKit = new MapDrawingClass(Control, T.Item1, T.Item2);
+            //Tuple<int, int> T = MainUnitProcessor.CityGetSize();
+           // drawingKit = new MapDrawingClass(Control, T.Item1, T.Item2);
             ClearImage();
             MainDraw();
         }

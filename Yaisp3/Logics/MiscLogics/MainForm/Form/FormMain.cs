@@ -13,38 +13,45 @@ namespace Yaisp3
     {
         private bool drawingMap = false;
         private MouseEventArgs eOld;
-        private MapLogicsClass mainLogic;
         private MainDrawingProcessor drawers;
 
-        
+        private AgencyHandler Agency;       //Создается соответствующей формой.
+        private CityHandler City;           //Создается соответствующей формой.
+        private StrategyHandler Strategy;   //Создается соответствующей формой.
+        private DateHandler Date;
+        private QueueHandler Queue;
+
 
         public FormMain()
         {
             InitializeComponent();
             drawers = new MainDrawingProcessor();
+            Date = new DateHandler();
             drawers.SetCanvas(CtrlPicBxMap);
+            SetStyle(ControlStyles.UserPaint, true);
             CtrlPicBxMap.MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
+            Queue = new QueueHandler();
         }
 
         private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
         {
-            if (mainLogic != null)
-                mainLogic.ZoomImage(e.X, e.Y, e.Delta);
+            drawers.Zoom(e.X, e.Y, e.Delta);
+            drawers.Draw();
         }
-
         private void CtrlPicBxMap_MouseDown(object sender, MouseEventArgs e)
         {
-            if (mainLogic != null)
-                switch (e.Button)
-                {
-                    case MouseButtons.Left:
-                        eOld = e;
-                        drawingMap = true;
-                        break;
-                    case MouseButtons.Middle:
-                        mainLogic.SetNormalZoom();
-                        break;
-                }
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                case MouseButtons.Right:
+                    eOld = e;
+                    drawingMap = true;
+                    break;
+                case MouseButtons.Middle:
+                    drawers.SetNormalZoom();
+                    break;
+            }
+            drawers.Draw();
         }
         private void CtrlPicBxMap_MouseUp(object sender, MouseEventArgs e)
         {
@@ -54,56 +61,85 @@ namespace Yaisp3
         {
             if (drawingMap)
             {
-                mainLogic.MoveImage(e.X, e.Y, eOld.X, eOld.Y);
+                drawers.Move(e.X, e.Y, eOld.X, eOld.Y);
                 eOld = e;
+                drawers.Draw();
             }
         }
 
-        private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
-        {
-            if (Program.formCreateAgency.ShowDialog() == DialogResult.OK)
-            {
-                CtrlChBIndAgen.Checked = true;
-                if (CtrlChBIndCity.Checked)
-                    CtrlButTimerStart.Enabled = true;
-            }
-        }
         private void CtrlTSMIAgencyDeleteClick(object sender, EventArgs e)
         {
-            MainUnitProcessor.AgencyDestroy();
+            Agency.AgencyDestroy();
+            Agency = null;
             CtrlChBIndAgen.Checked = false;
         }
         private void CtrlTSMICreateCityClick(object sender, EventArgs e)
         {
-
-            if (Program.formCity.ShowDialog() == DialogResult.OK)
+            FormCity Cf = new FormCity(drawers, City);
+            if (Cf.ShowDialog() == DialogResult.OK)
             {
-                mainLogic = new MapLogicsClass(CtrlPicBxMap);
                 CtrlChBIndCity.Checked = true;
                 CtrlTSMIAgencyDelete.Enabled = CtrlTSMIAgencyMenu.Enabled = true;
                 if (CtrlChBIndAgen.Checked)
                     CtrlButTimerStart.Enabled = true;
+                drawers = Cf.Drawers;
+                City = Cf.CityLink;
             }
+            else
+                if (!CtrlChBIndCity.Checked)
+                City = null;
+            drawers.SetCanvas(CtrlPicBxMap);
+            CtrlPicBxMap.Invalidate();
+        }
+        private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
+        {
+            FormAgency Af = new FormAgency(Agency, Strategy);
+            if (Af.ShowDialog() == DialogResult.OK)
+            {
+                CtrlChBIndAgen.Checked = true;
+                if (CtrlChBIndCity.Checked)
+                    CtrlButTimerStart.Enabled = true;
+                Agency = Af.AgencyLink;
+                Strategy = Af.StrategyLink;
+                Agency.AgencySetLink(City, Queue.GetQueueLink(), drawers);
+            }
+        }
+        private void CtrlTSMIProximityMapClick(object sender, EventArgs e)
+        {
+            FormProximity Pr = new FormProximity(City);
+            Pr.Show();
+        }
+
+        private void CtrlTSMIGraph_Click(object sender, EventArgs e)
+        {
+            FormGraph Gr = new FormGraph(Agency.AgencyGetSummary());
+            Gr.Show();
+        }
+
+        private void CtrlTSMIDrop_Click(object sender, EventArgs e)
+        {
+            if (CtrlTimer.Enabled)
+                CtrlButTimerPause.Text = "Продолжить";
+            CtrlTimer.Enabled = false;
         }
 
         private void CtrlTimer_Tick(object sender, EventArgs e)
         {
-            CtrlLblDate.Text = "Дата: " + MainUnitProcessor.DateGetAsString();
-            MainUnitProcessor.QueueAddRand(CtrlTBQueueQuantity.Value, CtrlTBQueueIntense.Value);
-            CtrlTxbOrders.Text = MainUnitProcessor.QueueGetText();
-            MainUnitProcessor.PassDay();
-            mainLogic.MoveImage(0, 0, 0, 0);
+            CtrlLblDate.Text = "Дата: " + Date.DateGetAsString();
+            Queue.QueueAddRand(CtrlTBQueueQuantity.Value, CtrlTBQueueIntense.Value);
+            CtrlTxbOrders.Text = Queue.ToString();
+            Strategy.StrategyAction();
+            Date.DateNewDay();
+            drawers.Draw();
         }
 
         private void CtrlButTimerStartClick(object sender, EventArgs e)
         {
             CtrlButTimerStart.Enabled = false;
-            MainUnitProcessor.QueueCreate();
             TextStorageClass.ParseTextData();
             CtrlTimer.Enabled = true;
             CtrlButTimerPause.Enabled = true;
         }
-
         private void CtrlButTimerPauseClick(object sender, EventArgs e)
         {
             CtrlTimer.Enabled = !CtrlTimer.Enabled;
@@ -118,25 +154,6 @@ namespace Yaisp3
             CtrlTimer.Interval = CtrlTBSpeed.Value * 20;
         }
 
-        private void CtrlTSMIProximityMapClick(object sender, EventArgs e)
-        {
-            FormProximity Pr = new FormProximity(drawers);
-            Pr.Show();
-        }
-
-        private void CtrlTSMIGraph_Click(object sender, EventArgs e)
-        {
-            FormGraph Gr = new FormGraph(MainUnitProcessor.AgencyGetSummary());
-            Gr.Show();
-        }
-
-        private void CtrlTSMIDrop_Click(object sender, EventArgs e)
-        {
-            if (CtrlTimer.Enabled)
-                CtrlButTimerPause.Text = "Продолжить";
-            CtrlTimer.Enabled = false;
-        }
-
         private void CtrlPicBxMap_Click(object sender, EventArgs e)
         {
             CtrlPicBxMap.Focus();
@@ -144,8 +161,13 @@ namespace Yaisp3
 
         private void CtrlPicBxMap_Paint(object sender, PaintEventArgs e)
         {
-            if (mainLogic != null)
-            mainLogic.MoveImage(0, 0, 0, 0);
+            drawers.Draw();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            drawers.Draw();
         }
     }
 }

@@ -45,8 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logics\MainLogics\MainDrawingProcessor.cs" />
+    <Compile Include="Logics\MainLogics\Handlers\AgencyHandler.cs" />
+    <Compile Include="Logics\MainLogics\Handlers\DateHandler.cs" />
+    <Compile Include="Logics\MainLogics\Processors\DrawingMotionProcessor.cs" />
+    <Compile Include="Logics\MainLogics\Processors\MainDrawingProcessor.cs" />
     <Compile Include="Logics\MainLogics\MiscellaneousLogics.cs" />
+    <Compile Include="Logics\MainLogics\Handlers\QueueHandler.cs" />
+    <Compile Include="Logics\MainLogics\Handlers\StrategyHandler.cs" />
+    <Compile Include="Logics\MainLogics\Handlers\CityHandler.cs" />
     <Compile Include="Logics\MiscLogics\GraphForm\Form\FormGraph.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,7 @@
     <Compile Include="Logics\MiscLogics\Templates\DrawingWrapperTemplate.cs" />
     <Compile Include="Logics\StructureCity\Elements\Drawers\GridDrawer.cs" />
     <Compile Include="Logics\StructureCity\Elements\Drawers\HouseDrawer.cs" />
+    <Compile Include="Logics\StructureCity\Elements\Drawers\HoveringDrawer.cs" />
     <Compile Include="Logics\StructureCity\Elements\Elements\Billboard.cs" />
     <Compile Include="Logics\StructureCity\Elements\Drawers\BillboardDrawer.cs" />
     <Compile Include="Logics\StructureCity\Elements\Templates\TemplateElement.cs" />
@@ -82,7 +89,7 @@
     <Compile Include="Logics\MiscLogics\MainForm\DrawingLogics\MapDrawingClass.cs" />
     <Compile Include="Logics\MiscLogics\MainForm\DrawingLogics\MapLogicsClass.cs" />
     <Compile Include="Logics\MiscLogics\Templates\MainDrawingTemplate.cs" />
-    <Compile Include="Logics\MainLogics\MainUnitProcessor.cs" />
+    <Compile Include="Logics\MainLogics\Processors\MainUnitProcessor.cs" />
     <Compile Include="Logics\StructureAgency\Logics\Agency.cs" />
     <Compile Include="Logics\StructureCity\City\City.cs" />
     <Compile Include="Logics\StructureCity\Redactor\DrawingLogics\CityRedactorDrawingClass.cs" />

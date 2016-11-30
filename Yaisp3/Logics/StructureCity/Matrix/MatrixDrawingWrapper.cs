@@ -6,17 +6,18 @@ using System.Drawing;
 
 namespace Yaisp3
 {
-    class MatrixDrawingWrapper : DrawingWrapperTemplate
+    public class MatrixDrawingWrapper : DrawingWrapperTemplate
     {
-        int[,] matrix;
+        MatrixCoefficients coeffs;
 
-        public MatrixDrawingWrapper(int[,] Matrix)
+        public MatrixDrawingWrapper(MatrixCoefficients Coeffs)
         {
-            matrix = Matrix;
+            coeffs = Coeffs;
         }
 
         public override void Draw(Graphics Graphics)
         {
+            int[,] matrix = coeffs.GetCoeffMap();
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
             int ScrX, ScrY, LastX, LastY;
@@ -26,10 +27,10 @@ namespace Yaisp3
                 for (int j = 0; j < cols; j++)
                 {
                     Br = new SolidBrush(Color.FromArgb(255 * matrix[i, j] / 10, 165 * matrix[i, j] / 10, 0));
-                    ScrX = GetScreenX(5 * i);
-                    ScrY = GetScreenY(-rows * 5 + 5 * i);
+                    ScrX = GetScreenX(5 * j);
+                    LastX = GetScreenX(5 * j + 5);
 
-                    LastX = GetScreenX(5 * i + 5);
+                    ScrY = GetScreenY(-rows * 5 + 5 * i);
                     LastY = GetScreenY(-rows * 5 + 5 * i + 5);
 
                     Graphics.FillRectangle(Br, ScrX, ScrY, LastX - ScrX, Math.Abs(LastY - ScrY));

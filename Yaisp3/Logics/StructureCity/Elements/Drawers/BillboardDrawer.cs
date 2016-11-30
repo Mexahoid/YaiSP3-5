@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Yaisp3
 {
-    class BillboardDrawer : DrawingWrapperTemplate
+    public class BillboardDrawer : DrawingWrapperTemplate
     {
         Billboard billboard;
         int cityHeight;

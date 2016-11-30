@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Yaisp3
 {
-    class HouseDrawer : DrawingWrapperTemplate
+    public class HouseDrawer : DrawingWrapperTemplate
     {
         House house;
         int cityHeight;

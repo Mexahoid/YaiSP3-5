@@ -51,6 +51,7 @@
             this.CtrlTxbName.Name = "CtrlTxbName";
             this.CtrlTxbName.Size = new System.Drawing.Size(169, 20);
             this.CtrlTxbName.TabIndex = 0;
+            this.CtrlTxbName.Text = "ООО \"Вектор\"";
             // 
             // CtrlLblMisc1
             // 
@@ -143,6 +144,8 @@
             // 
             // CtrlButEdit
             // 
+            this.CtrlButEdit.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.CtrlButEdit.Enabled = false;
             this.CtrlButEdit.Location = new System.Drawing.Point(169, 152);
             this.CtrlButEdit.Name = "CtrlButEdit";
             this.CtrlButEdit.Size = new System.Drawing.Size(75, 23);
@@ -213,7 +216,6 @@
             this.MinimizeBox = false;
             this.Name = "FormAgency";
             this.Text = "Рекламное баннерное агентство";
-            this.Load += new System.EventHandler(this.FormAgency_Load);
             this.CtrlGrBStrat.ResumeLayout(false);
             this.CtrlGrBStrat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumBillboards)).EndInit();

@@ -52,7 +52,6 @@ namespace Yaisp3
             billboardState = State.Building;
             elementHeight = elementWidth = 1;
             billboardCostPerDay = AllCost / 100;
-            elementColor = System.Drawing.Color.LightBlue;
             billboardOwner = null;
         }
 
@@ -61,7 +60,6 @@ namespace Yaisp3
         /// </summary>
         public void BillboardBuildToEnd()
         {
-            elementColor = System.Drawing.Color.Aquamarine;
             billboardState = State.Free;
         }
 
@@ -71,7 +69,7 @@ namespace Yaisp3
         /// <returns>Возвращает логическое значение.</returns>
         public bool BillboardBuilded()
         {
-            return billboardState == State.Free;
+            return billboardState != State.Building;
         }
 
         /// <summary>
@@ -91,8 +89,8 @@ namespace Yaisp3
         {
             billboardOwner = Client;
             billboardText = Client.GetTextData();
-            elementColor = Client.GetType() == typeof(ClientGovernment) ? System.Drawing.Color.Crimson :
-                Client.GetType() == typeof(ClientCompany) ? System.Drawing.Color.Orange : System.Drawing.Color.Green;
+            billboardState = Client.GetType() == typeof(ClientGovernment) ? State.Government :
+                Client.GetType() == typeof(ClientCompany) ? State.Company : State.Personal;
         }
 
         /// <summary>

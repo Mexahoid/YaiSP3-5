@@ -16,7 +16,13 @@ namespace Yaisp3
             cityHeight = Height;
             cityWidth = Width;
         }
-        
+
+        public GridDrawer(Tuple<int, int> Size)
+        {
+            cityHeight = Size.Item2;
+            cityWidth = Size.Item1;
+        }
+
         public override void Draw(Graphics Graphics)
         {
             for (int i = 0; i <= cityHeight; i++)

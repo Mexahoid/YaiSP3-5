@@ -12,39 +12,41 @@ namespace Yaisp3
     public partial class FormProximity : Form
     {
         private MouseEventArgs eOld;
-        private MapDrawingClass proximityDrawer;
-        private bool loaded;
+        private MainDrawingProcessor drawer;
         private bool drawing = false;
 
-        public FormProximity(MainDrawingProcessor Drawing)
+        public FormProximity(CityHandler City)
         {
             InitializeComponent();
+            drawer = new MainDrawingProcessor();
+            drawer.AddDrawer(new GridDrawer(City.CityGetSize()));
+            drawer.AddDrawer(City.CityGetCoeffsMap());
+            drawer.SetCanvas(CtrlPicBx);
+            SetStyle(ControlStyles.UserPaint, true);
             MouseWheel += new MouseEventHandler(CtrlPicBx_MouseWheel);
-            loaded = false;
         }
 
         private void CtrlPicBx_MouseDown(object sender, MouseEventArgs e)
         {
-            if (proximityDrawer != null)
+            switch (e.Button)
             {
-                switch (e.Button)
-                {
-                    case MouseButtons.Left:
-                        eOld = e;
-                        drawing = true;
-                        break;
-                    case MouseButtons.Middle:
-                        proximityDrawer.SetNormalZoom();
-                        break;
-                }
+                case MouseButtons.Left:
+                case MouseButtons.Right:
+                    eOld = e;
+                    drawing = true;
+                    break;
+                case MouseButtons.Middle:
+                    drawer.SetNormalZoom();
+                    break;
             }
         }
         private void CtrlPicBx_MouseMove(object sender, MouseEventArgs e)
         {
             if (drawing)
             {
-                proximityDrawer.Move(e.X, e.Y, eOld.X, eOld.Y);
+                drawer.Move(e.X, e.Y, eOld.X, eOld.Y);
                 eOld = e;
+                drawer.Draw();
             }
         }
         private void CtrlPicBx_MouseUp(object sender, MouseEventArgs e)
@@ -53,8 +55,13 @@ namespace Yaisp3
         }
         private void CtrlPicBx_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (proximityDrawer != null)
-                proximityDrawer.Zoom(e.X, e.Y, e.Delta);
+            drawer.Zoom(e.X, e.Y, e.Delta);
+            drawer.Draw();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            drawer.Draw();
         }
     }
 }

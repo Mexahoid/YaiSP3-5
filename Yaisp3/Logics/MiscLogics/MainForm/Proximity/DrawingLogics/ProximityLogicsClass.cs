@@ -24,8 +24,8 @@ namespace Yaisp3
         /// <param name="Control">Элемент, на котором производится рисование.</param>
         public ProximityLogicsClass(Control Control)
         {
-            colorMatrix = MainUnitProcessor.CityGetProximityMap();
-            drawingKit = new MapDrawingClass(Control, colorMatrix.GetLength(1), colorMatrix.GetLength(0));
+            //colorMatrix = MainUnitProcessor.CityGetProximityMap();
+            //drawingKit = new MapDrawingClass(Control, colorMatrix.GetLength(1), colorMatrix.GetLength(0));
             ClearImage();
             MainDraw();
         }
@@ -35,7 +35,7 @@ namespace Yaisp3
         /// </summary>
         protected override void MainDraw()
         {
-            colorMatrix = MainUnitProcessor.CityGetProximityMap();
+            //colorMatrix = MainUnitProcessor.CityGetProximityMap();
             DrawProximityMap();
             ((MapDrawingClass)drawingKit).DrawGrid();
             drawingKit.DrawImage();

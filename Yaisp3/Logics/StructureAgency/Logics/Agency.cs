@@ -42,9 +42,11 @@ namespace Yaisp3
         /// </summary>
         private List<Tuple<double, double>> agencySummary;
 
-        private City cityLink;
+        private CityHandler cityLink;
 
         private QueueClass queueLink;
+
+        private MainDrawingProcessor drawersLink;
 
         #endregion
 
@@ -56,24 +58,34 @@ namespace Yaisp3
         /// <param name="Name">Название агентства.</param>
         /// <param name="Money">Начальный депозит.</param>
         /// <param name="Billboards">Кол-во биллбордов.</param>
-        public Agency(string Name, int Money, int Billboards, City city, QueueClass queue)
+        public Agency(string Name, int Money, int Billboards)
         {
-            cityLink = city;
-            queueLink = queue;
-
-
             agencyName = Name;
             agencyDeposit = Money;
             agencyBillboards = new List<Billboard>();
             agencySummary = new List<Tuple<double, double>>();
             agencyStaffCount = 1 + Billboards * 3;  //Глава + обслуга
 
-            agencyFreeBillboards = 0;
-            for (int i = 0; i < Billboards; i++)
-                PlaceBillboardRnd();
+            agencyFreeBillboards = Billboards;
         }
 
         #region Обмен информацией 
+
+        /// <summary>
+        /// Дает ссылки агентству на город и очередь.
+        /// </summary>
+        /// <param name="City">Ссылка на экземпляр города.</param>
+        /// <param name="Queue">Ссылка на экземпляр очереди.</param>
+        public void SetLinks(CityHandler City, QueueClass Queue, MainDrawingProcessor Drawers)
+        {
+            cityLink = City;
+            queueLink = Queue;
+            drawersLink = Drawers;
+
+            for (int i = 0; i < agencyFreeBillboards; i++)
+                PlaceBillboardRnd();
+            agencyFreeBillboards = 0;
+        }
 
         /// <summary>
         /// Возвращает кортеж, состоящий из названия агентства, депозита, кол-ва щитов и стратегии.
@@ -81,7 +93,7 @@ namespace Yaisp3
         /// <returns>Возвращает кортеж из строки и двух целочисленных значений.</returns>
         public Tuple<string, int, int> GetData()
         {
-            return Tuple.Create(agencyName, agencyDeposit, agencyBillboards.Count);
+            return Tuple.Create(agencyName, agencyDeposit, agencyBillboards.Count + agencyFreeBillboards);
         }
 
         /// <summary>
@@ -107,7 +119,7 @@ namespace Yaisp3
         {
             int Cost = 10000 + MiscellaneousLogics.MainGetRandomValue(-1000, 1000);
             Billboard Billboard = new Billboard(Cost);
-            cityLink.PlaceBillboard(Billboard);   //Добавляем на карту города
+            drawersLink.AddDrawer(cityLink.CityBillboardPlace(Billboard));
             agencyBillboards.Add(Billboard);
             agencyDeposit -= Cost;
         }
@@ -163,7 +175,7 @@ namespace Yaisp3
         {
             int temp = agencyDeposit;
             int i;
-            for (i = 0; i < OrderCount && temp > 0; i++)
+            for (i = 0; i < OrderCount && temp > 11000; i++)
                 temp -= 11000;
             return i;
         }
@@ -184,6 +196,11 @@ namespace Yaisp3
         public int GetFreeBillboardsCount()
         {
             return agencyFreeBillboards;
+        }
+
+        public void DeleteBillboards()
+        {
+            cityLink.DeleteBillboards();
         }
 
         #endregion

@@ -62,6 +62,7 @@
             this.CtrlPicBxCity.TabIndex = 0;
             this.CtrlPicBxCity.TabStop = false;
             this.CtrlPicBxCity.Click += new System.EventHandler(this.CtrlPicBxCity_Click);
+            this.CtrlPicBxCity.Paint += new System.Windows.Forms.PaintEventHandler(this.CtrlPicBxCity_Paint);
             this.CtrlPicBxCity.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxCity_MouseDown);
             this.CtrlPicBxCity.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxCity_MouseMove);
             this.CtrlPicBxCity.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxCity_MouseUp);
@@ -261,7 +262,6 @@
             this.MinimizeBox = false;
             this.Name = "FormCity";
             this.Text = "Редактор города";
-            this.Load += new System.EventHandler(this.FormCity_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxCity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumCityHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumCityWidth)).EndInit();

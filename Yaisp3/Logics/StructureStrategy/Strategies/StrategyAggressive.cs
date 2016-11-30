@@ -24,9 +24,11 @@ namespace Yaisp3
         /// <summary>
         /// Конструктор класса стратегии.
         /// </summary>
-        public StrategyAggressive()
+        public StrategyAggressive(Agency agencyLink)
         {
+            agency = agencyLink;
             strategy = StrategyType.Aggressive;
+            if (agency != null)
             pastOrderCount = agency.QueueCount();
         }
 

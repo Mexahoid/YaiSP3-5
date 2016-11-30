@@ -11,7 +11,7 @@ namespace Yaisp3
         /// <summary>
         /// Координаты изображения окна.
         /// </summary>
-        protected int I2 = 0, J2 = 0;
+        protected int I1 = 0, I2 = 0, J1 = 0, J2 = 0;
 
         /// <summary>
         /// Координаты сиюминутного видимого куска графика.
@@ -37,7 +37,7 @@ namespace Yaisp3
         /// <returns>Возвращает целочисленное значение.</returns>
         protected int GetScreenX(double x)
         {
-            return (int)((x - x1p) * I2 / (x2p - x1p));
+            return I1 + (int)((x - x1p) * (I2 - I1) / (x2p - x1p));
         }
 
         /// <summary>
@@ -47,7 +47,8 @@ namespace Yaisp3
         /// <returns>Возвращает целочисленное значение.</returns>
         protected int GetScreenY(double y)
         {
-            return (int)((y - y1p) * J2 / (y1p - y2p));
+            return J1 + (int)((y - y1p) * (J1 - J2) / (y1p - y2p));
         }
+
     }
 }

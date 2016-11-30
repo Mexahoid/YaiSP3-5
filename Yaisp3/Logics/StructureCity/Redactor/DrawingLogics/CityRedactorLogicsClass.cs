@@ -19,8 +19,8 @@ namespace Yaisp3
         /// <param name="Control">Контрол, на котором производится рисование.</param>
         public CityRedactorLogicsClass(Control Control) : base(Control)
         {
-            Tuple<int, int> T = MainUnitProcessor.CityGetSize();
-            drawingKit = new CityRedactorDrawingClass(Control, T.Item1, T.Item2);
+           // Tuple<int, int> T = MainUnitProcessor.CityGetSize();
+           // drawingKit = new CityRedactorDrawingClass(Control, T.Item1, T.Item2);
             ClearImage();
             MainDraw();
         }
@@ -52,7 +52,7 @@ namespace Yaisp3
         {
             int Row, Col;
             if ((drawingKit as CityRedactorDrawingClass).FindPlaceInMatrix(X, Y, out Row, out Col))
-                MainUnitProcessor.CityHousePlace(Row, Col, Width, Height);
+                //MainUnitProcessor.CityHousePlace(Row, Col, Width, Height);
             ClearImage();
             MainDraw();
         }

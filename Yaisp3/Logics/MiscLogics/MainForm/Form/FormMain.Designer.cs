@@ -76,7 +76,6 @@
             this.CtrlPicBxMap.TabIndex = 0;
             this.CtrlPicBxMap.TabStop = false;
             this.CtrlPicBxMap.Click += new System.EventHandler(this.CtrlPicBxMap_Click);
-            this.CtrlPicBxMap.Paint += new System.Windows.Forms.PaintEventHandler(this.CtrlPicBxMap_Paint);
             this.CtrlPicBxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseDown);
             this.CtrlPicBxMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseMove);
             this.CtrlPicBxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseUp);

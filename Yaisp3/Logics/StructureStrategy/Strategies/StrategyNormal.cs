@@ -15,8 +15,9 @@ namespace Yaisp3
         /// <summary>
         /// Конструктор класса стратегии.
         /// </summary>
-        public StrategyNormal()
+        public StrategyNormal(Agency agencyLink)
         {
+            agency = agencyLink;
             strategy = StrategyType.Normal;
         }
 

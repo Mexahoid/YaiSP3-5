@@ -30,16 +30,10 @@ namespace Yaisp3
         /// </summary>
         protected int elementHeight;
 
-        protected System.Drawing.Color elementColor;   //Убрать
-
         #endregion
 
         #region Методы
-
-        public System.Drawing.Color GetDrawingColor()   //Убрать
-        {
-            return elementColor;
-        }
+        
 
         /// <summary>
         /// Устанавливает позицию элемента (левый верхний угол).
