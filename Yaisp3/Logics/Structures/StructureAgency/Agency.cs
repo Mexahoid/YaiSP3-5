@@ -100,12 +100,12 @@ namespace Yaisp3
         }
 
         /// <summary>
-        /// Возвращает кортеж, состоящий из названия агентства, депозита, кол-ва щитов и стратегии.
+        /// Возвращает кортеж, состоящий из депозита и кол-ва щитов.
         /// </summary>
-        /// <returns>Возвращает кортеж из строки и двух целочисленных значений.</returns>
-        public Tuple<string, int, int> GetData()
+        /// <returns>Возвращает кортеж из двух целочисленных значений.</returns>
+        public Tuple<int, int> GetData()
         {
-            return Tuple.Create(agencyName, agencyDeposit, agencyBillboards.Count + agencyFreeBillboards);
+            return Tuple.Create(agencyDeposit, agencyBillboards.Count + agencyFreeBillboards);
         }
 
         /// <summary>
@@ -225,8 +225,9 @@ namespace Yaisp3
         /// </summary>
         public void DeleteBillboards()
         {
-            cityLink.DeleteBillboards();
-            drawersLink.DeleteDrawers(typeof(BillboardDrawer));
+            int C = agencyBillboards.Count;
+            for (int i = 0; i < C; i++)
+                DeleteOneBillboard();
         }
 
         /// <summary>
@@ -247,6 +248,11 @@ namespace Yaisp3
                 agencyStaffCount -= 3;
                 drawersLink.DeleteFirstBillboardDrawer();
             }
+        }
+
+        public override string ToString()
+        {
+            return agencyName;
         }
         #endregion
     }

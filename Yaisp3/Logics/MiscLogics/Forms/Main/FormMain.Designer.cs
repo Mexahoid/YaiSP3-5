@@ -36,7 +36,6 @@
             this.CtrlTSMIDrop = new System.Windows.Forms.ToolStripDropDownButton();
             this.CtrlTSMICreateCity = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTSMIAgencyMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.CtrlTSMIAgencyDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTSMIProximityMap = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTSMIGraph = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTimer = new System.Windows.Forms.Timer(this.components);
@@ -114,7 +113,6 @@
             this.CtrlTSMIDrop.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CtrlTSMICreateCity,
             this.CtrlTSMIAgencyMenu,
-            this.CtrlTSMIAgencyDelete,
             this.CtrlTSMIProximityMap,
             this.CtrlTSMIGraph});
             this.CtrlTSMIDrop.Name = "CtrlTSMIDrop";
@@ -126,7 +124,7 @@
             // CtrlTSMICreateCity
             // 
             this.CtrlTSMICreateCity.Name = "CtrlTSMICreateCity";
-            this.CtrlTSMICreateCity.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMICreateCity.Size = new System.Drawing.Size(167, 22);
             this.CtrlTSMICreateCity.Text = "Создать город";
             this.CtrlTSMICreateCity.Click += new System.EventHandler(this.CtrlTSMICreateCityClick);
             // 
@@ -134,22 +132,14 @@
             // 
             this.CtrlTSMIAgencyMenu.Enabled = false;
             this.CtrlTSMIAgencyMenu.Name = "CtrlTSMIAgencyMenu";
-            this.CtrlTSMIAgencyMenu.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMIAgencyMenu.Size = new System.Drawing.Size(167, 22);
             this.CtrlTSMIAgencyMenu.Text = "Меню агентства";
             this.CtrlTSMIAgencyMenu.Click += new System.EventHandler(this.CtrlTSMIAgencyMenuClick);
-            // 
-            // CtrlTSMIAgencyDelete
-            // 
-            this.CtrlTSMIAgencyDelete.Enabled = false;
-            this.CtrlTSMIAgencyDelete.Name = "CtrlTSMIAgencyDelete";
-            this.CtrlTSMIAgencyDelete.Size = new System.Drawing.Size(174, 22);
-            this.CtrlTSMIAgencyDelete.Text = "Удалить агентство";
-            this.CtrlTSMIAgencyDelete.Click += new System.EventHandler(this.CtrlTSMIAgencyDeleteClick);
             // 
             // CtrlTSMIProximityMap
             // 
             this.CtrlTSMIProximityMap.Name = "CtrlTSMIProximityMap";
-            this.CtrlTSMIProximityMap.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMIProximityMap.Size = new System.Drawing.Size(167, 22);
             this.CtrlTSMIProximityMap.Text = "Зоны покрытия";
             this.CtrlTSMIProximityMap.Click += new System.EventHandler(this.CtrlTSMIProximityMapClick);
             // 
@@ -157,7 +147,7 @@
             // 
             this.CtrlTSMIGraph.Enabled = false;
             this.CtrlTSMIGraph.Name = "CtrlTSMIGraph";
-            this.CtrlTSMIGraph.Size = new System.Drawing.Size(174, 22);
+            this.CtrlTSMIGraph.Size = new System.Drawing.Size(167, 22);
             this.CtrlTSMIGraph.Text = "График бюджета";
             this.CtrlTSMIGraph.Click += new System.EventHandler(this.CtrlTSMIGraph_Click);
             // 
@@ -384,7 +374,6 @@
         private System.Windows.Forms.ToolStripDropDownButton CtrlTSMIDrop;
         private System.Windows.Forms.ToolStripMenuItem CtrlTSMICreateCity;
         private System.Windows.Forms.ToolStripMenuItem CtrlTSMIAgencyMenu;
-        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIAgencyDelete;
         private System.Windows.Forms.ToolStripMenuItem CtrlTSMIProximityMap;
         private System.Windows.Forms.ToolStripMenuItem CtrlTSMIGraph;
         private System.Windows.Forms.Timer CtrlTimer;

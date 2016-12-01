@@ -41,6 +41,8 @@
             this.CtrlNumBillboards = new System.Windows.Forms.NumericUpDown();
             this.CtrlNumDeposit = new System.Windows.Forms.NumericUpDown();
             this.CtrlLBAgencies = new System.Windows.Forms.ListBox();
+            this.CtrlButSuction = new System.Windows.Forms.Button();
+            this.CtrlButDelete = new System.Windows.Forms.Button();
             this.CtrlGrBStrat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumBillboards)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumDeposit)).BeginInit();
@@ -134,8 +136,7 @@
             // 
             // CtrlButCreate
             // 
-            this.CtrlButCreate.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.CtrlButCreate.Location = new System.Drawing.Point(169, 127);
+            this.CtrlButCreate.Location = new System.Drawing.Point(169, 61);
             this.CtrlButCreate.Name = "CtrlButCreate";
             this.CtrlButCreate.Size = new System.Drawing.Size(75, 23);
             this.CtrlButCreate.TabIndex = 7;
@@ -145,9 +146,8 @@
             // 
             // CtrlButEdit
             // 
-            this.CtrlButEdit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.CtrlButEdit.Enabled = false;
-            this.CtrlButEdit.Location = new System.Drawing.Point(169, 156);
+            this.CtrlButEdit.Location = new System.Drawing.Point(169, 90);
             this.CtrlButEdit.Name = "CtrlButEdit";
             this.CtrlButEdit.Size = new System.Drawing.Size(75, 23);
             this.CtrlButEdit.TabIndex = 8;
@@ -206,12 +206,38 @@
             this.CtrlLBAgencies.Name = "CtrlLBAgencies";
             this.CtrlLBAgencies.Size = new System.Drawing.Size(104, 173);
             this.CtrlLBAgencies.TabIndex = 11;
+            this.CtrlLBAgencies.SelectedIndexChanged += new System.EventHandler(this.CtrlLBAgencies_SelectedIndexChanged);
+            // 
+            // CtrlButSuction
+            // 
+            this.CtrlButSuction.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.CtrlButSuction.Enabled = false;
+            this.CtrlButSuction.Location = new System.Drawing.Point(169, 156);
+            this.CtrlButSuction.Name = "CtrlButSuction";
+            this.CtrlButSuction.Size = new System.Drawing.Size(75, 23);
+            this.CtrlButSuction.TabIndex = 12;
+            this.CtrlButSuction.Text = "Готово";
+            this.CtrlButSuction.UseVisualStyleBackColor = true;
+            this.CtrlButSuction.Click += new System.EventHandler(this.CtrlButSuction_Click);
+            // 
+            // CtrlButDelete
+            // 
+            this.CtrlButDelete.Enabled = false;
+            this.CtrlButDelete.Location = new System.Drawing.Point(169, 119);
+            this.CtrlButDelete.Name = "CtrlButDelete";
+            this.CtrlButDelete.Size = new System.Drawing.Size(75, 23);
+            this.CtrlButDelete.TabIndex = 13;
+            this.CtrlButDelete.Text = "Удалить";
+            this.CtrlButDelete.UseVisualStyleBackColor = true;
+            this.CtrlButDelete.Click += new System.EventHandler(this.CtrlButDelete_Click);
             // 
             // FormAgency
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(368, 187);
+            this.Controls.Add(this.CtrlButDelete);
+            this.Controls.Add(this.CtrlButSuction);
             this.Controls.Add(this.CtrlLBAgencies);
             this.Controls.Add(this.CtrlNumDeposit);
             this.Controls.Add(this.CtrlNumBillboards);
@@ -250,5 +276,7 @@
     private System.Windows.Forms.NumericUpDown CtrlNumBillboards;
     private System.Windows.Forms.NumericUpDown CtrlNumDeposit;
         private System.Windows.Forms.ListBox CtrlLBAgencies;
+        private System.Windows.Forms.Button CtrlButSuction;
+        private System.Windows.Forms.Button CtrlButDelete;
     }
 }

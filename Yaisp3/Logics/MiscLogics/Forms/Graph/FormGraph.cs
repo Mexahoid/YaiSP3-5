@@ -13,17 +13,19 @@ namespace Yaisp3
     {
         private bool drawingGraph = false;
         private MainDrawingProcessor graphDrawer;
+        private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
+
         private MouseEventArgs eOld;
 
-        public FormGraph(List<Tuple<double, double>> graphPoints)
+        public FormGraph(List<Tuple<AgencyHandler, StrategyHandler>> Agencies)
         {
+            this.Agencies = Agencies;
             InitializeComponent();
-            graphDrawer = new MainDrawingProcessor();
-            graphDrawer.AddDrawer(new GraphDrawer(graphPoints));
-            graphDrawer.SetCanvas(CtrlPicBxGraph);
+            int C = Agencies.Count;
+            for (int i = 0; i < C; i++)
+                CtrlLBAgencies.Items.Add(Agencies[i].Item1.ToString());
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             CtrlPicBxGraph.MouseWheel += new MouseEventHandler(CtrlPicBxGraph_MouseScroll);
-            graphDrawer.Draw();
         }
 
         private void CtrlPicBxGraph_MouseScroll(object sender, MouseEventArgs e)
@@ -54,7 +56,6 @@ namespace Yaisp3
         private void CtrlPicBxGraph_MouseUp(object sender, MouseEventArgs e)
         {
             drawingGraph = false;
-            graphDrawer.Draw();
         }
         private void CtrlPicBxGraph_MouseMove(object sender, MouseEventArgs e)
         {
@@ -68,7 +69,8 @@ namespace Yaisp3
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            graphDrawer.Draw();
+            if (graphDrawer != null)
+                graphDrawer.Draw();
         }
 
         /// <summary>
@@ -77,6 +79,14 @@ namespace Yaisp3
         private void CtrlPicBxGraph_Click(object sender, EventArgs e)
         {
             CtrlPicBxGraph.Focus();
+        }
+
+        private void CtrlLBAgencies_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            graphDrawer = new MainDrawingProcessor();
+            graphDrawer.AddDrawer(new GraphDrawer(Agencies[CtrlLBAgencies.SelectedIndex].Item1.AgencyGetSummary()));
+            graphDrawer.SetCanvas(CtrlPicBxGraph);
+            graphDrawer.Draw();
         }
     }
 }

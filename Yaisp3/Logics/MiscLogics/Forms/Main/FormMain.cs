@@ -17,12 +17,10 @@ namespace Yaisp3
 
         private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
 
-        private AgencyHandler Agency;       //Создается соответствующей формой.
         private CityHandler City;           //Создается соответствующей формой.
-        private StrategyHandler Strategy;   //Создается соответствующей формой.
         private DateHandler Date;
         private QueueHandler Queue;
-        
+
         public FormMain()
         {
             InitializeComponent();
@@ -32,8 +30,6 @@ namespace Yaisp3
             Date = new DateHandler();
             City = new CityHandler();
             Queue = new QueueHandler();
-            Agency = new AgencyHandler();
-            Strategy = new StrategyHandler();
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             CtrlPicBxMap.MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
         }
@@ -74,24 +70,13 @@ namespace Yaisp3
 
         private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
         {
-            FormAgency Af = new FormAgency(Agency, Strategy);
+            FormAgency Af = new FormAgency(Agencies, City.GetCityLink(), Queue.GetQueueLink(), drawers);
             if (Af.ShowDialog() == DialogResult.OK)
             {
                 CtrlChBIndAgen.Checked = true;
-                CtrlTSMIAgencyDelete.Enabled = true;
                 if (CtrlChBIndCity.Checked)
                     CtrlButTimerStart.Enabled = true;
-                Agency.AgencySetLink(City.GetCityLink(), Queue.GetQueueLink(), drawers);
-                Agencies.Add(Tuple.Create(Agency, Strategy));
             }
-        }
-        private void CtrlTSMIAgencyDeleteClick(object sender, EventArgs e)
-        {
-            Agency.AgencyDestroy();
-            Agency = new AgencyHandler();
-            Strategy = new StrategyHandler();
-            drawers.CheckList();
-            CtrlChBIndAgen.Checked = false;
         }
         private void CtrlTSMICreateCityClick(object sender, EventArgs e)
         {
@@ -117,7 +102,7 @@ namespace Yaisp3
 
         private void CtrlTSMIGraph_Click(object sender, EventArgs e)
         {
-            FormGraph Gr = new FormGraph(Agency.AgencyGetSummary());
+            FormGraph Gr = new FormGraph(Agencies);
             Gr.Show();
         }
 
@@ -133,13 +118,15 @@ namespace Yaisp3
             CtrlLblDate.Text = "Дата: " + Date.DateGetAsString();
             Queue.QueueAddRand(CtrlTBQueueQuantity.Value, CtrlTBQueueIntense.Value);
             CtrlTxbOrders.Text = Queue.ToString();
-            if (!Strategy.StrategyAction())
-            {
-                CtrlTimer.Stop();
-                MessageBox.Show("Агентство " + Agency.AgencyGetData().Item1 + " было ликвидировано по причине банкротства.", "Беда!");
-                Agency.AgencyDestroy();
-                Strategy.DeleteStrategy();
-            }
+            int C = Agencies.Count;
+            for (int i = 0; i < C; i++)
+                if (!Agencies[i].Item2.StrategyAction())
+                {
+                    CtrlTimer.Stop();
+                    MessageBox.Show("Агентство " + Agencies[i].Item1.ToString() + " было ликвидировано по причине банкротства.", "Беда!");
+                    Agencies[i].Item1.AgencyDestroy();
+                    Agencies[i].Item2.DeleteStrategy();
+                }
             Date.DateNewDay();
             drawers.Draw();
         }

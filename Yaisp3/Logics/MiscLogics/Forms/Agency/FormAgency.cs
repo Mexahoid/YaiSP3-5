@@ -13,17 +13,102 @@ namespace Yaisp3
     {
         private AgencyHandler AgencyLink;
         private StrategyHandler StrategyLink;
+
         private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
+        private City CityLink;
+        private QueueClass QueueLink;
+        private MainDrawingProcessor DrawersLink;
 
 
         private TemplateStrategy.StrategyType Strategy = TemplateStrategy.StrategyType.Normal;
 
-        public FormAgency(AgencyHandler AgencyOrig, StrategyHandler StrategyOrig)
+        public FormAgency(List<Tuple<AgencyHandler, StrategyHandler>> Agencies,
+            City City, QueueClass Queue, MainDrawingProcessor Drawers)
         {
-            AgencyLink = AgencyOrig;
-            StrategyLink = StrategyOrig;
+            DrawersLink = Drawers;
+            CityLink = City;
+            QueueLink = Queue;
+            this.Agencies = Agencies;
             InitializeComponent();
-            
+
+            if (Agencies.Count != 0)
+            {
+                int C = Agencies.Count;
+                for (int i = 0; i < C; i++)
+                    CtrlLBAgencies.Items.Add(Agencies[i].Item1.ToString());
+                AgencyLink = Agencies[0].Item1;
+                StrategyLink = Agencies[0].Item2;     //Выбираем их только если список не пуст
+
+                Strategy = StrategyLink.StrategyGetType();
+                switch (Strategy)
+                {
+                    case TemplateStrategy.StrategyType.Normal:
+                        CtrlRadNormal.Checked = true;
+                        break;
+                    case TemplateStrategy.StrategyType.Conservative:
+                        CtrlRadConserv.Checked = true;
+                        break;
+                    case TemplateStrategy.StrategyType.Aggressive:
+                        CtrlRadAggro.Checked = true;
+                        break;
+                }
+                Tuple<int, int> T = AgencyLink.AgencyGetData();
+                CtrlTxbName.Text = AgencyLink.ToString();
+                CtrlButEdit.Enabled = CtrlButDelete.Enabled = true;
+                CtrlNumDeposit.Value = T.Item1;
+                CtrlNumBillboards.Value = T.Item2;
+            }
+        }
+
+        /// <summary>
+        /// Создаём агентство.
+        /// </summary>
+        private void CtrlButCreateClick(object sender, EventArgs e)
+        {
+            AgencyLink = new AgencyHandler();
+            if (!AgencyLink.AgencyCreate(CtrlTxbName.Text,  //Если плохое имя - выдаем мсгбокс
+                (int)CtrlNumDeposit.Value,
+                (int)CtrlNumBillboards.Value, Agencies.Count + 1))
+                MessageBox.Show("Вы ввели недопустимое значение в каком-то из полей. Проверьте правильность информации.", "Ошибка значений", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            else
+            {
+                StrategyLink = new StrategyHandler();
+                StrategyLink.CreateLink(Strategy,
+                    AgencyLink.GetAgencyLink());            //Иначе создаем нормальную стратегию
+                AgencyLink.AgencySetLink(CityLink, QueueLink, DrawersLink);
+                Agencies.Add(Tuple.Create(AgencyLink, StrategyLink));
+                CtrlLBAgencies.Items.Add(AgencyLink.ToString());
+                AgencyLink = null;
+                StrategyLink = null;
+
+                CtrlButSuction.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Меняем имя и стратегию у агентства.
+        /// </summary>
+        private void CtrlButEditClick(object sender, EventArgs e)
+        {
+            AgencyLink.AgencyChangeName(CtrlTxbName.Text);
+            StrategyLink.CreateLink(Strategy, AgencyLink.GetAgencyLink());
+        }
+
+        /// <summary>
+        /// Меняем нынешнюю стратегию в форме.
+        /// </summary>
+        private void ChangeStrategyEvent(object sender, EventArgs e)
+        {
+            Strategy = (TemplateStrategy.StrategyType)Convert.ToByte((sender as RadioButton).Tag);
+        }
+
+        private void CtrlLBAgencies_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CtrlLBAgencies.SelectedIndex > -1)
+            {
+                AgencyLink = Agencies[CtrlLBAgencies.SelectedIndex].Item1;
+                StrategyLink = Agencies[CtrlLBAgencies.SelectedIndex].Item2;
+
                 Strategy = StrategyLink.StrategyGetType();
                 switch (Strategy)
                 {
@@ -38,67 +123,27 @@ namespace Yaisp3
                         break;
                 }
 
-            if (AgencyLink.AgencyIsPresent())                         //Если агентство не пусто, то запрещаем создатние.
-            {
-                CtrlButCreate.Enabled = CtrlNumBillboards.Enabled = CtrlNumDeposit.Enabled = false;
-                CtrlButEdit.Enabled = true;
-                Tuple<string, int, int> T = AgencyLink.AgencyGetData();
-                CtrlTxbName.Text = T.Item1;
-                CtrlNumDeposit.Value = T.Item2;
-                CtrlNumBillboards.Value = T.Item3;
-
-                Strategy = StrategyLink.StrategyGetType();    //Т.к. стратегия без агентства не существует.
-                switch (Strategy)
-                {
-                    case TemplateStrategy.StrategyType.Normal:
-                        CtrlRadNormal.Checked = true;
-                        break;
-                    case TemplateStrategy.StrategyType.Conservative:
-                        CtrlRadConserv.Checked = true;
-                        break;
-                    case TemplateStrategy.StrategyType.Aggressive:
-                        CtrlRadAggro.Checked = true;
-                        break;
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// Создаём агентство.
-        /// </summary>
-        private void CtrlButCreateClick(object sender, EventArgs e)
-        {
-            if (AgencyLink == null)                         //Если агентство пустое - нужно создать
-                AgencyLink = new AgencyHandler();
-            if (!AgencyLink.AgencyCreate(CtrlTxbName.Text,  //Если плохое имя - выдаем мсгбокс
-                (int)CtrlNumDeposit.Value,
-                (int)CtrlNumBillboards.Value, 1))
-                MessageBox.Show("Вы ввели недопустимое значение в каком-то из полей. Проверьте правильность информации.", "Ошибка значений", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            else
-            {
-                StrategyLink.CreateLink(Strategy, 
-                    AgencyLink.GetAgencyLink());            //Иначе создаем нормальную стратегию
-                Close();                                    //И закрываем.
+                CtrlButEdit.Enabled = CtrlButDelete.Enabled = true;
+                Tuple<int, int> T = AgencyLink.AgencyGetData();
+                CtrlTxbName.Text = AgencyLink.ToString();
+                CtrlNumDeposit.Value = T.Item1;
+                CtrlNumBillboards.Value = T.Item2;
             }
         }
 
-        /// <summary>
-        /// Меняем имя и стратегию у агентства.
-        /// </summary>
-        private void CtrlButEditClick(object sender, EventArgs e)
+        private void CtrlButDelete_Click(object sender, EventArgs e)
         {
-            AgencyLink.AgencyChangeName(CtrlTxbName.Text);
-            StrategyLink.CreateLink(Strategy, AgencyLink.GetAgencyLink());
+            AgencyLink.AgencyDestroy();
+            StrategyLink = null;
+            Agencies.RemoveAt(CtrlLBAgencies.SelectedIndex);
+            CtrlLBAgencies.Items.RemoveAt(CtrlLBAgencies.SelectedIndex);
+            if (Agencies.Count == 0)
+                CtrlButSuction.Enabled = false;
+        }
+
+        private void CtrlButSuction_Click(object sender, EventArgs e)
+        {
             Close();
-        }
-
-        /// <summary>
-        /// Меняем нынешнюю стратегию в форме.
-        /// </summary>
-        private void ChangeStrategyEvent(object sender, EventArgs e)
-        {
-            Strategy = (TemplateStrategy.StrategyType)Convert.ToByte((sender as RadioButton).Tag);
         }
     }
 }

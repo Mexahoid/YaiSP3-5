@@ -71,9 +71,14 @@ namespace Yaisp3
         /// Возвращает кортеж данных агентства.
         /// </summary>
         /// <returns>Возвращает кортеж из строки и двух целочисленных значений.</returns>
-        public Tuple<string, int, int> AgencyGetData()
+        public Tuple<int, int> AgencyGetData()
         {
             return Agency.GetData();
+        }
+
+        public override string ToString()
+        {
+            return Agency.ToString();
         }
 
         /// <summary>
