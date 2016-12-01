@@ -68,6 +68,14 @@ namespace Yaisp3
             }
         }
 
+        /// <summary>
+        /// Возвращает валидность биллборда.
+        /// </summary>
+        /// <returns>Возвращает логическое значение.</returns>
+        public bool IsValid()
+        {
+            return billboard.GetState() != Billboard.State.Invalid;
+        }
 
         #endregion
     }

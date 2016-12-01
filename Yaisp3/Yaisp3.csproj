@@ -69,10 +69,10 @@
     <Compile Include="Logics\MiscLogics\Drawers\GridDrawer.cs" />
     <Compile Include="Logics\MiscLogics\Drawers\HouseDrawer.cs" />
     <Compile Include="Logics\MiscLogics\Drawers\HoveringDrawer.cs" />
-    <Compile Include="Logics\Structures\StructureCity\Elements\Elements\Billboard.cs" />
+    <Compile Include="Logics\Structures\StructureCity\Elements\Billboard.cs" />
     <Compile Include="Logics\MiscLogics\Drawers\BillboardDrawer.cs" />
-    <Compile Include="Logics\Structures\StructureCity\Elements\Elements\TemplateElement.cs" />
-    <Compile Include="Logics\Structures\StructureCity\Elements\Elements\House.cs" />
+    <Compile Include="Logics\Structures\StructureCity\Elements\TemplateElement.cs" />
+    <Compile Include="Logics\Structures\StructureCity\Elements\House.cs" />
     <Compile Include="Logics\Structures\StructureCity\Matrix\MatrixCoefficients.cs" />
     <Compile Include="Logics\MiscLogics\Drawers\MatrixDrawer.cs" />
     <Compile Include="Logics\Structures\StructureQueue\Clients\ClientCompany.cs" />

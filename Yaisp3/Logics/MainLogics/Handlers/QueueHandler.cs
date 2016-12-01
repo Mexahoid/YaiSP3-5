@@ -23,6 +23,10 @@ namespace Yaisp3
             Queue = new QueueClass();
         }
 
+        /// <summary>
+        /// Возвращает ссылку на объект очереди.
+        /// </summary>
+        /// <returns>Возвращает экземпляр очереди.</returns>
         public QueueClass GetQueueLink()
         {
             return Queue;

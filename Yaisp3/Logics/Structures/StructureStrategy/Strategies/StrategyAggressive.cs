@@ -17,6 +17,11 @@ namespace Yaisp3
         /// </summary>
         private int pastOrderCount = 0;
 
+        /// <summary>
+        /// Счетчик остаточных плохих дней до сноса биллборда.
+        /// </summary>
+        private int badDaysCounter = -1;
+
         #endregion
 
         #region Методы
@@ -29,15 +34,16 @@ namespace Yaisp3
             agency = agencyLink;
             strategy = StrategyType.Aggressive;
             if (agency != null)
-            pastOrderCount = agency.QueueCount();
+                pastOrderCount = agency.QueueCount();
         }
 
         /// <summary>
         /// Действие стратегии.
         /// </summary>
-        public override void Action()
+        public override bool Action()
         {
-            BuildOrderedBillboards();
+            if (!BuildOrderedBillboards())
+                return false;
             if (agency.GetFreeBillboardsCount() == 0)
             {
                 int Count = agency.HowMuchCanWeAfford(pastOrderCount);
@@ -47,6 +53,30 @@ namespace Yaisp3
             int Temp = agency.QueueCount();
             if (pastOrderCount < Temp)
                 pastOrderCount = Temp;
+            List<Tuple<double, double>> Summary = agency.GetAgencySummary();
+            int C = Summary.Count;
+            if (C > 10)
+            {
+                if (badDaysCounter > 0)
+                {
+                    if (Summary[C - 1].Item2 / Summary[C - 11].Item2 < 0.8)
+                        badDaysCounter--;
+                    else
+                        badDaysCounter = -1;
+                }
+                else
+                if (Summary[C - 1].Item2 / Summary[C - 11].Item2 < 0.8)
+                    badDaysCounter = MiscellaneousLogics.MainGetRandomValue(30, 100);
+                if (badDaysCounter == 0)
+                {
+                    int A = MiscellaneousLogics.MainGetRandomValue(1,
+                        agency.GetFreeBillboardsCount());
+                    for (int i = 0; i < A; i++)
+                        agency.DeleteOneBillboard();
+                    badDaysCounter = -1;
+                }
+            }
+            return true;
         }
 
         #endregion

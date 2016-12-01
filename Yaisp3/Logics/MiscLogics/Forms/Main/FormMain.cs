@@ -26,11 +26,14 @@ namespace Yaisp3
         {
             InitializeComponent();
             drawers = new MainDrawingProcessor();
-            Date = new DateHandler();
             drawers.SetCanvas(CtrlPicBxMap);
+            Date = new DateHandler();
+            City = new CityHandler();
+            Queue = new QueueHandler();
+            Agency = new AgencyHandler();
+            Strategy = new StrategyHandler();
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             CtrlPicBxMap.MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
-            Queue = new QueueHandler();
         }
 
         private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
@@ -70,8 +73,8 @@ namespace Yaisp3
         private void CtrlTSMIAgencyDeleteClick(object sender, EventArgs e)
         {
             Agency.AgencyDestroy();
-            Agency = null;                  //Удаляем все следы агентства
-            Strategy = null;                //Обнуляем стратегию
+            Agency = new AgencyHandler();
+            Strategy = new StrategyHandler();
             drawers.CheckList();
             CtrlChBIndAgen.Checked = false;
         }
@@ -84,8 +87,6 @@ namespace Yaisp3
                 CtrlTSMIAgencyDelete.Enabled = CtrlTSMIAgencyMenu.Enabled = true;
                 if (CtrlChBIndAgen.Checked)
                     CtrlButTimerStart.Enabled = true;
-                drawers = Cf.Drawers;
-                City = Cf.CityLink;
             }
             else
                 if (!CtrlChBIndCity.Checked)
@@ -101,9 +102,7 @@ namespace Yaisp3
                 CtrlChBIndAgen.Checked = true;
                 if (CtrlChBIndCity.Checked)
                     CtrlButTimerStart.Enabled = true;
-                Agency = Af.AgencyLink;
-                Strategy = Af.StrategyLink;
-                Agency.AgencySetLink(City, Queue.GetQueueLink(), drawers);
+                Agency.AgencySetLink(City.GetCityLink(), Queue.GetQueueLink(), drawers);
             }
         }
         private void CtrlTSMIProximityMapClick(object sender, EventArgs e)
@@ -130,7 +129,13 @@ namespace Yaisp3
             CtrlLblDate.Text = "Дата: " + Date.DateGetAsString();
             Queue.QueueAddRand(CtrlTBQueueQuantity.Value, CtrlTBQueueIntense.Value);
             CtrlTxbOrders.Text = Queue.ToString();
-            Strategy.StrategyAction();
+            if (!Strategy.StrategyAction())
+            {
+                CtrlTimer.Stop();
+                MessageBox.Show("Агентство " + Agency.AgencyGetData().Item1 + " было ликвидировано по причине банкротства.", "Беда!");
+                Agency.AgencyDestroy();
+                Strategy.DeleteStrategy();
+            }
             Date.DateNewDay();
             drawers.Draw();
         }
@@ -156,7 +161,6 @@ namespace Yaisp3
         {
             CtrlTimer.Interval = CtrlTBSpeed.Value * 20;
         }
-        
 
         protected override void OnPaint(PaintEventArgs e)
         {

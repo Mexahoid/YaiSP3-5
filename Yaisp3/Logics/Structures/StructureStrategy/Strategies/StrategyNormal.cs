@@ -24,9 +24,10 @@ namespace Yaisp3
         /// <summary>
         /// Действие стратегии.
         /// </summary>
-        public override void Action()
+        public override bool Action()
         {
-            BuildOrderedBillboards();
+            if (!BuildOrderedBillboards())
+                return false;
             List<Tuple<double, double>> Summary = agency.GetAgencySummary();
             if (Summary.Count > 15)
             {
@@ -35,6 +36,7 @@ namespace Yaisp3
                     if (agency.HowMuchCanWeAfford(1) == 1)
                         agency.PlaceBillboardRnd();
             }
+            return true;
         }
 
         #endregion

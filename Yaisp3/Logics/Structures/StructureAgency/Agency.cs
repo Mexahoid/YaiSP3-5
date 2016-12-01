@@ -45,7 +45,7 @@ namespace Yaisp3
         /// <summary>
         /// Ссылка на объект города.
         /// </summary>
-        private CityHandler cityLink;
+        private City cityLink;
 
         /// <summary>
         /// Ссылка на объект очереди.
@@ -56,6 +56,11 @@ namespace Yaisp3
         /// Ссылка на объект главного рисовальщика.
         /// </summary>
         private MainDrawingProcessor drawersLink;
+
+        /// <summary>
+        /// ИД агентства.
+        /// </summary>
+        private int agencyId;
 
         #endregion
 
@@ -76,13 +81,13 @@ namespace Yaisp3
             agencyStaffCount = 1 + Billboards * 3;  //Глава + обслуга
             agencyFreeBillboards = Billboards;
         }
-        
+
         /// <summary>
         /// Дает ссылки агентству на город и очередь.
         /// </summary>
         /// <param name="City">Ссылка на экземпляр города.</param>
         /// <param name="Queue">Ссылка на экземпляр очереди.</param>
-        public void SetLinks(CityHandler City, QueueClass Queue, MainDrawingProcessor Drawers)
+        public void SetLinks(City City, QueueClass Queue, MainDrawingProcessor Drawers)
         {
             cityLink = City;
             queueLink = Queue;
@@ -117,6 +122,8 @@ namespace Yaisp3
         /// <returns>Возвращает целочисленное значение.</returns>
         public int QueueCount()
         {
+            if (queueLink == null)
+                return 0;
             return queueLink.GetQueueCount();
         }
 
@@ -127,7 +134,7 @@ namespace Yaisp3
         {
             int Cost = 10000 + MiscellaneousLogics.MainGetRandomValue(-1000, 1000);
             Billboard Billboard = new Billboard(Cost);
-            drawersLink.AddDrawer(cityLink.CityBillboardPlace(Billboard));
+            drawersLink.AddDrawer(cityLink.PlaceBillboard(Billboard));
             agencyBillboards.Add(Billboard);
             agencyDeposit -= Cost;
         }
@@ -135,8 +142,10 @@ namespace Yaisp3
         /// <summary>
         /// Провести день работы.
         /// </summary>
-        public void PassDay()
+        public bool PassDay()
         {
+            if (agencyDeposit <= 0)
+                return false;
             foreach (Billboard Bb in agencyBillboards)
                 if (!Bb.BillboardBuilded())
                 {
@@ -153,10 +162,14 @@ namespace Yaisp3
             agencyDeposit -= agencyStaffCount * 10;                        //Заплатить стаффу
             for (int i = 0; i < agencyBillboards.Count; i++)
             {
+                if (agencyBillboards[i].BillboardIsFilled())
+                    if (agencyBillboards[i].PassDay())
+                        agencyFreeBillboards++;
                 agencyDeposit -= agencyBillboards[i].BillboardPayMoney();  //Заплатить за содержание
                 agencyDeposit += agencyBillboards[i].ClientPay();          //Собрать деньгу с заказчика
             }
             agencySummary.Add(Tuple.Create(agencySummary.Count * 0.2, agencyDeposit / 10000.0));
+            return true;
         }
 
         /// <summary>
@@ -215,6 +228,22 @@ namespace Yaisp3
             drawersLink.DeleteDrawers(typeof(BillboardDrawer));
         }
 
+        public void DeleteOneBillboard()
+        {
+            if (cityLink.DeleteOneBillboard())
+            {
+                agencyFreeBillboards--;
+                int C = agencyBillboards.Count;
+                for (int i = 0; i < C; i++)
+                    if (agencyBillboards[i].GetState() == Billboard.State.Invalid)
+                    {
+                        agencyBillboards.RemoveAt(i);
+                        break;
+                    }
+                agencyStaffCount -= 3;
+                drawersLink.DeleteFirstBillboardDrawer();
+            }
+        }
         #endregion
     }
 }

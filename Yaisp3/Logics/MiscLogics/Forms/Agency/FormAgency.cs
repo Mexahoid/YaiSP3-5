@@ -11,8 +11,8 @@ namespace Yaisp3
 {
     public partial class FormAgency : Form
     {
-        public AgencyHandler AgencyLink;
-        public StrategyHandler StrategyLink;
+        private AgencyHandler AgencyLink;
+        private StrategyHandler StrategyLink;
         private TemplateStrategy.StrategyType Strategy = TemplateStrategy.StrategyType.Normal;
 
         public FormAgency(AgencyHandler AgencyOrig, StrategyHandler StrategyOrig)
@@ -20,8 +20,7 @@ namespace Yaisp3
             AgencyLink = AgencyOrig;
             StrategyLink = StrategyOrig;
             InitializeComponent();
-            if (StrategyLink != null)                       //Если стратегия не пустая - выбираем нужный радиобатон.
-            {
+            
                 Strategy = StrategyLink.StrategyGetType();
                 switch (Strategy)
                 {
@@ -35,8 +34,8 @@ namespace Yaisp3
                         CtrlRadAggro.Checked = true;
                         break;
                 }
-            }
-            if (AgencyLink != null)                         //Если агентство не пусто, то запрещаем создатние.
+
+            if (AgencyLink.AgencyIsPresent())                         //Если агентство не пусто, то запрещаем создатние.
             {
                 CtrlButCreate.Enabled = CtrlNumBillboards.Enabled = CtrlNumDeposit.Enabled = false;
                 CtrlButEdit.Enabled = true;
@@ -75,7 +74,7 @@ namespace Yaisp3
                 MessageBox.Show("Вы ввели недопустимое значение в каком-то из полей. Проверьте правильность информации.", "Ошибка значений", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else
             {
-                StrategyLink = new StrategyHandler(Strategy, 
+                StrategyLink.CreateLink(Strategy, 
                     AgencyLink.GetAgencyLink());            //Иначе создаем нормальную стратегию
                 Close();                                    //И закрываем.
             }
@@ -87,7 +86,7 @@ namespace Yaisp3
         private void CtrlButEditClick(object sender, EventArgs e)
         {
             AgencyLink.AgencyChangeName(CtrlTxbName.Text);
-            StrategyLink = new StrategyHandler(Strategy, AgencyLink.GetAgencyLink());
+            StrategyLink.CreateLink(Strategy, AgencyLink.GetAgencyLink());
             Close();
         }
 

@@ -150,6 +150,20 @@ namespace Yaisp3
             cityMatrixProximity.DeleteBillboardCoefficients();
         }
         
+        public bool DeleteOneBillboard()
+        {
+            int L = cityElements.Count;
+            for (int i = 0; i < L; i++)
+                if (cityElements[i].GetType() == typeof(Billboard) &&
+                    !((Billboard)cityElements[i]).BillboardIsFilled())
+                {
+                    ((Billboard)cityElements[i]).Invalidate();
+                    cityElements.RemoveAt(i);
+                    return true;
+                }
+            cityMatrixProximity.DeleteBillboardCoefficients();
+            return false;
+        }
         #endregion
     }
 }

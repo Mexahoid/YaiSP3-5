@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Обработчик стратегии.
+    /// </summary>
     public class StrategyHandler
     {
         /// <summary>
@@ -16,7 +19,7 @@ namespace Yaisp3
         /// Изменяет стратегию.
         /// </summary>
         /// <param name="Type">Тип новой стратегии.</param>
-        public StrategyHandler(TemplateStrategy.StrategyType Type, Agency Agency)
+        public void CreateLink(TemplateStrategy.StrategyType Type, Agency Agency)
         {
             switch (Type)
             {
@@ -38,15 +41,22 @@ namespace Yaisp3
         /// <returns>Возвращает тип стратегии.</returns>
         public TemplateStrategy.StrategyType StrategyGetType()
         {
+            if (Strategy == null)
+                return TemplateStrategy.StrategyType.Normal;
             return Strategy.ReturnStrategyType();
         }
 
         /// <summary>
         /// Совершает действие стратегии.
         /// </summary>
-        public void StrategyAction()
+        public bool StrategyAction()
         {
-            Strategy.Action();
+            return Strategy.Action();
+        }
+
+        public void DeleteStrategy()
+        {
+            Strategy = null;
         }
     }
 }

@@ -61,6 +61,11 @@ namespace Yaisp3
             Drawers = new List<DrawingWrapperTemplate>();
         }
 
+        public void CleanDrawers()
+        {
+            Drawers = new List<DrawingWrapperTemplate>();
+        }
+
         /// <summary>
         /// Добавляет рисовальщик в лист.
         /// </summary>
@@ -129,6 +134,18 @@ namespace Yaisp3
                 {
                     Drawers.RemoveAt(i--);
                     C--;
+                }
+        }
+
+        public void DeleteFirstBillboardDrawer()
+        {
+            int C = Drawers.Count;
+            for (int i = 0; i < C; i++)       //проверка на пустоту
+                if (Drawers[i].GetType() == typeof(BillboardDrawer) && 
+                    !((BillboardDrawer)Drawers[i]).IsValid())
+                {
+                    Drawers.RemoveAt(i);
+                    break;
                 }
         }
 

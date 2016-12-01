@@ -16,8 +16,8 @@ namespace Yaisp3
         private bool placed;
         private MouseEventArgs e0;
 
-        public MainDrawingProcessor Drawers;
-        public CityHandler CityLink;
+        private MainDrawingProcessor Drawers;
+        private CityHandler CityLink;
         private HoveringDrawer DrawableObject;
 
         public FormCity(MainDrawingProcessor OrigDrawers, CityHandler OrigCity)
@@ -32,9 +32,9 @@ namespace Yaisp3
 
         private void CtrlButMarkClick(object sender, EventArgs e)
         {
-            CityLink = new CityHandler(CtrlTxbCityName.Text, (int)(CtrlNumCityHeight.Value),
+            CityLink.CreateCity(CtrlTxbCityName.Text, (int)(CtrlNumCityHeight.Value),
               (int)(CtrlNumCityWidth.Value));
-            Drawers = new MainDrawingProcessor();
+            Drawers.CleanDrawers();
             Drawers.AddDrawer(new GridDrawer(Tuple.Create((int)(CtrlNumCityWidth.Value),
                 (int)(CtrlNumCityHeight.Value))));
             Drawers.SetCanvas(CtrlPicBxCity);

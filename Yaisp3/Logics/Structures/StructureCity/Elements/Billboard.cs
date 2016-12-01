@@ -12,31 +12,61 @@ namespace Yaisp3
     {
         #region Поля
 
+        /// <summary>
+        /// Состояние биллборда.
+        /// </summary>
         public enum State
         {
+            /// <summary>
+            /// Биллборд строится.
+            /// </summary>
             Building,
+            /// <summary>
+            /// Биллборд свободен.
+            /// </summary>
             Free,
+            /// <summary>
+            /// Хозяин - частное лицо.
+            /// </summary>
             Personal,
+            /// <summary>
+            /// Хозяин - компания.
+            /// </summary>
             Company,
-            Government
+            /// <summary>
+            /// Хозяин - гос. компания.
+            /// </summary>
+            Government,
+            /// <summary>
+            /// Невалидный экземпляр.
+            /// </summary>
+            Invalid
         }
 
         /// <summary>
         /// Сумма, которую стоит обслуживание этого биллборда за день.
         /// </summary>
-        private int billboardCostPerDay;
+        private int costPerDay;
 
         /// <summary>
         /// Ссылка на хозяина биллборда.
         /// </summary>
-        private TemplateClient billboardOwner;
+        private TemplateClient owner;
 
         /// <summary>
         /// Текст рекламы, записанной на биллборде.
         /// </summary>
-        private string billboardText;
+        private string text;
 
-        private State billboardState;
+        /// <summary>
+        /// Состояние биллборда.
+        /// </summary>
+        private State state;
+
+        /// <summary>
+        /// Дней до окончания контракта.
+        /// </summary>
+        private int daysToExpireDate;
 
         #endregion
 
@@ -49,10 +79,10 @@ namespace Yaisp3
         /// <param name="AllCost">Ощая цена постройки биллборда.</param>
         public Billboard(int AllCost)
         {
-            billboardState = State.Building;
+            state = State.Building;
             elementHeight = elementWidth = 1;
-            billboardCostPerDay = AllCost / 100;
-            billboardOwner = null;
+            costPerDay = AllCost / 100;
+            owner = null;
         }
 
         /// <summary>
@@ -60,7 +90,31 @@ namespace Yaisp3
         /// </summary>
         public void BillboardBuildToEnd()
         {
-            billboardState = State.Free;
+            state = State.Free;
+        }
+
+        /// <summary>
+        /// Отправляет биллборд на снос.
+        /// </summary>
+        public void Invalidate()
+        {
+            state = State.Invalid;
+        }
+
+        /// <summary>
+        /// Проводит день работы биллборда.
+        /// </summary>
+        /// <returns>Возвращает логическое значение.</returns>
+        public bool PassDay()
+        {
+            daysToExpireDate--;
+            if (daysToExpireDate < 1)
+            {
+                owner = null;
+                state = State.Free;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -69,7 +123,7 @@ namespace Yaisp3
         /// <returns>Возвращает логическое значение.</returns>
         public bool BillboardBuilded()
         {
-            return billboardState != State.Building;
+            return state != State.Building;
         }
 
         /// <summary>
@@ -78,7 +132,7 @@ namespace Yaisp3
         /// <returns>Возвращает логическое значение.</returns>
         public bool BillboardIsFilled()
         {
-            return billboardOwner != null;
+            return owner != null;
         }
 
         /// <summary>
@@ -87,10 +141,11 @@ namespace Yaisp3
         /// <param name="ClientDesire">Кортеж из текста рекламы, цены за аренду и уровня заказчика.</param>
         public void BillboardFill(TemplateClient Client)
         {
-            billboardOwner = Client;
-            billboardText = Client.GetTextData();
-            billboardState = Client.GetType() == typeof(ClientGovernment) ? State.Government :
+            owner = Client;
+            text = Client.GetTextData();
+            state = Client.GetType() == typeof(ClientGovernment) ? State.Government :
                 Client.GetType() == typeof(ClientCompany) ? State.Company : State.Personal;
+            daysToExpireDate = MiscellaneousLogics.MainGetRandomValue(0, 100);
         }
 
         /// <summary>
@@ -99,17 +154,25 @@ namespace Yaisp3
         /// <returns>Возвращает целочисленное значение.</returns>
         public int BillboardPayMoney()
         {
-            return billboardCostPerDay;
+            return costPerDay;
         }
 
+        /// <summary>
+        /// Возвращает состояние биллборда.
+        /// </summary>
+        /// <returns>Возвращает состояние биллборда.</returns>
         public State GetState()
         {
-            return billboardState;
+            return state;
         }
 
+        /// <summary>
+        /// Собирает деньги с хозяина биллборда.
+        /// </summary>
+        /// <returns>Возвращает целое число.</returns>
         public int ClientPay()
         {
-            return billboardOwner == null ? 0 : billboardOwner.Pay();
+            return owner == null ? 0 : owner.Pay();
         }
 
         #endregion

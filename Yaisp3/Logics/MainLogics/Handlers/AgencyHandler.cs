@@ -32,7 +32,7 @@ namespace Yaisp3
                 return false;
         }
 
-        public void AgencySetLink(CityHandler City, QueueClass Queue, MainDrawingProcessor Drawers)
+        public void AgencySetLink(City City, QueueClass Queue, MainDrawingProcessor Drawers)
         {
             Agency.SetLinks(City, Queue, Drawers);
         }
@@ -91,5 +91,6 @@ namespace Yaisp3
         {
             return Agency.GetAgencySummary();
         }
+        
     }
 }
