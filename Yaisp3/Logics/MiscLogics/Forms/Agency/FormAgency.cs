@@ -13,6 +13,9 @@ namespace Yaisp3
     {
         private AgencyHandler AgencyLink;
         private StrategyHandler StrategyLink;
+        private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
+
+
         private TemplateStrategy.StrategyType Strategy = TemplateStrategy.StrategyType.Normal;
 
         public FormAgency(AgencyHandler AgencyOrig, StrategyHandler StrategyOrig)
@@ -70,7 +73,7 @@ namespace Yaisp3
                 AgencyLink = new AgencyHandler();
             if (!AgencyLink.AgencyCreate(CtrlTxbName.Text,  //Если плохое имя - выдаем мсгбокс
                 (int)CtrlNumDeposit.Value,
-                (int)CtrlNumBillboards.Value))
+                (int)CtrlNumBillboards.Value, 1))
                 MessageBox.Show("Вы ввели недопустимое значение в каком-то из полей. Проверьте правильность информации.", "Ошибка значений", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else
             {

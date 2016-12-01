@@ -40,6 +40,7 @@
             this.CtrlButEdit = new System.Windows.Forms.Button();
             this.CtrlNumBillboards = new System.Windows.Forms.NumericUpDown();
             this.CtrlNumDeposit = new System.Windows.Forms.NumericUpDown();
+            this.CtrlLBAgencies = new System.Windows.Forms.ListBox();
             this.CtrlGrBStrat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumBillboards)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumDeposit)).BeginInit();
@@ -78,7 +79,7 @@
             this.CtrlGrBStrat.Controls.Add(this.CtrlRadAggro);
             this.CtrlGrBStrat.Location = new System.Drawing.Point(15, 85);
             this.CtrlGrBStrat.Name = "CtrlGrBStrat";
-            this.CtrlGrBStrat.Size = new System.Drawing.Size(121, 90);
+            this.CtrlGrBStrat.Size = new System.Drawing.Size(121, 94);
             this.CtrlGrBStrat.TabIndex = 4;
             this.CtrlGrBStrat.TabStop = false;
             this.CtrlGrBStrat.Tag = "3";
@@ -134,7 +135,7 @@
             // CtrlButCreate
             // 
             this.CtrlButCreate.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.CtrlButCreate.Location = new System.Drawing.Point(169, 121);
+            this.CtrlButCreate.Location = new System.Drawing.Point(169, 127);
             this.CtrlButCreate.Name = "CtrlButCreate";
             this.CtrlButCreate.Size = new System.Drawing.Size(75, 23);
             this.CtrlButCreate.TabIndex = 7;
@@ -146,7 +147,7 @@
             // 
             this.CtrlButEdit.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.CtrlButEdit.Enabled = false;
-            this.CtrlButEdit.Location = new System.Drawing.Point(169, 152);
+            this.CtrlButEdit.Location = new System.Drawing.Point(169, 156);
             this.CtrlButEdit.Name = "CtrlButEdit";
             this.CtrlButEdit.Size = new System.Drawing.Size(75, 23);
             this.CtrlButEdit.TabIndex = 8;
@@ -198,11 +199,20 @@
             0,
             0});
             // 
+            // CtrlLBAgencies
+            // 
+            this.CtrlLBAgencies.FormattingEnabled = true;
+            this.CtrlLBAgencies.Location = new System.Drawing.Point(258, 6);
+            this.CtrlLBAgencies.Name = "CtrlLBAgencies";
+            this.CtrlLBAgencies.Size = new System.Drawing.Size(104, 173);
+            this.CtrlLBAgencies.TabIndex = 11;
+            // 
             // FormAgency
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(256, 187);
+            this.ClientSize = new System.Drawing.Size(368, 187);
+            this.Controls.Add(this.CtrlLBAgencies);
             this.Controls.Add(this.CtrlNumDeposit);
             this.Controls.Add(this.CtrlNumBillboards);
             this.Controls.Add(this.CtrlButEdit);
@@ -215,7 +225,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormAgency";
-            this.Text = "Рекламное баннерное агентство";
+            this.Text = "Редактор агентств.";
             this.CtrlGrBStrat.ResumeLayout(false);
             this.CtrlGrBStrat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumBillboards)).EndInit();
@@ -239,5 +249,6 @@
     private System.Windows.Forms.Button CtrlButEdit;
     private System.Windows.Forms.NumericUpDown CtrlNumBillboards;
     private System.Windows.Forms.NumericUpDown CtrlNumDeposit;
-  }
+        private System.Windows.Forms.ListBox CtrlLBAgencies;
+    }
 }

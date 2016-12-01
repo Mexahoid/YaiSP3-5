@@ -68,6 +68,11 @@ namespace Yaisp3
         /// </summary>
         private int daysToExpireDate;
 
+        /// <summary>
+        /// ИД агентства-владельца.
+        /// </summary>
+        private int agencyId;
+
         #endregion
 
         #region Методы
@@ -77,8 +82,9 @@ namespace Yaisp3
         /// </summary>
         /// <param name="Position">Позиция установки.</param>
         /// <param name="AllCost">Ощая цена постройки биллборда.</param>
-        public Billboard(int AllCost)
+        public Billboard(int AllCost, int AgencyID)
         {
+            agencyId = AgencyID;
             state = State.Building;
             elementHeight = elementWidth = 1;
             costPerDay = AllCost / 100;
@@ -173,6 +179,12 @@ namespace Yaisp3
         public int ClientPay()
         {
             return owner == null ? 0 : owner.Pay();
+        }
+
+
+        public int GetAgencyId()
+        {
+            return agencyId;
         }
 
         #endregion

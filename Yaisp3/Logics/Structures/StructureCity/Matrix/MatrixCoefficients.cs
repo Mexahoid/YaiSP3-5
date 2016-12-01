@@ -69,9 +69,9 @@ namespace Yaisp3
         /// </summary>
         /// <param name="Row">Ряд матрицы.</param>
         /// <param name="Col">Столбец матрицы.</param>
-        public void PlaceBillboard(int Row, int Col)
+        public void PlaceBillboard(Tuple<int, int> Position)
         {
-            RecursionCoefficients(Row, Col, 10);
+            RecursionCoefficients(Position.Item1, Position.Item2, 10);
         }
 
         /// <summary>
@@ -81,10 +81,10 @@ namespace Yaisp3
         /// <param name="Col">Столбец матрицы.</param>
         /// <param name="Height">Высота дома.</param>
         /// <param name="Width">Ширина дома.</param>
-        public void PlaceCityElement(int Row, int Col, int Width, int Height)
+        public void PlaceCityElement(Tuple<int, int> Position, Tuple<int, int> Size)
         {
-            for (int i = Row; i < Row + Height; i++)
-                for (int j = Col; j < Col + Width; j++)
+            for (int i = Position.Item1; i < Position.Item1 + Size.Item2; i++)
+                for (int j = Position.Item2; j < Position.Item2 + Size.Item1; j++)
                     matrix[i, j] = 1000;
         }
 

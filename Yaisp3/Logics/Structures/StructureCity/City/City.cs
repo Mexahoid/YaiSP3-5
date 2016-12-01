@@ -54,7 +54,7 @@ namespace Yaisp3
             cityElements = new List<TemplateElement>();
             cityName = Name;
         }
-        
+
         /// <summary>
         /// Возвращает размер города.
         /// </summary>
@@ -81,7 +81,7 @@ namespace Yaisp3
         {
             return new MatrixDrawer(cityMatrixProximity);
         }
-        
+
         /// <summary>
         /// Проверяет возможность установки элемента.
         /// </summary>
@@ -114,7 +114,7 @@ namespace Yaisp3
                 House NewHouse = new House(++currentHouseGroup, RightWidth, DownDepth);
                 HouseDrawer Out = new HouseDrawer(NewHouse, citySize.Item2);
                 NewHouse.SetPosition(Row, Col);
-                cityMatrixProximity.PlaceCityElement(Row, Col, RightWidth, DownDepth);
+                cityMatrixProximity.PlaceCityElement(Tuple.Create(Row, Col), Tuple.Create(RightWidth, DownDepth));
                 cityElements.Add(NewHouse);
                 return Out;
             }
@@ -128,12 +128,12 @@ namespace Yaisp3
         public BillboardDrawer PlaceBillboard(Billboard Billboard)
         {
             Tuple<int, int> Position = cityMatrixProximity.GetRandomFreeSpace();
-            cityMatrixProximity.PlaceBillboard(Position.Item1, Position.Item2);
+            cityMatrixProximity.PlaceBillboard(Position);
             Billboard.SetPosition(Position.Item1, Position.Item2);
             cityElements.Add(Billboard);
             return new BillboardDrawer(Billboard, citySize.Item2);
         }
-        
+
         /// <summary>
         /// Удаляет все биллборды.
         /// </summary>
@@ -149,7 +149,11 @@ namespace Yaisp3
                 }
             cityMatrixProximity.DeleteBillboardCoefficients();
         }
-        
+
+        /// <summary>
+        /// Пытается удалить первый невалидный биллборд.
+        /// </summary>
+        /// <returns>Возвращает логическое значение.</returns>
         public bool DeleteOneBillboard()
         {
             int L = cityElements.Count;
@@ -159,10 +163,25 @@ namespace Yaisp3
                 {
                     ((Billboard)cityElements[i]).Invalidate();
                     cityElements.RemoveAt(i);
+                    RecreateMatrix();
                     return true;
                 }
-            cityMatrixProximity.DeleteBillboardCoefficients();
             return false;
+        }
+
+        /// <summary>
+        /// Пересоздаёт матрицу после удаления биллборда.
+        /// </summary>
+        public void RecreateMatrix()
+        {
+            int L = cityElements.Count;
+            cityMatrixProximity.DeleteBillboardCoefficients();
+            for (int i = 0; i < L; i++)
+                if (cityElements[i].GetType() == typeof(House))
+                    cityMatrixProximity.PlaceCityElement(cityElements[i].GetPosition(),
+                        cityElements[i].GetElementSize());
+                else
+                    cityMatrixProximity.PlaceBillboard(cityElements[i].GetPosition());
         }
         #endregion
     }

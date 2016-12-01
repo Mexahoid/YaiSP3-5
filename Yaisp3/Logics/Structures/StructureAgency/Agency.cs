@@ -72,9 +72,10 @@ namespace Yaisp3
         /// <param name="Name">Название агентства.</param>
         /// <param name="Money">Начальный депозит.</param>
         /// <param name="Billboards">Кол-во биллбордов.</param>
-        public Agency(string Name, int Money, int Billboards)
+        public Agency(string Name, int Money, int Billboards, int AgencyID)
         {
             agencyName = Name;
+            agencyId = AgencyID;
             agencyDeposit = Money;
             agencyBillboards = new List<Billboard>();
             agencySummary = new List<Tuple<double, double>>();
@@ -133,7 +134,7 @@ namespace Yaisp3
         public void PlaceBillboardRnd()
         {
             int Cost = 10000 + MiscellaneousLogics.MainGetRandomValue(-1000, 1000);
-            Billboard Billboard = new Billboard(Cost);
+            Billboard Billboard = new Billboard(Cost, agencyId);
             drawersLink.AddDrawer(cityLink.PlaceBillboard(Billboard));
             agencyBillboards.Add(Billboard);
             agencyDeposit -= Cost;
@@ -228,6 +229,9 @@ namespace Yaisp3
             drawersLink.DeleteDrawers(typeof(BillboardDrawer));
         }
 
+        /// <summary>
+        /// Удаляет первый невалидный биллборд.
+        /// </summary>
         public void DeleteOneBillboard()
         {
             if (cityLink.DeleteOneBillboard())

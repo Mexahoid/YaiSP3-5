@@ -44,14 +44,14 @@ namespace Yaisp3
             System.IO.StreamReader sr = new System.IO.StreamReader("../../Logics/Static/TextStorage/Texts/CompanyNames.txt");
             string[] Arr = sr.ReadToEnd().Split(';');
             sr.Close();
-            ClientNames = Arr[0].Split(new string[] { "\n", "\n\r" },
+            ClientNames = Arr[0].Split(new string[] { "\n", "\r\n", "\n\r" },
               StringSplitOptions.RemoveEmptyEntries);
-            CompanyNames = Arr[1].Split(new string[] { "\n", "\n\r" },
+            CompanyNames = Arr[1].Split(new string[] { "\n", "\r\n", "\n\r" },
               StringSplitOptions.RemoveEmptyEntries);
-            GovernNames = Arr[2].Split(new string[] { "\n", "\n\r" },
+            GovernNames = Arr[2].Split(new string[] { "\n", "\r\n", "\n\r" },
               StringSplitOptions.RemoveEmptyEntries);
             sr = new System.IO.StreamReader("../../Logics/Static/TextStorage/Texts/BillboardsTexts.txt");
-            BillboardTexts = sr.ReadToEnd().Split(new string[] { "\n", "\n\r" },
+            BillboardTexts = sr.ReadToEnd().Split(new string[] { "\n", "\r\n", "\n\r" },
               StringSplitOptions.RemoveEmptyEntries);
             sr.Close();
         }

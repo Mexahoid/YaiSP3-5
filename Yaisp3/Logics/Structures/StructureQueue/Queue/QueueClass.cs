@@ -121,7 +121,6 @@ namespace Yaisp3
             return queueHead == null;
         }
 
-
         /// <summary>
         /// Выдача обычного клиента из очереди.
         /// </summary>

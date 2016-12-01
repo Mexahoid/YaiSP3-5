@@ -5,10 +5,25 @@ using System.Text;
 
 namespace Yaisp3
 {
+    /// <summary>
+    /// Обработчик агентства.
+    /// </summary>
     public class AgencyHandler
     {
+        #region Поля
+
+        /// <summary>
+        /// Обрабатываемое агентство.
+        /// </summary>
         Agency Agency;
 
+        #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Конструктор обработчика.
+        /// </summary>
         public AgencyHandler()
         {
             Agency = null;
@@ -21,34 +36,39 @@ namespace Yaisp3
         /// <param name="Money">Начальный депозит.</param>
         /// <param name="Billboards">Количество рекламных щитов.</param>
         /// <returns>Возвращает логическое значение.</returns>
-        public bool AgencyCreate(string Name, int Money, int Billboards)
+        public bool AgencyCreate(string Name, int Money, int Billboards, int AgencyGroup)
         {
             if (Name != null && Name != "")
             {
-                Agency = new Agency(Name, Money, Billboards);
+                Agency = new Agency(Name, Money, Billboards, AgencyGroup);
                 return true;
             }
             else
                 return false;
         }
 
+        /// <summary>
+        /// Заносит в агентство ссылки на город, очередь и отрисовщики.
+        /// </summary>
+        /// <param name="City">Ссылка на город.</param>
+        /// <param name="Queue">Ссылка на очередь.</param>
+        /// <param name="Drawers">Ссылка на отрисовщики.</param>
         public void AgencySetLink(City City, QueueClass Queue, MainDrawingProcessor Drawers)
         {
             Agency.SetLinks(City, Queue, Drawers);
         }
-
-        public void AgencyPassDay()
-        {
-            Agency.PassDay();
-        }
-
+        
+        /// <summary>
+        /// Возвращает ссылку на агентство.
+        /// </summary>
+        /// <returns>Возвращает экземпляр агентства.</returns>
         public Agency GetAgencyLink()
         {
             return Agency;
         }
 
         /// <summary>
-        /// Возвращает кортеж данных агентства/
+        /// Возвращает кортеж данных агентства.
         /// </summary>
         /// <returns>Возвращает кортеж из строки и двух целочисленных значений.</returns>
         public Tuple<string, int, int> AgencyGetData()
@@ -91,6 +111,7 @@ namespace Yaisp3
         {
             return Agency.GetAgencySummary();
         }
-        
+
+        #endregion
     }
 }

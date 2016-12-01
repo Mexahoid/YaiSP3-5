@@ -15,16 +15,18 @@ namespace Yaisp3
         private MouseEventArgs eOld;
         private MainDrawingProcessor drawers;
 
+        private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
+
         private AgencyHandler Agency;       //Создается соответствующей формой.
         private CityHandler City;           //Создается соответствующей формой.
         private StrategyHandler Strategy;   //Создается соответствующей формой.
         private DateHandler Date;
         private QueueHandler Queue;
-
-
+        
         public FormMain()
         {
             InitializeComponent();
+            Agencies = new List<Tuple<AgencyHandler, StrategyHandler>>();
             drawers = new MainDrawingProcessor();
             drawers.SetCanvas(CtrlPicBxMap);
             Date = new DateHandler();
@@ -70,6 +72,19 @@ namespace Yaisp3
             }
         }
 
+        private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
+        {
+            FormAgency Af = new FormAgency(Agency, Strategy);
+            if (Af.ShowDialog() == DialogResult.OK)
+            {
+                CtrlChBIndAgen.Checked = true;
+                CtrlTSMIAgencyDelete.Enabled = true;
+                if (CtrlChBIndCity.Checked)
+                    CtrlButTimerStart.Enabled = true;
+                Agency.AgencySetLink(City.GetCityLink(), Queue.GetQueueLink(), drawers);
+                Agencies.Add(Tuple.Create(Agency, Strategy));
+            }
+        }
         private void CtrlTSMIAgencyDeleteClick(object sender, EventArgs e)
         {
             Agency.AgencyDestroy();
@@ -84,7 +99,7 @@ namespace Yaisp3
             if (Cf.ShowDialog() == DialogResult.OK)
             {
                 CtrlChBIndCity.Checked = true;
-                CtrlTSMIAgencyDelete.Enabled = CtrlTSMIAgencyMenu.Enabled = true;
+                CtrlTSMIAgencyMenu.Enabled = true;
                 if (CtrlChBIndAgen.Checked)
                     CtrlButTimerStart.Enabled = true;
             }
@@ -93,17 +108,6 @@ namespace Yaisp3
                 City = null;
             drawers.SetCanvas(CtrlPicBxMap);
             CtrlPicBxMap.Invalidate();
-        }
-        private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
-        {
-            FormAgency Af = new FormAgency(Agency, Strategy);
-            if (Af.ShowDialog() == DialogResult.OK)
-            {
-                CtrlChBIndAgen.Checked = true;
-                if (CtrlChBIndCity.Checked)
-                    CtrlButTimerStart.Enabled = true;
-                Agency.AgencySetLink(City.GetCityLink(), Queue.GetQueueLink(), drawers);
-            }
         }
         private void CtrlTSMIProximityMapClick(object sender, EventArgs e)
         {

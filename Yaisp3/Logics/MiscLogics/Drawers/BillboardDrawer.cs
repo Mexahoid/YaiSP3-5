@@ -38,6 +38,10 @@ namespace Yaisp3
             cityHeight = CityHeight;
         }
         
+        /// <summary>
+        /// Отрисовывает биллборд на канве.
+        /// </summary>
+        /// <param name="Graphics">Канва, на которой производится рисование.</param>
         public override void Draw(Graphics Graphics)
         {
             Tuple<int, int> Position = billboard.GetPosition();
@@ -66,6 +70,9 @@ namespace Yaisp3
                     Graphics.FillRectangle(Brushes.Crimson, ScrX, ScrY, LastX - ScrX, Math.Abs(LastY - ScrY));
                     break;
             }
+            
+            Font MyFont = new Font("Courier New", (float)(I2 / (x2p - x1p)) + 3, FontStyle.Bold);
+            Graphics.DrawString(billboard.GetAgencyId().ToString(), MyFont, Brushes.Black, ScrX, ScrY);
         }
 
         /// <summary>
