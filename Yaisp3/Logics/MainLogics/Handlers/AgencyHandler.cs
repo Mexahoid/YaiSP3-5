@@ -76,10 +76,6 @@ namespace Yaisp3
             return Agency.GetData();
         }
 
-        /// <summary>
-        /// Выводит название агентства.
-        /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
             return Agency.ToString();

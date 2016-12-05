@@ -122,10 +122,13 @@ namespace Yaisp3
             for (int i = 0; i < C; i++)
                 if (!Agencies[i].Item2.StrategyAction())
                 {
-                    CtrlTimer.Stop();
+                    CtrlTimer.Enabled = false;
+                    CtrlButTimerPause.Text = "Продолжить";
                     MessageBox.Show("Агентство " + Agencies[i].Item1.ToString() + " было ликвидировано по причине банкротства.", "Беда!");
                     Agencies[i].Item1.AgencyDestroy();
                     Agencies[i].Item2.DeleteStrategy();
+                    Agencies.RemoveAt(i--);
+                    C--;
                 }
             Date.DateNewDay();
             drawers.Draw();

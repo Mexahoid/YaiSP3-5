@@ -183,6 +183,7 @@ namespace Yaisp3
                 else
                     cityMatrixProximity.PlaceBillboard(cityElements[i].GetPosition());
         }
+
         #endregion
     }
 }

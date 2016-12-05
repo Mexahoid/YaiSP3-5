@@ -63,10 +63,13 @@ namespace Yaisp3
         {
             if (agency.PassDay())
             {
-                int Count = agency.HowMuchCanWeAfford(
-                      agency.QueueCount());
-                for (int i = 0; i < Count; i++)
-                    agency.PlaceBillboardRnd();
+                if (agency.GetBuildingBillboardsCount() == 0)
+                {
+                    int Count = agency.HowMuchCanWeAfford(
+                         agency.QueueCount());
+                    for (int i = 0; i < Count; i++)
+                        agency.PlaceBillboardRnd();
+                }
                 return true;
             }
             return false;

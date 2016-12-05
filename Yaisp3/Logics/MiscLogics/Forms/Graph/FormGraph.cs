@@ -13,6 +13,7 @@ namespace Yaisp3
     {
         private bool drawingGraph = false;
         private MainDrawingProcessor graphDrawer;
+        private List<MainDrawingProcessor> Drawers;
         private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
 
         private MouseEventArgs eOld;
@@ -20,12 +21,18 @@ namespace Yaisp3
         public FormGraph(List<Tuple<AgencyHandler, StrategyHandler>> Agencies)
         {
             this.Agencies = Agencies;
+            graphDrawer = new MainDrawingProcessor();
+            Drawers = new List<MainDrawingProcessor>();
             InitializeComponent();
             int C = Agencies.Count;
             for (int i = 0; i < C; i++)
-                CtrlLBAgencies.Items.Add(Agencies[i].Item1.ToString());
+            {
+                graphDrawer.AddDrawer(new GraphDrawer(Agencies[i].Item1.AgencyGetSummary()));
+                graphDrawer.SetCanvas(CtrlPicBxGraph);
+            }
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             CtrlPicBxGraph.MouseWheel += new MouseEventHandler(CtrlPicBxGraph_MouseScroll);
+            CtrlPicBxGraph.Invalidate();
         }
 
         private void CtrlPicBxGraph_MouseScroll(object sender, MouseEventArgs e)
@@ -59,18 +66,18 @@ namespace Yaisp3
         }
         private void CtrlPicBxGraph_MouseMove(object sender, MouseEventArgs e)
         {
-            if (drawingGraph)
-            {
-                graphDrawer.Move(e.X, e.Y, eOld.X, eOld.Y);
-                eOld = e;
-                graphDrawer.Draw();
-            }
+                if (drawingGraph)
+                {
+                    graphDrawer.Move(e.X, e.Y, eOld.X, eOld.Y);
+                    eOld = e;
+                    graphDrawer.Draw();
+                }
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (graphDrawer != null)
-                graphDrawer.Draw();
+                if (graphDrawer != null)
+                    graphDrawer.Draw();
         }
 
         /// <summary>
@@ -79,14 +86,6 @@ namespace Yaisp3
         private void CtrlPicBxGraph_Click(object sender, EventArgs e)
         {
             CtrlPicBxGraph.Focus();
-        }
-
-        private void CtrlLBAgencies_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            graphDrawer = new MainDrawingProcessor();
-            graphDrawer.AddDrawer(new GraphDrawer(Agencies[CtrlLBAgencies.SelectedIndex].Item1.AgencyGetSummary()));
-            graphDrawer.SetCanvas(CtrlPicBxGraph);
-            graphDrawer.Draw();
         }
     }
 }

@@ -22,6 +22,9 @@ namespace Yaisp3
         /// </summary>
         private int badDaysCounter = -1;
 
+        private int daysTillResetting;
+
+
         #endregion
 
         #region Методы
@@ -52,7 +55,12 @@ namespace Yaisp3
             }
             int Temp = agency.QueueCount();
             if (pastOrderCount < Temp)
+            { 
                 pastOrderCount = Temp;
+                daysTillResetting = MiscellaneousLogics.MainGetRandomValue(0, 6);
+            }
+            if (--daysTillResetting < 1)
+                pastOrderCount = 0;
             List<Tuple<double, double>> Summary = agency.GetAgencySummary();
             int C = Summary.Count;
             if (C > 10)

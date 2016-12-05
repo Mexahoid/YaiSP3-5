@@ -64,7 +64,7 @@ namespace Yaisp3
 
         #endregion
 
-        #region Методы
+        -#region Методы
 
         /// <summary>
         /// Конструктор агентства.
@@ -148,11 +148,8 @@ namespace Yaisp3
             if (agencyDeposit <= 0)
                 return false;
             foreach (Billboard Bb in agencyBillboards)
-                if (!Bb.BillboardBuilded())
-                {
-                    Bb.BillboardBuildToEnd();
+                if (!Bb.BillboardBuilded() && Bb.BillboardBuildToEnd())
                     agencyFreeBillboards += 1;
-                }
             int Temp = agencyDeposit;
             while (agencyFreeBillboards > 0 && !queueLink.QueueIsNull())
             {
@@ -220,6 +217,16 @@ namespace Yaisp3
             return agencyFreeBillboards;
         }
 
+        public int GetBuildingBillboardsCount()
+        {
+            int C = agencyBillboards.Count;
+            int Count = 0;
+            for (int i = 0; i < C; i++)
+                if (!agencyBillboards[i].BillboardBuilded())
+                    Count++;
+            return Count;
+        }
+
         /// <summary>
         /// Удаляет сами биллборды и рисовальщики биллбордов.
         /// </summary>
@@ -254,6 +261,7 @@ namespace Yaisp3
         {
             return agencyName;
         }
+
         #endregion
     }
 }

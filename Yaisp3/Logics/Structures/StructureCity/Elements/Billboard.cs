@@ -73,6 +73,11 @@ namespace Yaisp3
         /// </summary>
         private int agencyId;
 
+        /// <summary>
+        /// Дней до окончания стройки.
+        /// </summary>
+        private int daysToBuild = 20;
+
         #endregion
 
         #region Методы
@@ -94,9 +99,14 @@ namespace Yaisp3
         /// <summary>
         /// Активирует биллборд как готовый к заполнению.
         /// </summary>
-        public void BillboardBuildToEnd()
+        public bool BillboardBuildToEnd()
         {
-            state = State.Free;
+            if (--daysToBuild < 1)
+            {
+                state = State.Free;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -138,7 +148,7 @@ namespace Yaisp3
         /// <returns>Возвращает логическое значение.</returns>
         public bool BillboardIsFilled()
         {
-            return owner != null;
+            return owner != null && state != State.Building;
         }
 
         /// <summary>
@@ -181,7 +191,10 @@ namespace Yaisp3
             return owner == null ? 0 : owner.Pay();
         }
 
-
+        /// <summary>
+        /// Возвращает ИД агентства.
+        /// </summary>
+        /// <returns>Возвращает целочисленное значение.</returns>
         public int GetAgencyId()
         {
             return agencyId;
