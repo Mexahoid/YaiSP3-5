@@ -64,7 +64,7 @@ namespace Yaisp3
 
         #endregion
 
-        -#region Методы
+        #region Методы
 
         /// <summary>
         /// Конструктор агентства.

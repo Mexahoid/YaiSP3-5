@@ -9,7 +9,7 @@ namespace Yaisp3
     /// <summary>
     /// Абстрактный класс рисовальщика.
     /// </summary>
-    public abstract class DrawingWrapperTemplate
+    public abstract class DrawingWrapperTemplate : IDrawable, IResizable
     {
         #region Поля
 

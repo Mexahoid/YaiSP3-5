@@ -13,7 +13,7 @@ namespace Yaisp3
     {
         private bool drawingGraph = false;
         private MainDrawingProcessor graphDrawer;
-        private List<MainDrawingProcessor> Drawers;
+        private List<IDrawable> Drawers;
         private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
 
         private MouseEventArgs eOld;
@@ -22,13 +22,18 @@ namespace Yaisp3
         {
             this.Agencies = Agencies;
             graphDrawer = new MainDrawingProcessor();
-            Drawers = new List<MainDrawingProcessor>();
+            Drawers = new List<IDrawable>();
             InitializeComponent();
             int C = Agencies.Count;
+            List<string> Names = new List<string>();
+            for (int i = 0; i < C; i++)
+                Names.Add(Agencies[i].Item1.ToString());
+            Drawers.Add(new GraphLegendDrawer(Names, CtrlPicBxGraph.Width));
+
             for (int i = 0; i < C; i++)
             {
-                graphDrawer.AddDrawer(new GraphDrawer(Agencies[i].Item1.AgencyGetSummary()));
-                graphDrawer.SetCanvas(CtrlPicBxGraph);
+                Drawers.Add(new GraphDrawer(Agencies[i].Item1.AgencyGetSummary()));
+                Drawers[i].SetCanvas(CtrlPicBxGraph);
             }
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             CtrlPicBxGraph.MouseWheel += new MouseEventHandler(CtrlPicBxGraph_MouseScroll);
@@ -66,18 +71,18 @@ namespace Yaisp3
         }
         private void CtrlPicBxGraph_MouseMove(object sender, MouseEventArgs e)
         {
-                if (drawingGraph)
-                {
-                    graphDrawer.Move(e.X, e.Y, eOld.X, eOld.Y);
-                    eOld = e;
-                    graphDrawer.Draw();
-                }
+            if (drawingGraph)
+            {
+                graphDrawer.Move(e.X, e.Y, eOld.X, eOld.Y);
+                eOld = e;
+                graphDrawer.Draw();
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-                if (graphDrawer != null)
-                    graphDrawer.Draw();
+            if (graphDrawer != null)
+                graphDrawer.Draw();
         }
 
         /// <summary>

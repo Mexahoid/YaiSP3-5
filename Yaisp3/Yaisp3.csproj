@@ -49,6 +49,8 @@
     <Compile Include="Logics\MainLogics\Handlers\DateHandler.cs" />
     <Compile Include="Logics\MainLogics\Processors\MainDrawingProcessor.cs" />
     <Compile Include="Logics\MiscLogics\Drawers\GraphLegendDrawer.cs" />
+    <Compile Include="Logics\MiscLogics\Interfaces\IDrawable.cs" />
+    <Compile Include="Logics\MiscLogics\Interfaces\IResizable.cs" />
     <Compile Include="Logics\Static\MiscellaneousLogics.cs" />
     <Compile Include="Logics\MainLogics\Handlers\QueueHandler.cs" />
     <Compile Include="Logics\MainLogics\Handlers\StrategyHandler.cs" />
