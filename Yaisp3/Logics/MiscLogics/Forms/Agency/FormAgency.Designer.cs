@@ -1,4 +1,4 @@
-﻿namespace Yaisp3
+﻿namespace AgencySimulator
 {
   partial class FormAgency
   {

@@ -6,8 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AgencySimulator.Interfaces;
+using System.IO;
+using System.Reflection;
 
-namespace Yaisp3
+namespace AgencySimulator
 {
     public partial class FormMain : Form
     {
@@ -16,10 +19,12 @@ namespace Yaisp3
         private MainDrawingProcessor drawers;
 
         private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
+        private CityHandler City;
 
-        private CityHandler City;           //Создается соответствующей формой.
         private DateHandler Date;
         private QueueHandler Queue;
+
+        private List<IStrategy> Strategies;
 
         public FormMain()
         {
@@ -99,13 +104,11 @@ namespace Yaisp3
             FormProximity Pr = new FormProximity(City);
             Pr.Show();
         }
-
         private void CtrlTSMIGraph_Click(object sender, EventArgs e)
         {
             FormGraph Gr = new FormGraph(Agencies);
             Gr.Show();
         }
-
         private void CtrlTSMIDrop_Click(object sender, EventArgs e)
         {
             if (CtrlTimer.Enabled)
@@ -133,7 +136,6 @@ namespace Yaisp3
             Date.DateNewDay();
             drawers.Draw();
         }
-
         private void CtrlButTimerStartClick(object sender, EventArgs e)
         {
             CtrlButTimerStart.Enabled = false;
@@ -167,6 +169,41 @@ namespace Yaisp3
         private void CtrlPicBxMap_Click(object sender, EventArgs e)
         {
             CtrlPicBxMap.Focus();
+        }
+
+        private void LoadPlugins()
+        {
+            string[] pluginFiles = Directory.GetFiles(Application.StartupPath, "*.dll");
+            Strategies = new List<IStrategy>();
+
+            foreach (string pluginPath in pluginFiles)
+            {
+                Type objType = null;
+                try
+                {
+                    // пытаемся загрузить библиотеку
+                    Assembly assembly = Assembly.LoadFrom(pluginPath);
+                    if (assembly != null)
+                    {
+                        objType = assembly.GetType(Path.GetFileNameWithoutExtension(pluginPath) + ".PlugIn");
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+                try
+                {
+                    if (objType != null)
+                    {
+                        Strategies.Add((IStrategy)Activator.CreateInstance(objType));
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
         }
     }
 }

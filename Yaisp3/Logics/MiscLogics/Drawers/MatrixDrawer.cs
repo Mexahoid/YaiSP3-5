@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace Yaisp3
+namespace AgencySimulator
 {
     /// <summary>
     /// Класс отрисовщика матрицы коэффициентов.

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Yaisp3
+namespace AgencySimulator
 {
     public partial class FormGraph : Form
     {
@@ -21,23 +21,34 @@ namespace Yaisp3
         public FormGraph(List<Tuple<AgencyHandler, StrategyHandler>> Agencies)
         {
             this.Agencies = Agencies;
-            graphDrawer = new MainDrawingProcessor();
-            Drawers = new List<IDrawable>();
             InitializeComponent();
-            int C = Agencies.Count;
-            List<string> Names = new List<string>();
-            for (int i = 0; i < C; i++)
-                Names.Add(Agencies[i].Item1.ToString());
-            Drawers.Add(new GraphLegendDrawer(Names, CtrlPicBxGraph.Width));
-
-            for (int i = 0; i < C; i++)
-            {
-                Drawers.Add(new GraphDrawer(Agencies[i].Item1.AgencyGetSummary()));
-                Drawers[i].SetCanvas(CtrlPicBxGraph);
-            }
+            InitData();
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             CtrlPicBxGraph.MouseWheel += new MouseEventHandler(CtrlPicBxGraph_MouseScroll);
             CtrlPicBxGraph.Invalidate();
+        }
+
+        private void InitData()
+        {
+            graphDrawer = new MainDrawingProcessor();
+            Drawers = new List<IDrawable>();
+            int C = Agencies.Count;
+            List<string> Names = new List<string>();
+            List<int> Hashes = new List<int>();
+            string Name;
+            for (int i = 0; i < C; i++)
+            {
+                Name = Agencies[i].Item1.ToString();
+                Names.Add(Name);
+                Hashes.Add(Name.GetHashCode() + MiscellaneousLogics.MainGetRandomValue(-1000, 1000)
+                    + MiscellaneousLogics.MainGetRandomValue(-100000, 100000)
+                    + MiscellaneousLogics.MainGetRandomValue(-10000000, 10000000));
+            }
+            graphDrawer.AddDrawer(new GraphLegendDrawer(Names, Hashes));
+
+            for (int i = 0; i < C; i++)
+                graphDrawer.AddDrawer(new GraphDrawer(Agencies[i].Item1.AgencyGetSummary(), Hashes[i]));
+            graphDrawer.SetCanvas(CtrlPicBxGraph);
         }
 
         private void CtrlPicBxGraph_MouseScroll(object sender, MouseEventArgs e)

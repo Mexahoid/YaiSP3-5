@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace Yaisp3
+namespace AgencySimulator
 {
     /// <summary>
     /// Класс отрисовщика дома.

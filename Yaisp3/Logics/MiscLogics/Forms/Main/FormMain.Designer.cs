@@ -1,4 +1,11 @@
-﻿namespace Yaisp3
+﻿using System.Windows.Forms;
+using AgencySimulator.Interfaces;
+using System.IO;
+using System.Collections.Generic;
+using System;
+using System.Reflection;
+
+namespace AgencySimulator
 {
     partial class FormMain
     {
@@ -29,33 +36,33 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.CtrlPicBxMap = new System.Windows.Forms.PictureBox();
-            this.CtrlLblMisc1 = new System.Windows.Forms.Label();
-            this.CtrlLblDate = new System.Windows.Forms.Label();
-            this.CtrlMainStrip = new System.Windows.Forms.ToolStrip();
-            this.CtrlTSMIDrop = new System.Windows.Forms.ToolStripDropDownButton();
-            this.CtrlTSMICreateCity = new System.Windows.Forms.ToolStripMenuItem();
-            this.CtrlTSMIAgencyMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.CtrlTSMIProximityMap = new System.Windows.Forms.ToolStripMenuItem();
-            this.CtrlTSMIGraph = new System.Windows.Forms.ToolStripMenuItem();
-            this.CtrlTimer = new System.Windows.Forms.Timer(this.components);
-            this.CtrlButTimerPause = new System.Windows.Forms.Button();
-            this.CtrlButTimerStart = new System.Windows.Forms.Button();
-            this.CtrlGrBTime = new System.Windows.Forms.GroupBox();
-            this.CtrlLblMisc3 = new System.Windows.Forms.Label();
-            this.CtrlLblMisc2 = new System.Windows.Forms.Label();
-            this.CtrlTBSpeed = new System.Windows.Forms.TrackBar();
-            this.CtrlChBIndCity = new System.Windows.Forms.CheckBox();
-            this.CtrlChBIndAgen = new System.Windows.Forms.CheckBox();
-            this.CtrlGrbIndic = new System.Windows.Forms.GroupBox();
-            this.CtrlGrBQueue = new System.Windows.Forms.GroupBox();
-            this.CtrlLblMisc7 = new System.Windows.Forms.Label();
-            this.CtrlLblMisc6 = new System.Windows.Forms.Label();
-            this.CtrlTBQueueIntense = new System.Windows.Forms.TrackBar();
-            this.CtrlLblMisc5 = new System.Windows.Forms.Label();
-            this.CtrlLblMisc4 = new System.Windows.Forms.Label();
-            this.CtrlTBQueueQuantity = new System.Windows.Forms.TrackBar();
-            this.CtrlTxbOrders = new System.Windows.Forms.TextBox();
+            this.CtrlPicBxMap = new PictureBox();
+            this.CtrlLblMisc1 = new Label();
+            this.CtrlLblDate = new Label();
+            this.CtrlMainStrip = new ToolStrip();
+            this.CtrlTSMIDrop = new ToolStripDropDownButton();
+            this.CtrlTSMICreateCity = new ToolStripMenuItem();
+            this.CtrlTSMIAgencyMenu = new ToolStripMenuItem();
+            this.CtrlTSMIProximityMap = new ToolStripMenuItem();
+            this.CtrlTSMIGraph = new ToolStripMenuItem();
+            this.CtrlTimer = new Timer(this.components);
+            this.CtrlButTimerPause = new Button();
+            this.CtrlButTimerStart = new Button();
+            this.CtrlGrBTime = new GroupBox();
+            this.CtrlLblMisc3 = new Label();
+            this.CtrlLblMisc2 = new Label();
+            this.CtrlTBSpeed = new TrackBar();
+            this.CtrlChBIndCity = new CheckBox();
+            this.CtrlChBIndAgen = new CheckBox();
+            this.CtrlGrbIndic = new GroupBox();
+            this.CtrlGrBQueue = new GroupBox();
+            this.CtrlLblMisc7 = new Label();
+            this.CtrlLblMisc6 = new Label();
+            this.CtrlTBQueueIntense = new TrackBar();
+            this.CtrlLblMisc5 = new Label();
+            this.CtrlLblMisc4 = new Label();
+            this.CtrlTBQueueQuantity = new TrackBar();
+            this.CtrlTxbOrders = new TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxMap)).BeginInit();
             this.CtrlMainStrip.SuspendLayout();
             this.CtrlGrBTime.SuspendLayout();
@@ -75,9 +82,9 @@
             this.CtrlPicBxMap.TabIndex = 0;
             this.CtrlPicBxMap.TabStop = false;
             this.CtrlPicBxMap.Click += new System.EventHandler(this.CtrlPicBxMap_Click);
-            this.CtrlPicBxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseDown);
-            this.CtrlPicBxMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseMove);
-            this.CtrlPicBxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseUp);
+            this.CtrlPicBxMap.MouseDown += new MouseEventHandler(this.CtrlPicBxMap_MouseDown);
+            this.CtrlPicBxMap.MouseMove += new MouseEventHandler(this.CtrlPicBxMap_MouseMove);
+            this.CtrlPicBxMap.MouseUp += new MouseEventHandler(this.CtrlPicBxMap_MouseUp);
             // 
             // CtrlLblMisc1
             // 
@@ -99,7 +106,7 @@
             // 
             // CtrlMainStrip
             // 
-            this.CtrlMainStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CtrlMainStrip.Items.AddRange(new ToolStripItem[] {
             this.CtrlTSMIDrop});
             this.CtrlMainStrip.Location = new System.Drawing.Point(0, 0);
             this.CtrlMainStrip.Name = "CtrlMainStrip";
@@ -109,8 +116,8 @@
             // 
             // CtrlTSMIDrop
             // 
-            this.CtrlTSMIDrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.CtrlTSMIDrop.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CtrlTSMIDrop.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            this.CtrlTSMIDrop.DropDownItems.AddRange(new ToolStripItem[] {
             this.CtrlTSMICreateCity,
             this.CtrlTSMIAgencyMenu,
             this.CtrlTSMIProximityMap,
@@ -118,7 +125,7 @@
             this.CtrlTSMIDrop.Name = "CtrlTSMIDrop";
             this.CtrlTSMIDrop.Size = new System.Drawing.Size(54, 22);
             this.CtrlTSMIDrop.Text = "Меню";
-            this.CtrlTSMIDrop.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.CtrlTSMIDrop.TextImageRelation = TextImageRelation.Overlay;
             this.CtrlTSMIDrop.Click += new System.EventHandler(this.CtrlTSMIDrop_Click);
             // 
             // CtrlTSMICreateCity
@@ -216,7 +223,7 @@
             this.CtrlTBSpeed.Maximum = 25;
             this.CtrlTBSpeed.Minimum = 1;
             this.CtrlTBSpeed.Name = "CtrlTBSpeed";
-            this.CtrlTBSpeed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.CtrlTBSpeed.RightToLeft = RightToLeft.Yes;
             this.CtrlTBSpeed.Size = new System.Drawing.Size(218, 45);
             this.CtrlTBSpeed.TabIndex = 8;
             this.CtrlTBSpeed.Value = 25;
@@ -293,7 +300,7 @@
             this.CtrlTBQueueIntense.Location = new System.Drawing.Point(6, 70);
             this.CtrlTBQueueIntense.Maximum = 12;
             this.CtrlTBQueueIntense.Name = "CtrlTBQueueIntense";
-            this.CtrlTBQueueIntense.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.CtrlTBQueueIntense.RightToLeft = RightToLeft.Yes;
             this.CtrlTBQueueIntense.Size = new System.Drawing.Size(218, 45);
             this.CtrlTBQueueIntense.TabIndex = 12;
             this.CtrlTBQueueIntense.Value = 1;
@@ -338,7 +345,7 @@
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(911, 691);
             this.Controls.Add(this.CtrlTxbOrders);
             this.Controls.Add(this.CtrlGrBQueue);
@@ -369,33 +376,38 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox CtrlPicBxMap;
-        private System.Windows.Forms.ToolStrip CtrlMainStrip;
-        private System.Windows.Forms.ToolStripDropDownButton CtrlTSMIDrop;
-        private System.Windows.Forms.ToolStripMenuItem CtrlTSMICreateCity;
-        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIAgencyMenu;
-        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIProximityMap;
-        private System.Windows.Forms.ToolStripMenuItem CtrlTSMIGraph;
-        private System.Windows.Forms.Timer CtrlTimer;
-        private System.Windows.Forms.Button CtrlButTimerPause;
-        private System.Windows.Forms.Button CtrlButTimerStart;
-        private System.Windows.Forms.CheckBox CtrlChBIndCity;
-        private System.Windows.Forms.CheckBox CtrlChBIndAgen;
-        private System.Windows.Forms.GroupBox CtrlGrBTime;
-        private System.Windows.Forms.GroupBox CtrlGrbIndic;
-        private System.Windows.Forms.GroupBox CtrlGrBQueue;
-        private System.Windows.Forms.TextBox CtrlTxbOrders;
-        private System.Windows.Forms.Label CtrlLblDate;
-        private System.Windows.Forms.Label CtrlLblMisc1;
-        private System.Windows.Forms.Label CtrlLblMisc3;
-        private System.Windows.Forms.Label CtrlLblMisc2;
-        private System.Windows.Forms.Label CtrlLblMisc5;
-        private System.Windows.Forms.Label CtrlLblMisc4;
-        private System.Windows.Forms.Label CtrlLblMisc7;
-        private System.Windows.Forms.Label CtrlLblMisc6;
-        private System.Windows.Forms.TrackBar CtrlTBSpeed;
-        private System.Windows.Forms.TrackBar CtrlTBQueueQuantity;
-        private System.Windows.Forms.TrackBar CtrlTBQueueIntense;
+        #region Controls 
+
+        private PictureBox CtrlPicBxMap;
+        private ToolStrip CtrlMainStrip;
+        private ToolStripDropDownButton CtrlTSMIDrop;
+        private ToolStripMenuItem CtrlTSMICreateCity;
+        private ToolStripMenuItem CtrlTSMIAgencyMenu;
+        private ToolStripMenuItem CtrlTSMIProximityMap;
+        private ToolStripMenuItem CtrlTSMIGraph;
+        private Timer CtrlTimer;
+        private Button CtrlButTimerPause;
+        private Button CtrlButTimerStart;
+        private CheckBox CtrlChBIndCity;
+        private CheckBox CtrlChBIndAgen;
+        private GroupBox CtrlGrBTime;
+        private GroupBox CtrlGrbIndic;
+        private GroupBox CtrlGrBQueue;
+        private TextBox CtrlTxbOrders;
+        private Label CtrlLblDate;
+        private Label CtrlLblMisc1;
+        private Label CtrlLblMisc3;
+        private Label CtrlLblMisc2;
+        private Label CtrlLblMisc5;
+        private Label CtrlLblMisc4;
+        private Label CtrlLblMisc7;
+        private Label CtrlLblMisc6;
+        private TrackBar CtrlTBSpeed;
+        private TrackBar CtrlTBQueueQuantity;
+        private TrackBar CtrlTBQueueIntense;
+
+        #endregion
+
     }
 }
 

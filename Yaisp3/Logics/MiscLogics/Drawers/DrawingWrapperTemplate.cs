@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace Yaisp3
+namespace AgencySimulator
 {
     /// <summary>
     /// Абстрактный класс рисовальщика.
     /// </summary>
-    public abstract class DrawingWrapperTemplate : IDrawable, IResizable
+    public abstract class DrawingWrapperTemplate : IDrawable
     {
         #region Поля
 

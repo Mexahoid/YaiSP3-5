@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Yaisp3
+namespace AgencySimulator.Main
 {
     static class Program
     {

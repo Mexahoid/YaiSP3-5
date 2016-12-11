@@ -5,19 +5,19 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Yaisp3
+namespace AgencySimulator
 {
     /// <summary>
     /// Главный класс-отрисовщик.
     /// </summary>
-    public class MainDrawingProcessor
+    public class MainDrawingProcessor : IDisposable
     {
         #region Поля
 
         /// <summary>
         /// Список рисовальщиков.
         /// </summary>
-        private List<DrawingWrapperTemplate> Drawers;
+        private List<IDrawable> Drawers;
 
         /// <summary>
         /// Канва, связанная с элементом управления.
@@ -58,19 +58,31 @@ namespace Yaisp3
         /// </summary>
         public MainDrawingProcessor()
         {
-            Drawers = new List<DrawingWrapperTemplate>();
+            Drawers = new List<IDrawable>();
         }
 
+        //VS сказала реализовать интерфейс IDisposable, потому здесь стоит очистка канваса.
+        /// <summary>
+        /// Очистка битмапа.
+        /// </summary>
+        public void Dispose()
+        {
+            Bitmap.Dispose();
+        }
+
+        /// <summary>
+        /// Очистка списка рисовальщиков.
+        /// </summary>
         public void CleanDrawers()
         {
-            Drawers = new List<DrawingWrapperTemplate>();
+            Drawers = new List<IDrawable>();
         }
 
         /// <summary>
         /// Добавляет рисовальщик в лист.
         /// </summary>
         /// <param name="Drawer">Рисовальщик.</param>
-        public void AddDrawer(DrawingWrapperTemplate Drawer)
+        public void AddDrawer(IDrawable Drawer)
         {
             Drawer.SetDims(Tuple.Create(I2, J2, x1p, y1p, x2p, y2p));
             Drawers.Add(Drawer);
@@ -137,6 +149,9 @@ namespace Yaisp3
                 }
         }
 
+        /// <summary>
+        /// Удалить первый отрисовщик биллборда.
+        /// </summary>
         public void DeleteFirstBillboardDrawer()
         {
             int C = Drawers.Count;

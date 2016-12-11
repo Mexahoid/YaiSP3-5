@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Yaisp3
+namespace AgencySimulator
 {
     /// <summary>
     /// Базовый класс клиента.

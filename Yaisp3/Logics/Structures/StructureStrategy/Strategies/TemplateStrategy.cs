@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Yaisp3
+namespace AgencySimulator
 {
     /// <summary>
     /// Абстрактный класс-предок стратегии.

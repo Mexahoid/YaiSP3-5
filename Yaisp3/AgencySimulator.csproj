@@ -7,8 +7,8 @@
     <ProjectGuid>{B663DC1C-C655-4E6A-930B-EB77CF342AC8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Yaisp3</RootNamespace>
-    <AssemblyName>Yaisp3</AssemblyName>
+    <RootNamespace>AgencySimulator</RootNamespace>
+    <AssemblyName>AgencySimulator</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -50,7 +50,6 @@
     <Compile Include="Logics\MainLogics\Processors\MainDrawingProcessor.cs" />
     <Compile Include="Logics\MiscLogics\Drawers\GraphLegendDrawer.cs" />
     <Compile Include="Logics\MiscLogics\Interfaces\IDrawable.cs" />
-    <Compile Include="Logics\MiscLogics\Interfaces\IResizable.cs" />
     <Compile Include="Logics\Static\MiscellaneousLogics.cs" />
     <Compile Include="Logics\MainLogics\Handlers\QueueHandler.cs" />
     <Compile Include="Logics\MainLogics\Handlers\StrategyHandler.cs" />
@@ -152,7 +151,12 @@
     <Content Include="Logics\Static\TextStorage\Texts\BillboardsTexts.txt" />
     <Content Include="Logics\Static\TextStorage\Texts\CompanyNames.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{c15ea4a6-0987-4104-a1ef-85b1de660310}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

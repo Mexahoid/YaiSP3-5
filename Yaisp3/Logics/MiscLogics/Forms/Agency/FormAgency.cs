@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Yaisp3
+namespace AgencySimulator
 {
     public partial class FormAgency : Form
     {
@@ -18,8 +18,7 @@ namespace Yaisp3
         private City CityLink;
         private QueueClass QueueLink;
         private MainDrawingProcessor DrawersLink;
-
-
+        
         private TemplateStrategy.StrategyType Strategy = TemplateStrategy.StrategyType.Normal;
 
         public FormAgency(List<Tuple<AgencyHandler, StrategyHandler>> Agencies,
