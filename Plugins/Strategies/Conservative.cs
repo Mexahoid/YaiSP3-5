@@ -7,12 +7,11 @@ using AgencySimulator.Interfaces;
 using AgencySimulator;
 
 
-namespace AgencySimulator.Plugin
+namespace AgencySimulator.Plugins
 {
     public class Conservative : IStrategy
     {
         private string strategyName = "MyPlugin";
-
 
         public string StrategyName
         {

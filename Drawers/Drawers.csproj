@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C15EA4A6-0987-4104-A1EF-85B1DE660310}</ProjectGuid>
+    <ProjectGuid>{FCA39A66-4B22-42B9-8F81-80840550F0B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AgencySimulator.Interfaces</RootNamespace>
-    <AssemblyName>Interfaces</AssemblyName>
+    <RootNamespace>AgencySimulator.Drawers</RootNamespace>
+    <AssemblyName>Drawers</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -42,24 +42,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\Agency\IAgency.cs" />
-    <Compile Include="Interfaces\City\IBillboard.cs" />
-    <Compile Include="Interfaces\City\IMatrix.cs" />
-    <Compile Include="Interfaces\Drawers\IBillboardDrawer.cs" />
-    <Compile Include="Interfaces\City\ICity.cs" />
-    <Compile Include="Interfaces\Drawers\IDrawable.cs" />
-    <Compile Include="Interfaces\Drawers\IMainDrawer.cs" />
-    <Compile Include="Interfaces\Drawers\IMatrixDrawer.cs" />
-    <Compile Include="Interfaces\Handlers\ICityHandler.cs" />
-    <Compile Include="Interfaces\Queue\IClient.cs" />
-    <Compile Include="Interfaces\City\IElement.cs" />
-    <Compile Include="Interfaces\City\IHouse.cs" />
-    <Compile Include="Interfaces\Drawers\IHouseDrawer.cs" />
-    <Compile Include="Interfaces\Queue\IQueue.cs" />
-    <Compile Include="Interfaces\Agency\IStrategy.cs" />
+    <Compile Include="Classes\BillboardDrawer.cs" />
+    <Compile Include="Classes\DrawingWrapperTemplate.cs" />
+    <Compile Include="Classes\GraphDrawer.cs" />
+    <Compile Include="Classes\GraphLegendDrawer.cs" />
+    <Compile Include="Classes\GridDrawer.cs" />
+    <Compile Include="Classes\HouseDrawer.cs" />
+    <Compile Include="Classes\HoveringDrawer.cs" />
+    <Compile Include="Classes\MainDrawingProcessor.cs" />
+    <Compile Include="Classes\MatrixDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{c15ea4a6-0987-4104-a1ef-85b1de660310}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Types\Types.csproj">
       <Project>{7daf6227-72cf-4f70-bc24-b01f38e0590c}</Project>
       <Name>Types</Name>

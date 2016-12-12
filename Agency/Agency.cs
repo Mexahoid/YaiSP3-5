@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using AgencySimulator.Interfaces;
+using AgencySimulator.StaticLogics;
+using AgencySimulator.Types;
 
-namespace AgencySimulator
+namespace AgencySimulator.Agency
 {
     /// <summary>
     /// Класс агентства.
     /// </summary>
-    public sealed class Agency
+    public sealed class Agency : IAgency
     {
         #region Поля
 
@@ -25,7 +29,7 @@ namespace AgencySimulator
         /// <summary>
         /// Список биллбордов агентства.
         /// </summary>
-        private List<Billboard> agencyBillboards;
+        private List<IBillboard> agencyBillboards;
 
         /// <summary>
         /// Количество свободных построенных(!) биллбордов.
@@ -45,17 +49,17 @@ namespace AgencySimulator
         /// <summary>
         /// Ссылка на объект города.
         /// </summary>
-        private City cityLink;
+        private ICity cityLink;
 
         /// <summary>
         /// Ссылка на объект очереди.
         /// </summary>
-        private QueueClass queueLink;
+        private IQueue queueLink;
 
         /// <summary>
         /// Ссылка на объект главного рисовальщика.
         /// </summary>
-        private MainDrawingProcessor drawersLink;
+        private IMainDrawer drawersLink;
 
         /// <summary>
         /// ИД агентства.
@@ -77,7 +81,7 @@ namespace AgencySimulator
             agencyName = Name;
             agencyId = AgencyID;
             agencyDeposit = Money;
-            agencyBillboards = new List<Billboard>();
+            agencyBillboards = new List<IBillboard>();
             agencySummary = new List<Tuple<double, double>>();
             agencyStaffCount = 1 + Billboards * 3;  //Глава + обслуга
             agencyFreeBillboards = Billboards;
@@ -88,7 +92,7 @@ namespace AgencySimulator
         /// </summary>
         /// <param name="City">Ссылка на экземпляр города.</param>
         /// <param name="Queue">Ссылка на экземпляр очереди.</param>
-        public void SetLinks(City City, QueueClass Queue, MainDrawingProcessor Drawers)
+        public void SetLinks(ICity City, IQueue Queue, IMainDrawer Drawers)
         {
             cityLink = City;
             queueLink = Queue;
@@ -134,9 +138,10 @@ namespace AgencySimulator
         public void PlaceBillboardRnd()
         {
             int Cost = 10000 + MiscellaneousLogics.MainGetRandomValue(-1000, 1000);
-            Billboard Billboard = new Billboard(Cost, agencyId);
-            drawersLink.AddDrawer(cityLink.PlaceBillboard(Billboard));
-            agencyBillboards.Add(Billboard);
+
+            Tuple<IBillboardDrawer, IBillboard> T = cityLink.PlaceBillboard(Cost, agencyId);
+            drawersLink.AddDrawer(T.Item1);
+            agencyBillboards.Add(T.Item2);
             agencyDeposit -= Cost;
         }
 
@@ -147,7 +152,7 @@ namespace AgencySimulator
         {
             if (agencyDeposit <= 0)
                 return false;
-            foreach (Billboard Bb in agencyBillboards)
+            foreach (IBillboard Bb in agencyBillboards)
                 if (!Bb.BillboardBuilded() && Bb.BillboardBuildToEnd())
                     agencyFreeBillboards += 1;
             int Temp = agencyDeposit;
@@ -174,7 +179,7 @@ namespace AgencySimulator
         /// Заполняет первый свободный биллборд заказом клиента.
         /// </summary>
         /// <param name="ClientDesire">Кортеж желания клиента.</param>
-        public void FillBillboard(TemplateClient Client)
+        public void FillBillboard(IClient Client)
         {
             int L = agencyBillboards.Count;
             for (int i = 0; i < L; i++)
@@ -217,10 +222,6 @@ namespace AgencySimulator
             return agencyFreeBillboards;
         }
 
-        /// <summary>
-        /// Вернуть количество строящихся биллбордов.
-        /// </summary>
-        /// <returns>Возвращает целочисленное значение.</returns>
         public int GetBuildingBillboardsCount()
         {
             int C = agencyBillboards.Count;
@@ -245,26 +246,22 @@ namespace AgencySimulator
         /// Удаляет первый невалидный биллборд.
         /// </summary>
         public void DeleteOneBillboard()
-        {
-            if (cityLink.DeleteOneBillboard())
-            {
-                agencyFreeBillboards--;
-                int C = agencyBillboards.Count;
-                for (int i = 0; i < C; i++)
-                    if (agencyBillboards[i].GetState() == Billboard.State.Invalid)
-                    {
-                        agencyBillboards.RemoveAt(i);
-                        break;
-                    }
-                agencyStaffCount -= 3;
-                drawersLink.DeleteFirstBillboardDrawer();
-            }
-        }
+         {
+             if (cityLink.DeleteOneBillboard())
+             {
+                 agencyFreeBillboards--;
+                 int C = agencyBillboards.Count;
+                 for (int i = 0; i < C; i++)
+                     if (agencyBillboards[i].GetState() == BillboardState.Invalid)
+                     {
+                         agencyBillboards.RemoveAt(i);
+                         break;
+                     }
+                 agencyStaffCount -= 3;
+                 drawersLink.DeleteFirstBillboardDrawer();
+             }
+         }
 
-        /// <summary>
-        /// Возвращает название агентства.
-        /// </summary>
-        /// <returns>Возвращает строку.</returns>
         public override string ToString()
         {
             return agencyName;
