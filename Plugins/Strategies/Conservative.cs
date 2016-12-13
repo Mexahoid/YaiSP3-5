@@ -11,12 +11,17 @@ namespace AgencySimulator.Plugins
 {
     public class Conservative : IStrategy
     {
-        private string strategyName = "MyPlugin";
+        #region Поля
 
-        public string StrategyName
-        {
-            get { return strategyName; }
-        }
+        /// <summary>
+        /// Агентство, с которым работает стратегия.
+        /// </summary>
+        IAgency agency;
+
+        #endregion
+
+        #region Методы
+
         /// <summary>
         /// Действие стратегии.
         /// </summary>
@@ -40,10 +45,11 @@ namespace AgencySimulator.Plugins
             }*/
             return true;
         }
+
         /// <summary>
         /// Пытается установить столько же биллбордов, сколько заказов сейчас в очереди.
         /// </summary>
-       /* protected bool BuildOrderedBillboards()
+        public bool BuildOrderedBillboards()
         {
             if (agency.PassDay())
             {
@@ -57,6 +63,17 @@ namespace AgencySimulator.Plugins
                 return true;
             }
             return false;
-        }*/
+        }
+
+        /// <summary>
+        /// Дает стратегии ссылку на агентство.
+        /// </summary>
+        /// <param name="Agency"></param>
+        public void CreateLink(IAgency Agency)
+        {
+            agency = Agency;
+        }
+
+        #endregion
     }
 }

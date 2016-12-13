@@ -50,6 +50,10 @@
       <Project>{c15ea4a6-0987-4104-a1ef-85b1de660310}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StaticLogics\StaticLogics.csproj">
+      <Project>{23d34628-934b-41b9-8b89-c5c9c4527180}</Project>
+      <Name>StaticLogics</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

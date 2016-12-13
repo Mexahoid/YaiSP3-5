@@ -50,10 +50,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Drawers\Drawers.csproj">
-      <Project>{fca39a66-4b22-42b9-8f81-80840550f0b5}</Project>
-      <Name>Drawers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{c15ea4a6-0987-4104-a1ef-85b1de660310}</Project>
       <Name>Interfaces</Name>

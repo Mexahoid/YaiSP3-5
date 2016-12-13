@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Classes\MiscellaneousLogics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\TextStorageClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

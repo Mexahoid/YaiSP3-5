@@ -42,28 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\Agency\IAgency.cs" />
-    <Compile Include="Interfaces\City\IBillboard.cs" />
-    <Compile Include="Interfaces\City\IMatrix.cs" />
-    <Compile Include="Interfaces\Drawers\IBillboardDrawer.cs" />
-    <Compile Include="Interfaces\City\ICity.cs" />
-    <Compile Include="Interfaces\Drawers\IDrawable.cs" />
-    <Compile Include="Interfaces\Drawers\IMainDrawer.cs" />
-    <Compile Include="Interfaces\Drawers\IMatrixDrawer.cs" />
-    <Compile Include="Interfaces\Handlers\ICityHandler.cs" />
-    <Compile Include="Interfaces\Queue\IClient.cs" />
-    <Compile Include="Interfaces\City\IElement.cs" />
-    <Compile Include="Interfaces\City\IHouse.cs" />
-    <Compile Include="Interfaces\Drawers\IHouseDrawer.cs" />
-    <Compile Include="Interfaces\Queue\IQueue.cs" />
-    <Compile Include="Interfaces\Agency\IStrategy.cs" />
+    <Compile Include="Interfaces\IAgency.cs" />
+    <Compile Include="Interfaces\IStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Types\Types.csproj">
-      <Project>{7daf6227-72cf-4f70-bc24-b01f38e0590c}</Project>
-      <Name>Types</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

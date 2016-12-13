@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AgencySimulator;
 
 namespace AgencySimulator.Interfaces
 {
@@ -19,5 +18,9 @@ namespace AgencySimulator.Interfaces
         int HowMuchCanWeAfford(int OrderCount);
 
         void PlaceBillboardRnd();
+
+        List<Tuple<double, double>> GetAgencySummary();
+
+        void DeleteOneBillboard();
     }
 }
