@@ -8,6 +8,16 @@ namespace AgencySimulator.Interfaces
 {
     public interface IAgency
     {
-        
+        bool PassDay();
+
+        int GetFreeBillboardsCount();
+
+        int GetBuildingBillboardsCount();
+
+        int QueueCount();
+
+        int HowMuchCanWeAfford(int OrderCount);
+
+        void PlaceBillboardRnd();
     }
 }
