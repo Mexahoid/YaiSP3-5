@@ -75,13 +75,23 @@ namespace AgencySimulator
 
         private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
         {
-            FormAgency Af = new FormAgency(Agencies, Strategies,  
-                City.GetCityLink(), Queue.GetQueueLink(), drawers);
-            if (Af.ShowDialog() == DialogResult.OK)
+            if (Strategies == null || Strategies.Count == 0)
             {
-                CtrlChBIndAgen.Checked = true;
-                if (CtrlChBIndCity.Checked)
-                    CtrlButTimerStart.Enabled = true;
+                if (MessageBox.Show("Какие агентства без стратегий? С ума сошел?", "Ты что, дурак?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    MessageBox.Show("Молодец, что хотя бы честно.", "Дело серьезное", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                else
+                    MessageBox.Show("Я что-то не верю тебе.", "Врать нехорошо", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            else
+            { 
+                FormAgency Af = new FormAgency(Agencies, Strategies,
+                    City.GetCityLink(), Queue.GetQueueLink(), drawers);
+                if (Af.ShowDialog() == DialogResult.OK)
+                {
+                    CtrlChBIndAgen.Checked = true;
+                    if (CtrlChBIndCity.Checked)
+                        CtrlButTimerStart.Enabled = true;
+                }
             }
         }
         private void CtrlTSMICreateCityClick(object sender, EventArgs e)
@@ -115,6 +125,11 @@ namespace AgencySimulator
             if (CtrlTimer.Enabled)
                 CtrlButTimerPause.Text = "Продолжить";
             CtrlTimer.Enabled = false;
+        }
+        private void CtrlTSMILoadPlugins_Click(object sender, EventArgs e)
+        {
+            if (CtrlFBD.ShowDialog() == DialogResult.OK)
+                LoadPlugins(CtrlFBD.SelectedPath);
         }
 
         private void CtrlTimer_Tick(object sender, EventArgs e)
@@ -171,12 +186,6 @@ namespace AgencySimulator
             CtrlPicBxMap.Focus();
         }
 
-        private void CtrlTSMILoadPlugins_Click(object sender, EventArgs e)
-        {
-            if (CtrlFBD.ShowDialog() == DialogResult.OK)
-                LoadPlugins(CtrlFBD.SelectedPath);
-        }
-
         private void LoadPlugins(string SelectPath)
         {
             string[] pluginFiles = Directory.GetFiles(SelectPath, "*.dll");
@@ -207,6 +216,5 @@ namespace AgencySimulator
                 }
             }
         }
-
     }
 }
