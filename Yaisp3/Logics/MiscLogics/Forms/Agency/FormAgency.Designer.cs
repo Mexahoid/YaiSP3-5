@@ -31,10 +31,6 @@
             this.CtrlTxbName = new System.Windows.Forms.TextBox();
             this.CtrlLblMisc1 = new System.Windows.Forms.Label();
             this.CtrlLblMisc2 = new System.Windows.Forms.Label();
-            this.CtrlGrBStrat = new System.Windows.Forms.GroupBox();
-            this.CtrlRadConserv = new System.Windows.Forms.RadioButton();
-            this.CtrlRadNormal = new System.Windows.Forms.RadioButton();
-            this.CtrlRadAggro = new System.Windows.Forms.RadioButton();
             this.CtrlLblMisc3 = new System.Windows.Forms.Label();
             this.CtrlButCreate = new System.Windows.Forms.Button();
             this.CtrlButEdit = new System.Windows.Forms.Button();
@@ -43,7 +39,7 @@
             this.CtrlLBAgencies = new System.Windows.Forms.ListBox();
             this.CtrlButSuction = new System.Windows.Forms.Button();
             this.CtrlButDelete = new System.Windows.Forms.Button();
-            this.CtrlGrBStrat.SuspendLayout();
+            this.CtrlLBStrategies = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumBillboards)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumDeposit)).BeginInit();
             this.SuspendLayout();
@@ -73,57 +69,6 @@
             this.CtrlLblMisc2.Size = new System.Drawing.Size(57, 13);
             this.CtrlLblMisc2.TabIndex = 3;
             this.CtrlLblMisc2.Text = "Депозит: ";
-            // 
-            // CtrlGrBStrat
-            // 
-            this.CtrlGrBStrat.Controls.Add(this.CtrlRadConserv);
-            this.CtrlGrBStrat.Controls.Add(this.CtrlRadNormal);
-            this.CtrlGrBStrat.Controls.Add(this.CtrlRadAggro);
-            this.CtrlGrBStrat.Location = new System.Drawing.Point(15, 85);
-            this.CtrlGrBStrat.Name = "CtrlGrBStrat";
-            this.CtrlGrBStrat.Size = new System.Drawing.Size(121, 94);
-            this.CtrlGrBStrat.TabIndex = 4;
-            this.CtrlGrBStrat.TabStop = false;
-            this.CtrlGrBStrat.Tag = "3";
-            this.CtrlGrBStrat.Text = "Стратегия";
-            // 
-            // CtrlRadConserv
-            // 
-            this.CtrlRadConserv.AutoSize = true;
-            this.CtrlRadConserv.Location = new System.Drawing.Point(6, 42);
-            this.CtrlRadConserv.Name = "CtrlRadConserv";
-            this.CtrlRadConserv.Size = new System.Drawing.Size(109, 17);
-            this.CtrlRadConserv.TabIndex = 7;
-            this.CtrlRadConserv.Tag = "1";
-            this.CtrlRadConserv.Text = "Консервативная";
-            this.CtrlRadConserv.UseVisualStyleBackColor = true;
-            this.CtrlRadConserv.CheckedChanged += new System.EventHandler(this.ChangeStrategyEvent);
-            // 
-            // CtrlRadNormal
-            // 
-            this.CtrlRadNormal.AutoSize = true;
-            this.CtrlRadNormal.Checked = true;
-            this.CtrlRadNormal.Location = new System.Drawing.Point(6, 19);
-            this.CtrlRadNormal.Name = "CtrlRadNormal";
-            this.CtrlRadNormal.Size = new System.Drawing.Size(83, 17);
-            this.CtrlRadNormal.TabIndex = 6;
-            this.CtrlRadNormal.TabStop = true;
-            this.CtrlRadNormal.Tag = "0";
-            this.CtrlRadNormal.Text = "Умеренная";
-            this.CtrlRadNormal.UseVisualStyleBackColor = true;
-            this.CtrlRadNormal.CheckedChanged += new System.EventHandler(this.ChangeStrategyEvent);
-            // 
-            // CtrlRadAggro
-            // 
-            this.CtrlRadAggro.AutoSize = true;
-            this.CtrlRadAggro.Location = new System.Drawing.Point(6, 65);
-            this.CtrlRadAggro.Name = "CtrlRadAggro";
-            this.CtrlRadAggro.Size = new System.Drawing.Size(91, 17);
-            this.CtrlRadAggro.TabIndex = 5;
-            this.CtrlRadAggro.Tag = "2";
-            this.CtrlRadAggro.Text = "Агрессивная";
-            this.CtrlRadAggro.UseVisualStyleBackColor = true;
-            this.CtrlRadAggro.CheckedChanged += new System.EventHandler(this.ChangeStrategyEvent);
             // 
             // CtrlLblMisc3
             // 
@@ -202,9 +147,9 @@
             // CtrlLBAgencies
             // 
             this.CtrlLBAgencies.FormattingEnabled = true;
-            this.CtrlLBAgencies.Location = new System.Drawing.Point(258, 6);
+            this.CtrlLBAgencies.Location = new System.Drawing.Point(252, 12);
             this.CtrlLBAgencies.Name = "CtrlLBAgencies";
-            this.CtrlLBAgencies.Size = new System.Drawing.Size(104, 173);
+            this.CtrlLBAgencies.Size = new System.Drawing.Size(104, 160);
             this.CtrlLBAgencies.TabIndex = 11;
             this.CtrlLBAgencies.SelectedIndexChanged += new System.EventHandler(this.CtrlLBAgencies_SelectedIndexChanged);
             // 
@@ -212,7 +157,7 @@
             // 
             this.CtrlButSuction.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.CtrlButSuction.Enabled = false;
-            this.CtrlButSuction.Location = new System.Drawing.Point(169, 156);
+            this.CtrlButSuction.Location = new System.Drawing.Point(169, 149);
             this.CtrlButSuction.Name = "CtrlButSuction";
             this.CtrlButSuction.Size = new System.Drawing.Size(75, 23);
             this.CtrlButSuction.TabIndex = 12;
@@ -231,11 +176,20 @@
             this.CtrlButDelete.UseVisualStyleBackColor = true;
             this.CtrlButDelete.Click += new System.EventHandler(this.CtrlButDelete_Click);
             // 
+            // CtrlLBStrategies
+            // 
+            this.CtrlLBStrategies.FormattingEnabled = true;
+            this.CtrlLBStrategies.Location = new System.Drawing.Point(12, 90);
+            this.CtrlLBStrategies.Name = "CtrlLBStrategies";
+            this.CtrlLBStrategies.Size = new System.Drawing.Size(151, 82);
+            this.CtrlLBStrategies.TabIndex = 14;
+            // 
             // FormAgency
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 187);
+            this.ClientSize = new System.Drawing.Size(368, 186);
+            this.Controls.Add(this.CtrlLBStrategies);
             this.Controls.Add(this.CtrlButDelete);
             this.Controls.Add(this.CtrlButSuction);
             this.Controls.Add(this.CtrlLBAgencies);
@@ -244,7 +198,6 @@
             this.Controls.Add(this.CtrlButEdit);
             this.Controls.Add(this.CtrlButCreate);
             this.Controls.Add(this.CtrlLblMisc3);
-            this.Controls.Add(this.CtrlGrBStrat);
             this.Controls.Add(this.CtrlLblMisc2);
             this.Controls.Add(this.CtrlLblMisc1);
             this.Controls.Add(this.CtrlTxbName);
@@ -252,8 +205,6 @@
             this.MinimizeBox = false;
             this.Name = "FormAgency";
             this.Text = "Редактор агентств.";
-            this.CtrlGrBStrat.ResumeLayout(false);
-            this.CtrlGrBStrat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumBillboards)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlNumDeposit)).EndInit();
             this.ResumeLayout(false);
@@ -266,10 +217,6 @@
     private System.Windows.Forms.TextBox CtrlTxbName;
     private System.Windows.Forms.Label CtrlLblMisc1;
     private System.Windows.Forms.Label CtrlLblMisc2;
-    private System.Windows.Forms.GroupBox CtrlGrBStrat;
-    private System.Windows.Forms.RadioButton CtrlRadConserv;
-    private System.Windows.Forms.RadioButton CtrlRadNormal;
-    private System.Windows.Forms.RadioButton CtrlRadAggro;
     private System.Windows.Forms.Label CtrlLblMisc3;
     private System.Windows.Forms.Button CtrlButCreate;
     private System.Windows.Forms.Button CtrlButEdit;
@@ -278,5 +225,6 @@
         private System.Windows.Forms.ListBox CtrlLBAgencies;
         private System.Windows.Forms.Button CtrlButSuction;
         private System.Windows.Forms.Button CtrlButDelete;
+        private System.Windows.Forms.ListBox CtrlLBStrategies;
     }
 }

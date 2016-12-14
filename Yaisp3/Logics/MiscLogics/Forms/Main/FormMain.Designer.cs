@@ -36,33 +36,35 @@ namespace AgencySimulator
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.CtrlPicBxMap = new PictureBox();
-            this.CtrlLblMisc1 = new Label();
-            this.CtrlLblDate = new Label();
-            this.CtrlMainStrip = new ToolStrip();
-            this.CtrlTSMIDrop = new ToolStripDropDownButton();
-            this.CtrlTSMICreateCity = new ToolStripMenuItem();
-            this.CtrlTSMIAgencyMenu = new ToolStripMenuItem();
-            this.CtrlTSMIProximityMap = new ToolStripMenuItem();
-            this.CtrlTSMIGraph = new ToolStripMenuItem();
-            this.CtrlTimer = new Timer(this.components);
-            this.CtrlButTimerPause = new Button();
-            this.CtrlButTimerStart = new Button();
-            this.CtrlGrBTime = new GroupBox();
-            this.CtrlLblMisc3 = new Label();
-            this.CtrlLblMisc2 = new Label();
-            this.CtrlTBSpeed = new TrackBar();
-            this.CtrlChBIndCity = new CheckBox();
-            this.CtrlChBIndAgen = new CheckBox();
-            this.CtrlGrbIndic = new GroupBox();
-            this.CtrlGrBQueue = new GroupBox();
-            this.CtrlLblMisc7 = new Label();
-            this.CtrlLblMisc6 = new Label();
-            this.CtrlTBQueueIntense = new TrackBar();
-            this.CtrlLblMisc5 = new Label();
-            this.CtrlLblMisc4 = new Label();
-            this.CtrlTBQueueQuantity = new TrackBar();
-            this.CtrlTxbOrders = new TextBox();
+            this.CtrlPicBxMap = new System.Windows.Forms.PictureBox();
+            this.CtrlLblMisc1 = new System.Windows.Forms.Label();
+            this.CtrlLblDate = new System.Windows.Forms.Label();
+            this.CtrlMainStrip = new System.Windows.Forms.ToolStrip();
+            this.CtrlTSMIDrop = new System.Windows.Forms.ToolStripDropDownButton();
+            this.CtrlTSMICreateCity = new System.Windows.Forms.ToolStripMenuItem();
+            this.CtrlTSMIAgencyMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.CtrlTSMIProximityMap = new System.Windows.Forms.ToolStripMenuItem();
+            this.CtrlTSMIGraph = new System.Windows.Forms.ToolStripMenuItem();
+            this.CtrlTimer = new System.Windows.Forms.Timer(this.components);
+            this.CtrlButTimerPause = new System.Windows.Forms.Button();
+            this.CtrlButTimerStart = new System.Windows.Forms.Button();
+            this.CtrlGrBTime = new System.Windows.Forms.GroupBox();
+            this.CtrlLblMisc3 = new System.Windows.Forms.Label();
+            this.CtrlLblMisc2 = new System.Windows.Forms.Label();
+            this.CtrlTBSpeed = new System.Windows.Forms.TrackBar();
+            this.CtrlChBIndCity = new System.Windows.Forms.CheckBox();
+            this.CtrlChBIndAgen = new System.Windows.Forms.CheckBox();
+            this.CtrlGrbIndic = new System.Windows.Forms.GroupBox();
+            this.CtrlGrBQueue = new System.Windows.Forms.GroupBox();
+            this.CtrlLblMisc7 = new System.Windows.Forms.Label();
+            this.CtrlLblMisc6 = new System.Windows.Forms.Label();
+            this.CtrlTBQueueIntense = new System.Windows.Forms.TrackBar();
+            this.CtrlLblMisc5 = new System.Windows.Forms.Label();
+            this.CtrlLblMisc4 = new System.Windows.Forms.Label();
+            this.CtrlTBQueueQuantity = new System.Windows.Forms.TrackBar();
+            this.CtrlTxbOrders = new System.Windows.Forms.TextBox();
+            this.CtrlTSMILoadPlugins = new System.Windows.Forms.ToolStripMenuItem();
+            this.CtrlFBD = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxMap)).BeginInit();
             this.CtrlMainStrip.SuspendLayout();
             this.CtrlGrBTime.SuspendLayout();
@@ -82,9 +84,9 @@ namespace AgencySimulator
             this.CtrlPicBxMap.TabIndex = 0;
             this.CtrlPicBxMap.TabStop = false;
             this.CtrlPicBxMap.Click += new System.EventHandler(this.CtrlPicBxMap_Click);
-            this.CtrlPicBxMap.MouseDown += new MouseEventHandler(this.CtrlPicBxMap_MouseDown);
-            this.CtrlPicBxMap.MouseMove += new MouseEventHandler(this.CtrlPicBxMap_MouseMove);
-            this.CtrlPicBxMap.MouseUp += new MouseEventHandler(this.CtrlPicBxMap_MouseUp);
+            this.CtrlPicBxMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseDown);
+            this.CtrlPicBxMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseMove);
+            this.CtrlPicBxMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtrlPicBxMap_MouseUp);
             // 
             // CtrlLblMisc1
             // 
@@ -106,7 +108,7 @@ namespace AgencySimulator
             // 
             // CtrlMainStrip
             // 
-            this.CtrlMainStrip.Items.AddRange(new ToolStripItem[] {
+            this.CtrlMainStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CtrlTSMIDrop});
             this.CtrlMainStrip.Location = new System.Drawing.Point(0, 0);
             this.CtrlMainStrip.Name = "CtrlMainStrip";
@@ -116,22 +118,23 @@ namespace AgencySimulator
             // 
             // CtrlTSMIDrop
             // 
-            this.CtrlTSMIDrop.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.CtrlTSMIDrop.DropDownItems.AddRange(new ToolStripItem[] {
+            this.CtrlTSMIDrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.CtrlTSMIDrop.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CtrlTSMICreateCity,
             this.CtrlTSMIAgencyMenu,
             this.CtrlTSMIProximityMap,
-            this.CtrlTSMIGraph});
+            this.CtrlTSMIGraph,
+            this.CtrlTSMILoadPlugins});
             this.CtrlTSMIDrop.Name = "CtrlTSMIDrop";
             this.CtrlTSMIDrop.Size = new System.Drawing.Size(54, 22);
             this.CtrlTSMIDrop.Text = "Меню";
-            this.CtrlTSMIDrop.TextImageRelation = TextImageRelation.Overlay;
+            this.CtrlTSMIDrop.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.CtrlTSMIDrop.Click += new System.EventHandler(this.CtrlTSMIDrop_Click);
             // 
             // CtrlTSMICreateCity
             // 
             this.CtrlTSMICreateCity.Name = "CtrlTSMICreateCity";
-            this.CtrlTSMICreateCity.Size = new System.Drawing.Size(167, 22);
+            this.CtrlTSMICreateCity.Size = new System.Drawing.Size(179, 22);
             this.CtrlTSMICreateCity.Text = "Создать город";
             this.CtrlTSMICreateCity.Click += new System.EventHandler(this.CtrlTSMICreateCityClick);
             // 
@@ -139,14 +142,14 @@ namespace AgencySimulator
             // 
             this.CtrlTSMIAgencyMenu.Enabled = false;
             this.CtrlTSMIAgencyMenu.Name = "CtrlTSMIAgencyMenu";
-            this.CtrlTSMIAgencyMenu.Size = new System.Drawing.Size(167, 22);
+            this.CtrlTSMIAgencyMenu.Size = new System.Drawing.Size(179, 22);
             this.CtrlTSMIAgencyMenu.Text = "Меню агентства";
             this.CtrlTSMIAgencyMenu.Click += new System.EventHandler(this.CtrlTSMIAgencyMenuClick);
             // 
             // CtrlTSMIProximityMap
             // 
             this.CtrlTSMIProximityMap.Name = "CtrlTSMIProximityMap";
-            this.CtrlTSMIProximityMap.Size = new System.Drawing.Size(167, 22);
+            this.CtrlTSMIProximityMap.Size = new System.Drawing.Size(179, 22);
             this.CtrlTSMIProximityMap.Text = "Зоны покрытия";
             this.CtrlTSMIProximityMap.Click += new System.EventHandler(this.CtrlTSMIProximityMapClick);
             // 
@@ -154,7 +157,7 @@ namespace AgencySimulator
             // 
             this.CtrlTSMIGraph.Enabled = false;
             this.CtrlTSMIGraph.Name = "CtrlTSMIGraph";
-            this.CtrlTSMIGraph.Size = new System.Drawing.Size(167, 22);
+            this.CtrlTSMIGraph.Size = new System.Drawing.Size(179, 22);
             this.CtrlTSMIGraph.Text = "График бюджета";
             this.CtrlTSMIGraph.Click += new System.EventHandler(this.CtrlTSMIGraph_Click);
             // 
@@ -223,7 +226,7 @@ namespace AgencySimulator
             this.CtrlTBSpeed.Maximum = 25;
             this.CtrlTBSpeed.Minimum = 1;
             this.CtrlTBSpeed.Name = "CtrlTBSpeed";
-            this.CtrlTBSpeed.RightToLeft = RightToLeft.Yes;
+            this.CtrlTBSpeed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.CtrlTBSpeed.Size = new System.Drawing.Size(218, 45);
             this.CtrlTBSpeed.TabIndex = 8;
             this.CtrlTBSpeed.Value = 25;
@@ -300,7 +303,7 @@ namespace AgencySimulator
             this.CtrlTBQueueIntense.Location = new System.Drawing.Point(6, 70);
             this.CtrlTBQueueIntense.Maximum = 12;
             this.CtrlTBQueueIntense.Name = "CtrlTBQueueIntense";
-            this.CtrlTBQueueIntense.RightToLeft = RightToLeft.Yes;
+            this.CtrlTBQueueIntense.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.CtrlTBQueueIntense.Size = new System.Drawing.Size(218, 45);
             this.CtrlTBQueueIntense.TabIndex = 12;
             this.CtrlTBQueueIntense.Value = 1;
@@ -342,10 +345,21 @@ namespace AgencySimulator
             this.CtrlTxbOrders.Size = new System.Drawing.Size(232, 119);
             this.CtrlTxbOrders.TabIndex = 14;
             // 
+            // CtrlTSMILoadPlugins
+            // 
+            this.CtrlTSMILoadPlugins.Name = "CtrlTSMILoadPlugins";
+            this.CtrlTSMILoadPlugins.Size = new System.Drawing.Size(179, 22);
+            this.CtrlTSMILoadPlugins.Text = "Загрузить плагины";
+            this.CtrlTSMILoadPlugins.Click += new System.EventHandler(this.CtrlTSMILoadPlugins_Click);
+            // 
+            // CtrlFBD
+            // 
+            this.CtrlFBD.ShowNewFolderButton = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(911, 691);
             this.Controls.Add(this.CtrlTxbOrders);
             this.Controls.Add(this.CtrlGrBQueue);
@@ -408,6 +422,8 @@ namespace AgencySimulator
 
         #endregion
 
+        private ToolStripMenuItem CtrlTSMILoadPlugins;
+        private FolderBrowserDialog CtrlFBD;
     }
 }
 

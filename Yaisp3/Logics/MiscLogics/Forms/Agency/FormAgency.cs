@@ -6,56 +6,44 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AgencySimulator.Interfaces;
 
 namespace AgencySimulator
 {
     public partial class FormAgency : Form
     {
-        private AgencyHandler AgencyLink;
-        private StrategyHandler StrategyLink;
+        private AgencyHandler CurrentAgency;
+        private StrategyHandler CurrentStrategy;
 
         private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
+        private List<IStrategy> Strategies;
+
         private City CityLink;
         private QueueClass QueueLink;
         private MainDrawingProcessor DrawersLink;
-        
-        private TemplateStrategy.StrategyType Strategy = TemplateStrategy.StrategyType.Normal;
 
-        public FormAgency(List<Tuple<AgencyHandler, StrategyHandler>> Agencies,
+        public FormAgency(List<Tuple<AgencyHandler, StrategyHandler>> Agencies, List<IStrategy> Strategies,
             City City, QueueClass Queue, MainDrawingProcessor Drawers)
         {
             DrawersLink = Drawers;
             CityLink = City;
             QueueLink = Queue;
             this.Agencies = Agencies;
+            this.Strategies = Strategies;
             InitializeComponent();
+
+            int L = Strategies.Count;
+            if (L != 0)
+            {
+                for (int i = 0; i < L; i++)
+                    CtrlLBStrategies.Items.Add(Strategies[i].GetName());
+            }
 
             if (Agencies.Count != 0)
             {
                 int C = Agencies.Count;
                 for (int i = 0; i < C; i++)
-                    CtrlLBAgencies.Items.Add(Agencies[i].Item1.ToString());
-                AgencyLink = Agencies[0].Item1;
-                StrategyLink = Agencies[0].Item2;     //Выбираем их только если список не пуст
-
-                Strategy = StrategyLink.StrategyGetType();
-                switch (Strategy)
-                {
-                    case TemplateStrategy.StrategyType.Normal:
-                        CtrlRadNormal.Checked = true;
-                        break;
-                    case TemplateStrategy.StrategyType.Conservative:
-                        CtrlRadConserv.Checked = true;
-                        break;
-                    case TemplateStrategy.StrategyType.Aggressive:
-                        CtrlRadAggro.Checked = true;
-                        break;
-                }
-                Tuple<int, int> T = AgencyLink.AgencyGetData();
-                CtrlTxbName.Text = AgencyLink.ToString();
-                CtrlButEdit.Enabled = CtrlButDelete.Enabled = true;
-                CtrlNumDeposit.Value = T.Item1;
-                CtrlNumBillboards.Value = T.Item2;
+                    CtrlLBAgencies.Items.Add(Agencies[i].ToString());
             }
         }
 
@@ -64,21 +52,20 @@ namespace AgencySimulator
         /// </summary>
         private void CtrlButCreateClick(object sender, EventArgs e)
         {
-            AgencyLink = new AgencyHandler();
-            if (!AgencyLink.AgencyCreate(CtrlTxbName.Text,  //Если плохое имя - выдаем мсгбокс
+            CurrentAgency = new AgencyHandler();
+            if (!CurrentAgency.AgencyCreate(CtrlTxbName.Text,  //Если плохое имя - выдаем мсгбокс
                 (int)CtrlNumDeposit.Value,
                 (int)CtrlNumBillboards.Value, Agencies.Count + 1))
                 MessageBox.Show("Вы ввели недопустимое значение в каком-то из полей. Проверьте правильность информации.", "Ошибка значений", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else
             {
-                StrategyLink = new StrategyHandler();
-                StrategyLink.CreateLink(Strategy,
-                    AgencyLink.GetAgencyLink());            //Иначе создаем нормальную стратегию
-                AgencyLink.AgencySetLink(CityLink, QueueLink, DrawersLink);
-                Agencies.Add(Tuple.Create(AgencyLink, StrategyLink));
-                CtrlLBAgencies.Items.Add(AgencyLink.ToString());
-                AgencyLink = null;
-                StrategyLink = null;
+                CurrentAgency.AgencySetLink(CityLink, QueueLink, DrawersLink);              //Агентству заталкиваем ссылки
+                CurrentStrategy = new StrategyHandler(CurrentAgency.GetAgencyLink());       //Потом заталкиваем агентство в хэндлер стратегии
+                CurrentStrategy.SetStrategy(Strategies[CtrlLBStrategies.SelectedIndex]);    //Хэндлеру прописываем нужную стратегию
+                Agencies.Add(Tuple.Create(CurrentAgency, CurrentStrategy));                 //И заталкиваем в общий список
+                CtrlLBAgencies.Items.Add(CurrentAgency.ToString());                         //Потом заносим имя агентства в список агентств
+                CurrentAgency = null;
+                CurrentStrategy = null;
 
                 CtrlButSuction.Enabled = true;
             }
@@ -89,42 +76,26 @@ namespace AgencySimulator
         /// </summary>
         private void CtrlButEditClick(object sender, EventArgs e)
         {
-            AgencyLink.AgencyChangeName(CtrlTxbName.Text);
-            StrategyLink.CreateLink(Strategy, AgencyLink.GetAgencyLink());
+            CurrentAgency.AgencyChangeName(CtrlTxbName.Text);
+            CurrentStrategy = new StrategyHandler(CurrentAgency.GetAgencyLink());
+            CurrentStrategy.SetStrategy(Strategies[CtrlLBStrategies.SelectedIndex]);
         }
-
-        /// <summary>
-        /// Меняем нынешнюю стратегию в форме.
-        /// </summary>
-        private void ChangeStrategyEvent(object sender, EventArgs e)
-        {
-            Strategy = (TemplateStrategy.StrategyType)Convert.ToByte((sender as RadioButton).Tag);
-        }
+        
 
         private void CtrlLBAgencies_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CtrlLBAgencies.SelectedIndex > -1)
             {
-                AgencyLink = Agencies[CtrlLBAgencies.SelectedIndex].Item1;
-                StrategyLink = Agencies[CtrlLBAgencies.SelectedIndex].Item2;
+                CurrentAgency = Agencies[CtrlLBAgencies.SelectedIndex].Item1;
+                CurrentStrategy = Agencies[CtrlLBAgencies.SelectedIndex].Item2;
 
-                Strategy = StrategyLink.StrategyGetType();
-                switch (Strategy)
-                {
-                    case TemplateStrategy.StrategyType.Normal:
-                        CtrlRadNormal.Checked = true;
-                        break;
-                    case TemplateStrategy.StrategyType.Conservative:
-                        CtrlRadConserv.Checked = true;
-                        break;
-                    case TemplateStrategy.StrategyType.Aggressive:
-                        CtrlRadAggro.Checked = true;
-                        break;
-                }
-
+                int index = CtrlLBStrategies.FindString(CurrentStrategy.ToString(), -1);
+                if (index != -1)
+                    CtrlLBStrategies.SetSelected(index, true);
+                
                 CtrlButEdit.Enabled = CtrlButDelete.Enabled = true;
-                Tuple<int, int> T = AgencyLink.AgencyGetData();
-                CtrlTxbName.Text = AgencyLink.ToString();
+                Tuple<int, int> T = CurrentAgency.AgencyGetData();
+                CtrlTxbName.Text = CurrentAgency.ToString();
                 CtrlNumDeposit.Value = T.Item1;
                 CtrlNumBillboards.Value = T.Item2;
             }
@@ -132,8 +103,8 @@ namespace AgencySimulator
 
         private void CtrlButDelete_Click(object sender, EventArgs e)
         {
-            AgencyLink.AgencyDestroy();
-            StrategyLink = null;
+            CurrentAgency.AgencyDestroy();
+            CurrentStrategy = null;
             Agencies.RemoveAt(CtrlLBAgencies.SelectedIndex);
             CtrlLBAgencies.Items.RemoveAt(CtrlLBAgencies.SelectedIndex);
             if (Agencies.Count == 0)

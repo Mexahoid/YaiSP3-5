@@ -2,61 +2,59 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AgencySimulator.Interfaces;
 
 namespace AgencySimulator
 {
     /// <summary>
-    /// Обработчик стратегии.
+    /// Класс-инкапсулятор для стратегий-плагинов.
     /// </summary>
     public class StrategyHandler
     {
-        /// <summary>
-        /// Экземпляр стратегии.
-        /// </summary>
-        private TemplateStrategy Strategy;
+        #region Поля
 
         /// <summary>
-        /// Изменяет стратегию.
+        /// Инкапсулированный темплейт рабочей стратегии.
         /// </summary>
-        /// <param name="Type">Тип новой стратегии.</param>
-        public void CreateLink(TemplateStrategy.StrategyType Type, Agency Agency)
+        private IStrategy encasedStrategy;
+
+        /// <summary>
+        /// Инкапсулированное агентство.
+        /// </summary>
+        private Agency encasedAgency;
+
+        #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Заставляет стратегию действовать на агентство.
+        /// </summary>
+        public bool Action()
         {
-            switch (Type)
-            {
-                case TemplateStrategy.StrategyType.Normal:
-                    Strategy = new StrategyNormal(Agency);
-                    break;
-                case TemplateStrategy.StrategyType.Conservative:
-                    Strategy = new StrategyConservative(Agency);
-                    break;
-                case TemplateStrategy.StrategyType.Aggressive:
-                    Strategy = new StrategyAggressive(Agency);
-                    break;
-            }
+            return encasedStrategy.Action(encasedAgency);
         }
 
         /// <summary>
-        /// Возвращает тип стратегии агентства.
+        /// Конструктор инкапсулятора.
         /// </summary>
-        /// <returns>Возвращает тип стратегии.</returns>
-        public TemplateStrategy.StrategyType StrategyGetType()
+        /// <param name="AgencyLink">Ссылка на агентство.</param>
+        /// <param name="StrategyTemplate">Ссылка на рабочую стратегию.</param>
+        public StrategyHandler(Agency AgencyLink)
         {
-            if (Strategy == null)
-                return TemplateStrategy.StrategyType.Normal;
-            return Strategy.ReturnStrategyType();
+            encasedAgency = AgencyLink;
         }
 
-        /// <summary>
-        /// Совершает действие стратегии.
-        /// </summary>
-        public bool StrategyAction()
+        public void SetStrategy(IStrategy StrategyTemplate)
         {
-            return Strategy.Action();
+            encasedStrategy = StrategyTemplate;
         }
 
-        public void DeleteStrategy()
+        public override string ToString()
         {
-            Strategy = null;
+            return encasedStrategy.GetName();
         }
+
+        #endregion
     }
 }

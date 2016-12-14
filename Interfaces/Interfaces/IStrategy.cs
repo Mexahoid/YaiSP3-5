@@ -7,10 +7,8 @@ namespace AgencySimulator.Interfaces
 {
     public interface IStrategy
     {      
-        bool Action();
+        bool Action(IAgency agency);
 
-        bool BuildOrderedBillboards();
-
-        void CreateLink(IAgency agency);
+        string GetName();
     }
 }

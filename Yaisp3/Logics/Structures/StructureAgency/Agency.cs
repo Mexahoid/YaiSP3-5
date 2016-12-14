@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AgencySimulator.Interfaces;
 
 namespace AgencySimulator
 {
     /// <summary>
     /// Класс агентства.
     /// </summary>
-    public sealed class Agency
+    public sealed class Agency : IAgency
     {
         #region Поля
 

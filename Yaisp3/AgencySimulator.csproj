@@ -52,7 +52,6 @@
     <Compile Include="Logics\MiscLogics\Interfaces\IDrawable.cs" />
     <Compile Include="Logics\Static\MiscellaneousLogics.cs" />
     <Compile Include="Logics\MainLogics\Handlers\QueueHandler.cs" />
-    <Compile Include="Logics\MainLogics\Handlers\StrategyHandler.cs" />
     <Compile Include="Logics\MainLogics\Handlers\CityHandler.cs" />
     <Compile Include="Logics\MiscLogics\Forms\Graph\FormGraph.cs">
       <SubType>Form</SubType>
@@ -81,14 +80,11 @@
     <Compile Include="Logics\Structures\StructureQueue\Clients\ClientGovernment.cs" />
     <Compile Include="Logics\Structures\StructureQueue\Clients\ClientPerson.cs" />
     <Compile Include="Logics\Structures\StructureQueue\Queue\QueueClass.cs" />
-    <Compile Include="Logics\Structures\StructureStrategy\Strategies\TemplateStrategy.cs" />
     <Compile Include="Logics\Structures\StructureQueue\Clients\TemplateClient.cs" />
     <Compile Include="Logics\Static\TextStorage\Logics\TextStorageClass.cs" />
     <Compile Include="Logics\Structures\StructureAgency\Agency.cs" />
     <Compile Include="Logics\Structures\StructureCity\City\City.cs" />
-    <Compile Include="Logics\Structures\StructureStrategy\Strategies\StrategyAggressive.cs" />
-    <Compile Include="Logics\Structures\StructureStrategy\Strategies\StrategyConservative.cs" />
-    <Compile Include="Logics\Structures\StructureStrategy\Strategies\StrategyNormal.cs" />
+    <Compile Include="Logics\MainLogics\Handlers\StrategyHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logics\MiscLogics\Forms\Agency\FormAgency.cs">

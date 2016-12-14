@@ -19,8 +19,8 @@ namespace AgencySimulator
         private MainDrawingProcessor drawers;
 
         private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
-        private CityHandler City;
 
+        private CityHandler City;
         private DateHandler Date;
         private QueueHandler Queue;
 
@@ -75,7 +75,8 @@ namespace AgencySimulator
 
         private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
         {
-            FormAgency Af = new FormAgency(Agencies, City.GetCityLink(), Queue.GetQueueLink(), drawers);
+            FormAgency Af = new FormAgency(Agencies, Strategies,  
+                City.GetCityLink(), Queue.GetQueueLink(), drawers);
             if (Af.ShowDialog() == DialogResult.OK)
             {
                 CtrlChBIndAgen.Checked = true;
@@ -123,13 +124,12 @@ namespace AgencySimulator
             CtrlTxbOrders.Text = Queue.ToString();
             int C = Agencies.Count;
             for (int i = 0; i < C; i++)
-                if (!Agencies[i].Item2.StrategyAction())
+                if (!Agencies[i].Item2.Action())
                 {
                     CtrlTimer.Enabled = false;
                     CtrlButTimerPause.Text = "Продолжить";
                     MessageBox.Show("Агентство " + Agencies[i].Item1.ToString() + " было ликвидировано по причине банкротства.", "Беда!");
                     Agencies[i].Item1.AgencyDestroy();
-                    Agencies[i].Item2.DeleteStrategy();
                     Agencies.RemoveAt(i--);
                     C--;
                 }
@@ -171,9 +171,15 @@ namespace AgencySimulator
             CtrlPicBxMap.Focus();
         }
 
-        private void LoadPlugins()
+        private void CtrlTSMILoadPlugins_Click(object sender, EventArgs e)
         {
-            string[] pluginFiles = Directory.GetFiles(Application.StartupPath, "*.dll");
+            if (CtrlFBD.ShowDialog() == DialogResult.OK)
+                LoadPlugins(CtrlFBD.SelectedPath);
+        }
+
+        private void LoadPlugins(string SelectPath)
+        {
+            string[] pluginFiles = Directory.GetFiles(SelectPath, "*.dll");
             Strategies = new List<IStrategy>();
 
             foreach (string pluginPath in pluginFiles)
@@ -184,9 +190,7 @@ namespace AgencySimulator
                     // пытаемся загрузить библиотеку
                     Assembly assembly = Assembly.LoadFrom(pluginPath);
                     if (assembly != null)
-                    {
-                        objType = assembly.GetType(Path.GetFileNameWithoutExtension(pluginPath) + ".PlugIn");
-                    }
+                        objType = assembly.GetTypes()[0];
                 }
                 catch
                 {
@@ -195,9 +199,7 @@ namespace AgencySimulator
                 try
                 {
                     if (objType != null)
-                    {
-                        Strategies.Add((IStrategy)Activator.CreateInstance(objType));
-                    }
+                        Strategies.Add(Activator.CreateInstance(objType) as IStrategy);
                 }
                 catch
                 {
@@ -205,5 +207,6 @@ namespace AgencySimulator
                 }
             }
         }
+
     }
 }
