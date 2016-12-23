@@ -7,22 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using AgencySimulator.Interfaces;
+using System.Reflection;
 
 namespace AgencySimulator
 {
     public partial class FormAgency : Form
     {
         private AgencyHandler CurrentAgency;
-        private StrategyHandler CurrentStrategy;
+        private Type CurrentStrategy;
 
-        private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
-        private List<IStrategy> Strategies;
+        private List<Tuple<AgencyHandler, IStrategy>> Agencies;
+        private List<Type> Strategies;
 
         private City CityLink;
         private QueueClass QueueLink;
         private MainDrawingProcessor DrawersLink;
 
-        public FormAgency(List<Tuple<AgencyHandler, StrategyHandler>> Agencies, List<IStrategy> Strategies,
+        public FormAgency(List<Tuple<AgencyHandler, IStrategy>> Agencies, List<Type> Strategies,
             City City, QueueClass Queue, MainDrawingProcessor Drawers)
         {
             DrawersLink = Drawers;
@@ -35,8 +36,13 @@ namespace AgencySimulator
             int L = Strategies.Count;
             if (L != 0)
             {
+                object[] attrs;
                 for (int i = 0; i < L; i++)
-                    CtrlLBStrategies.Items.Add(Strategies[i].GetName());
+                {
+                    attrs = Strategies[i].GetCustomAttributes(false);
+                if (attrs.Length > 0 && attrs[0] as Description != null)
+                    CtrlLBStrategies.Items.Add((attrs[0] as Description).Desc);
+                }
             }
 
             if (Agencies.Count != 0)
@@ -59,10 +65,10 @@ namespace AgencySimulator
                 MessageBox.Show("Вы ввели недопустимое значение в каком-то из полей. Проверьте правильность информации.", "Ошибка значений", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             else
             {
+                CurrentStrategy = Strategies[CtrlLBStrategies.SelectedIndex];
                 CurrentAgency.AgencySetLink(CityLink, QueueLink, DrawersLink);              //Агентству заталкиваем ссылки
-                CurrentStrategy = new StrategyHandler(CurrentAgency.GetAgencyLink());       //Потом заталкиваем агентство в хэндлер стратегии
-                CurrentStrategy.SetStrategy(Strategies[CtrlLBStrategies.SelectedIndex]);    //Хэндлеру прописываем нужную стратегию
-                Agencies.Add(Tuple.Create(CurrentAgency, CurrentStrategy));                 //И заталкиваем в общий список
+                IStrategy AgencyStrat = Activator.CreateInstance(CurrentStrategy) as IStrategy;
+                Agencies.Add(Tuple.Create(CurrentAgency, AgencyStrat));                 //И заталкиваем в общий список
                 CtrlLBAgencies.Items.Add(CurrentAgency.ToString());                         //Потом заносим имя агентства в список агентств
                 CurrentAgency = null;
                 CurrentStrategy = null;
@@ -77,8 +83,8 @@ namespace AgencySimulator
         private void CtrlButEditClick(object sender, EventArgs e)
         {
             CurrentAgency.AgencyChangeName(CtrlTxbName.Text);
-            CurrentStrategy = new StrategyHandler(CurrentAgency.GetAgencyLink());
-            CurrentStrategy.SetStrategy(Strategies[CtrlLBStrategies.SelectedIndex]);
+            IStrategy AgencyStrat = Activator.CreateInstance(CurrentStrategy) as IStrategy;
+            Agencies[CtrlLBAgencies.SelectedIndex] = Tuple.Create(CurrentAgency, AgencyStrat);
         }
         
 
@@ -87,7 +93,7 @@ namespace AgencySimulator
             if (CtrlLBAgencies.SelectedIndex > -1)
             {
                 CurrentAgency = Agencies[CtrlLBAgencies.SelectedIndex].Item1;
-                CurrentStrategy = Agencies[CtrlLBAgencies.SelectedIndex].Item2;
+                CurrentStrategy = Agencies[CtrlLBAgencies.SelectedIndex].Item2.GetType();
 
                 int index = CtrlLBStrategies.FindString(CurrentStrategy.ToString(), -1);
                 if (index != -1)

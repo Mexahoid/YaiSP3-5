@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IAgency.cs" />
+    <Compile Include="Interfaces\Description.cs" />
     <Compile Include="Interfaces\IStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

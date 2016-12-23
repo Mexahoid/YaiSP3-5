@@ -7,6 +7,7 @@ using AgencySimulator.Interfaces;
 
 namespace StrategyConservative
 {
+    [Description(Desc = "Консервативная")]
     public class StrategyConservative : IStrategy
     {
         #region Методы

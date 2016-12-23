@@ -7,6 +7,7 @@ using AgencySimulator.Interfaces;
 
 namespace StrategyAggressive
 {
+    [Description(Desc = "Агрессивная")]
     public class StrategyAgressive : IStrategy
     {
         #region Поля

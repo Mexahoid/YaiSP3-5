@@ -18,18 +18,19 @@ namespace AgencySimulator
         private MouseEventArgs eOld;
         private MainDrawingProcessor drawers;
 
-        private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
+        private List<Tuple<AgencyHandler, IStrategy>> Agencies;
 
         private CityHandler City;
         private DateHandler Date;
         private QueueHandler Queue;
 
         private List<IStrategy> Strategies;
+        private List<Type> StrategiesTypes;
 
         public FormMain()
         {
             InitializeComponent();
-            Agencies = new List<Tuple<AgencyHandler, StrategyHandler>>();
+            Agencies = new List<Tuple<AgencyHandler, IStrategy>>();
             drawers = new MainDrawingProcessor();
             drawers.SetCanvas(CtrlPicBxMap);
             Date = new DateHandler();
@@ -75,16 +76,13 @@ namespace AgencySimulator
 
         private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
         {
-            if (Strategies == null || Strategies.Count == 0)
+            if (StrategiesTypes == null || StrategiesTypes.Count == 0)
             {
-                if (MessageBox.Show("Какие агентства без стратегий? С ума сошел?", "Ты что, дурак?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    MessageBox.Show("Молодец, что хотя бы честно.", "Дело серьезное", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                else
-                    MessageBox.Show("Я что-то не верю тебе.", "Врать нехорошо", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("Какие агентства без стратегий? Не забудь их загрузить.", "Неа, не пущу.", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
             else
-            { 
-                FormAgency Af = new FormAgency(Agencies, Strategies,
+            {
+                FormAgency Af = new FormAgency(Agencies, StrategiesTypes,
                     City.GetCityLink(), Queue.GetQueueLink(), drawers);
                 if (Af.ShowDialog() == DialogResult.OK)
                 {
@@ -106,7 +104,7 @@ namespace AgencySimulator
             }
             else
                 if (!CtrlChBIndCity.Checked)
-                City = null;
+                    City = null;
             drawers.SetCanvas(CtrlPicBxMap);
             CtrlPicBxMap.Invalidate();
         }
@@ -139,7 +137,7 @@ namespace AgencySimulator
             CtrlTxbOrders.Text = Queue.ToString();
             int C = Agencies.Count;
             for (int i = 0; i < C; i++)
-                if (!Agencies[i].Item2.Action())
+                if (!Agencies[i].Item2.Action(Agencies[i].Item1.GetAgencyLink()))
                 {
                     CtrlTimer.Enabled = false;
                     CtrlButTimerPause.Text = "Продолжить";
@@ -190,6 +188,7 @@ namespace AgencySimulator
         {
             string[] pluginFiles = Directory.GetFiles(SelectPath, "*.dll");
             Strategies = new List<IStrategy>();
+            StrategiesTypes = new List<Type>();
 
             foreach (string pluginPath in pluginFiles)
             {
@@ -199,16 +198,11 @@ namespace AgencySimulator
                     // пытаемся загрузить библиотеку
                     Assembly assembly = Assembly.LoadFrom(pluginPath);
                     if (assembly != null)
+                    {
                         objType = assembly.GetTypes()[0];
-                }
-                catch
-                {
-                    continue;
-                }
-                try
-                {
-                    if (objType != null)
-                        Strategies.Add(Activator.CreateInstance(objType) as IStrategy);
+                        if (objType.IsAssignableFrom(typeof(IStrategy)))
+                            StrategiesTypes.Add(objType);
+                    }
                 }
                 catch
                 {

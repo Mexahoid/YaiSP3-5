@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AgencySimulator.Interfaces;
 
 namespace AgencySimulator
 {
@@ -14,11 +15,11 @@ namespace AgencySimulator
         private bool drawingGraph = false;
         private MainDrawingProcessor graphDrawer;
         private List<IDrawable> Drawers;
-        private List<Tuple<AgencyHandler, StrategyHandler>> Agencies;
+        private List<Tuple<AgencyHandler, IStrategy>> Agencies;
 
         private MouseEventArgs eOld;
 
-        public FormGraph(List<Tuple<AgencyHandler, StrategyHandler>> Agencies)
+        public FormGraph(List<Tuple<AgencyHandler, IStrategy>> Agencies)
         {
             this.Agencies = Agencies;
             InitializeComponent();

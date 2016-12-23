@@ -7,6 +7,7 @@ using AgencySimulator.Interfaces;
 
 namespace StrategyNormal
 {
+    [Description(Desc = "Умеренная")]
     public class StrategyNormal : IStrategy
     {
         #region Поля
