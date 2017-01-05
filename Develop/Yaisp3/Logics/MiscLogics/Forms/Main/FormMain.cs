@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using AgencySimulator.Interfaces;
 using System.IO;
 using System.Reflection;
+using AgencySimulator.Interfaces;
 
 namespace AgencySimulator
 {
     public partial class FormMain : Form
     {
+        #region Поля
+
         private bool drawingMap = false;
         private MouseEventArgs eOld;
         private MainDrawingProcessor drawers;
@@ -24,8 +21,13 @@ namespace AgencySimulator
         private DateHandler Date;
         private QueueHandler Queue;
 
-        private List<IStrategy> Strategies;
         private List<Type> StrategiesTypes;
+
+        #endregion
+
+        #region Методы
+
+        #region Одиночные методы
 
         public FormMain()
         {
@@ -38,7 +40,68 @@ namespace AgencySimulator
             Queue = new QueueHandler();
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             CtrlPicBxMap.MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
+
+            (int, int) Tally()
+            {
+                return (0, 0);
+            }
         }
+
+        private void CtrlTBSpeed_Scroll(object sender, EventArgs e)
+        {
+            CtrlTimer.Interval = CtrlTBSpeed.Value * 20;
+
+        }
+
+        /// <summary>
+        /// Переопределяет метода перерисовки для инвалидации.
+        /// </summary>
+        /// <param name="e">Объект отрисовки.</param>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            drawers.Draw();
+        }
+
+        /// <summary>
+        /// Костыль для Windows XP.
+        /// </summary>
+        private void CtrlPicBxMap_Click(object sender, EventArgs e)
+        {
+            CtrlPicBxMap.Focus();
+        }
+
+        /// <summary>
+        /// Загружает плагины.
+        /// </summary>
+        /// <param name="SelectPath">Путь папки загрузки.</param>
+        private void LoadPlugins(string SelectPath)
+        {
+            string[] pluginFiles = Directory.GetFiles(SelectPath, "*.dll");
+            StrategiesTypes = new List<Type>();
+
+            foreach (string pluginPath in pluginFiles)
+            {
+                Type objType = null;
+                try
+                {
+                    Assembly assembly = Assembly.LoadFrom(pluginPath);
+                    if (assembly != null)
+                    {
+                        objType = assembly.GetTypes()[0];
+                        if (objType.GetInterface("IStrategy") != null)
+                            StrategiesTypes.Add(objType);
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Методы мыши
 
         private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
         {
@@ -74,6 +137,10 @@ namespace AgencySimulator
             }
         }
 
+        #endregion
+
+        #region Методы кнопок выпадающего меню
+
         private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
         {
             if (StrategiesTypes == null || StrategiesTypes.Count == 0)
@@ -104,7 +171,7 @@ namespace AgencySimulator
             }
             else
                 if (!CtrlChBIndCity.Checked)
-                    City = null;
+                City = null;
             drawers.SetCanvas(CtrlPicBxMap);
             CtrlPicBxMap.Invalidate();
         }
@@ -129,6 +196,10 @@ namespace AgencySimulator
             if (CtrlFBD.ShowDialog() == DialogResult.OK)
                 LoadPlugins(CtrlFBD.SelectedPath);
         }
+
+        #endregion
+
+        #region Методы таймера
 
         private void CtrlTimer_Tick(object sender, EventArgs e)
         {
@@ -166,49 +237,9 @@ namespace AgencySimulator
                 CtrlButTimerPause.Text = "Продолжить";
         }
 
-        private void CtrlTBSpeed_Scroll(object sender, EventArgs e)
-        {
-            CtrlTimer.Interval = CtrlTBSpeed.Value * 20;
-        }
+        #endregion
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            drawers.Draw();
-        }
 
-        /// <summary>
-        /// Костыль для Windows XP.
-        /// </summary>
-        private void CtrlPicBxMap_Click(object sender, EventArgs e)
-        {
-            CtrlPicBxMap.Focus();
-        }
-
-        private void LoadPlugins(string SelectPath)
-        {
-            string[] pluginFiles = Directory.GetFiles(SelectPath, "*.dll");
-            Strategies = new List<IStrategy>();
-            StrategiesTypes = new List<Type>();
-
-            foreach (string pluginPath in pluginFiles)
-            {
-                Type objType = null;
-                try
-                {
-                    // пытаемся загрузить библиотеку
-                    Assembly assembly = Assembly.LoadFrom(pluginPath);
-                    if (assembly != null)
-                    {
-                        objType = assembly.GetTypes()[0];
-                        if (objType.IsAssignableFrom(typeof(IStrategy)))
-                            StrategiesTypes.Add(objType);
-                    }
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-        }
+        #endregion
     }
 }

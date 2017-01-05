@@ -96,15 +96,7 @@ namespace StrategyAggressive
             }
             return true;
         }
-
-        /// <summary>
-        /// Возвращает название стратегии.
-        /// </summary>
-        /// <returns>Возвращает строку.</returns>
-        public string GetName()
-        {
-            return "Агрессивная";
-        }
+        
 
         #endregion
     }

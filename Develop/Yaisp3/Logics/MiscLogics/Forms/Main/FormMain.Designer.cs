@@ -45,6 +45,7 @@ namespace AgencySimulator
             this.CtrlTSMIAgencyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTSMIProximityMap = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTSMIGraph = new System.Windows.Forms.ToolStripMenuItem();
+            this.CtrlTSMILoadPlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlTimer = new System.Windows.Forms.Timer(this.components);
             this.CtrlButTimerPause = new System.Windows.Forms.Button();
             this.CtrlButTimerStart = new System.Windows.Forms.Button();
@@ -63,7 +64,6 @@ namespace AgencySimulator
             this.CtrlLblMisc4 = new System.Windows.Forms.Label();
             this.CtrlTBQueueQuantity = new System.Windows.Forms.TrackBar();
             this.CtrlTxbOrders = new System.Windows.Forms.TextBox();
-            this.CtrlTSMILoadPlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.CtrlFBD = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.CtrlPicBxMap)).BeginInit();
             this.CtrlMainStrip.SuspendLayout();
@@ -114,7 +114,6 @@ namespace AgencySimulator
             this.CtrlMainStrip.Name = "CtrlMainStrip";
             this.CtrlMainStrip.Size = new System.Drawing.Size(911, 25);
             this.CtrlMainStrip.TabIndex = 6;
-            this.CtrlMainStrip.Text = "toolStrip1";
             // 
             // CtrlTSMIDrop
             // 
@@ -160,6 +159,13 @@ namespace AgencySimulator
             this.CtrlTSMIGraph.Size = new System.Drawing.Size(179, 22);
             this.CtrlTSMIGraph.Text = "График бюджета";
             this.CtrlTSMIGraph.Click += new System.EventHandler(this.CtrlTSMIGraph_Click);
+            // 
+            // CtrlTSMILoadPlugins
+            // 
+            this.CtrlTSMILoadPlugins.Name = "CtrlTSMILoadPlugins";
+            this.CtrlTSMILoadPlugins.Size = new System.Drawing.Size(179, 22);
+            this.CtrlTSMILoadPlugins.Text = "Загрузить плагины";
+            this.CtrlTSMILoadPlugins.Click += new System.EventHandler(this.CtrlTSMILoadPlugins_Click);
             // 
             // CtrlTimer
             // 
@@ -345,15 +351,9 @@ namespace AgencySimulator
             this.CtrlTxbOrders.Size = new System.Drawing.Size(232, 119);
             this.CtrlTxbOrders.TabIndex = 14;
             // 
-            // CtrlTSMILoadPlugins
-            // 
-            this.CtrlTSMILoadPlugins.Name = "CtrlTSMILoadPlugins";
-            this.CtrlTSMILoadPlugins.Size = new System.Drawing.Size(179, 22);
-            this.CtrlTSMILoadPlugins.Text = "Загрузить плагины";
-            this.CtrlTSMILoadPlugins.Click += new System.EventHandler(this.CtrlTSMILoadPlugins_Click);
-            // 
             // CtrlFBD
             // 
+            this.CtrlFBD.SelectedPath = "D:\\Data\\Projects\\C_Sharp\\Yaisp3\\Release\\Plugins";
             this.CtrlFBD.ShowNewFolderButton = false;
             // 
             // FormMain
