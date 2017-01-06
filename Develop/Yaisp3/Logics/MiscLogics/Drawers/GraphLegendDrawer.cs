@@ -19,7 +19,7 @@ namespace AgencySimulator
         /// <summary>
         /// Список хэшей названий.
         /// </summary>
-        private List<int> hashes;
+        private List<long> hashes;
 
         /// <summary>
         /// Правая граница канваса.
@@ -35,7 +35,7 @@ namespace AgencySimulator
         /// </summary>
         /// <param name="Names">Список названий агентств.</param>
         /// <param name="Hashes">Список хэшей от названий.</param>
-        public GraphLegendDrawer(List<string> Names, List<int> Hashes)
+        public GraphLegendDrawer(List<string> Names, List<long> Hashes)
         {
             agencyNames = Names;
             hashes = Hashes;
@@ -68,7 +68,16 @@ namespace AgencySimulator
             {
                 Graphics.DrawString(agencyNames[i], new Font("Arial", 10), Brushes.Black,
                   rightBoundary - S.Width - 25, A.Height + i * S.Height);
-                Graphics.DrawLine(new Pen(Color.FromArgb(hashes[i]), 2),
+                int B = (int)(hashes[i] % 100 * 2);
+                while (B * 2 < 255)
+                    B *= 2;
+                int G = (int)(hashes[i] % 10_000 / 50);
+                while (G * 2 < 255)
+                    G *= 2;
+                int R = (int)(hashes[i] % 1_000_000 / 5_000);
+                while (R * 2 < 255)
+                    R *= 2;
+                Graphics.DrawLine(new Pen(Color.FromArgb(R, G, B), 2),
                     new PointF(rightBoundary - 25, A.Height + i * S.Height + S.Height / 2),
                     new PointF(rightBoundary - 5, A.Height + i * S.Height + S.Height / 2));
             }

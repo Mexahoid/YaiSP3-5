@@ -41,7 +41,7 @@ namespace AgencySimulator
         /// <summary>
         /// Список из подневных коэффициентов бюджета.
         /// </summary>
-        private List<Tuple<double, double>> agencySummary;
+        private List<(double, double)> agencySummary;
 
         /// <summary>
         /// Ссылка на объект города.
@@ -79,7 +79,7 @@ namespace AgencySimulator
             agencyId = AgencyID;
             agencyDeposit = Money;
             agencyBillboards = new List<Billboard>();
-            agencySummary = new List<Tuple<double, double>>();
+            agencySummary = new List<(double, double)>();
             agencyStaffCount = 1 + Billboards * 3;  //Глава + обслуга
             agencyFreeBillboards = Billboards;
         }
@@ -104,9 +104,9 @@ namespace AgencySimulator
         /// Возвращает кортеж, состоящий из депозита и кол-ва щитов.
         /// </summary>
         /// <returns>Возвращает кортеж из двух целочисленных значений.</returns>
-        public Tuple<int, int> GetData()
+        public (int, int) GetData()
         {
-            return Tuple.Create(agencyDeposit, agencyBillboards.Count + agencyFreeBillboards);
+            return (agencyDeposit, agencyBillboards.Count + agencyFreeBillboards);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace AgencySimulator
                 agencyDeposit -= agencyBillboards[i].BillboardPayMoney();  //Заплатить за содержание
                 agencyDeposit += agencyBillboards[i].ClientPay();          //Собрать деньгу с заказчика
             }
-            agencySummary.Add(Tuple.Create(agencySummary.Count * 0.2, agencyDeposit / 10000.0));
+            agencySummary.Add((agencySummary.Count * 0.2, agencyDeposit / 10000.0));
             return true;
         }
 
@@ -204,7 +204,7 @@ namespace AgencySimulator
         /// Возвращает список из подневных значений счета агентства.
         /// </summary>
         /// <returns>Возвращает кортеж вещественных значений.</returns>
-        public List<Tuple<double, double>> GetAgencySummary()
+        public List<(double, double)> GetAgencySummary()
         {
             return agencySummary;
         }

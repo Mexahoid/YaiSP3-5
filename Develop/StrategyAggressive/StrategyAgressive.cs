@@ -72,7 +72,7 @@ namespace StrategyAggressive
             }
             if (--daysTillResetting < 1)
                 pastOrderCount = 0;
-            List<Tuple<double, double>> Summary = agency.GetAgencySummary();
+            List<(double, double)> Summary = agency.GetAgencySummary();
             int C = Summary.Count;
             if (C > 10)
             {
@@ -96,7 +96,15 @@ namespace StrategyAggressive
             }
             return true;
         }
-        
+
+        /// <summary>
+        /// Возвращает название стратегии.
+        /// </summary>
+        /// <returns>Возвращает строку.</returns>
+        public string GetName()
+        {
+            return "Агрессивная";
+        }
 
         #endregion
     }

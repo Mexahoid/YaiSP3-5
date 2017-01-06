@@ -9,5 +9,6 @@ namespace AgencySimulator.Interfaces
     {      
         bool Action(IAgency agency);
 
+        string GetName();
     }
 }

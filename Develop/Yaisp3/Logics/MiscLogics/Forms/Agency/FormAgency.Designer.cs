@@ -149,7 +149,7 @@
             this.CtrlLBAgencies.FormattingEnabled = true;
             this.CtrlLBAgencies.Location = new System.Drawing.Point(252, 12);
             this.CtrlLBAgencies.Name = "CtrlLBAgencies";
-            this.CtrlLBAgencies.Size = new System.Drawing.Size(104, 160);
+            this.CtrlLBAgencies.Size = new System.Drawing.Size(218, 160);
             this.CtrlLBAgencies.TabIndex = 11;
             this.CtrlLBAgencies.SelectedIndexChanged += new System.EventHandler(this.CtrlLBAgencies_SelectedIndexChanged);
             // 
@@ -188,7 +188,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 186);
+            this.ClientSize = new System.Drawing.Size(482, 186);
             this.Controls.Add(this.CtrlLBStrategies);
             this.Controls.Add(this.CtrlButDelete);
             this.Controls.Add(this.CtrlButSuction);

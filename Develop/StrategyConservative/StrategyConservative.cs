@@ -23,7 +23,7 @@ namespace StrategyConservative
             if (Sychev.Next(0, 100) == 97)
                 if (agency.HowMuchCanWeAfford(1) == 1)
                     agency.PlaceBillboardRnd();
-            List<Tuple<double, double>> Summary = agency.GetAgencySummary();
+            List<(double, double)> Summary = agency.GetAgencySummary();
             int C = Summary.Count;
             if (C > 10)
             {

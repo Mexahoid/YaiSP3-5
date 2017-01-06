@@ -31,10 +31,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logics\MainLogics\Handlers\AgencyHandler.cs" />
+    <Compile Include="Logics\MainLogics\Handlers\DataHandler.cs" />
     <Compile Include="Logics\MainLogics\Handlers\DateHandler.cs" />
     <Compile Include="Logics\MainLogics\Processors\MainDrawingProcessor.cs" />
     <Compile Include="Logics\MiscLogics\Drawers\GraphLegendDrawer.cs" />

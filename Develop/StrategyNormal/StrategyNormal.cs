@@ -45,7 +45,7 @@ namespace StrategyNormal
             Random Sychev = new Random((int)DateTime.Now.Ticks);
             if (!BuildOrderedBillboards(agency))
                 return false;
-            List<Tuple<double, double>> Summary = agency.GetAgencySummary();
+            List<(double, double)> Summary = agency.GetAgencySummary();
             int C = Summary.Count;
             if (C > 15)
             {

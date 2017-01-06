@@ -19,7 +19,7 @@ namespace AgencySimulator.Interfaces
 
         void PlaceBillboardRnd();
 
-        List<Tuple<double, double>> GetAgencySummary();
+        List<(double, double)> GetAgencySummary();
 
         void DeleteOneBillboard();
     }

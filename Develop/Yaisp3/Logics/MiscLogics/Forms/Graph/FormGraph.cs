@@ -15,11 +15,11 @@ namespace AgencySimulator
         private bool drawingGraph = false;
         private MainDrawingProcessor graphDrawer;
         private List<IDrawable> Drawers;
-        private List<Tuple<AgencyHandler, IStrategy>> Agencies;
+        private List<(AgencyHandler agency, IStrategy strategy)> Agencies;
 
         private MouseEventArgs eOld;
 
-        public FormGraph(List<Tuple<AgencyHandler, IStrategy>> Agencies)
+        public FormGraph(List<(AgencyHandler agency, IStrategy strategy)> Agencies)
         {
             this.Agencies = Agencies;
             InitializeComponent();
@@ -35,15 +35,19 @@ namespace AgencySimulator
             Drawers = new List<IDrawable>();
             int C = Agencies.Count;
             List<string> Names = new List<string>();
-            List<int> Hashes = new List<int>();
+            List<long> Hashes = new List<long>();
             string Name;
+            int Temp = 0;
             for (int i = 0; i < C; i++)
             {
                 Name = Agencies[i].Item1.ToString();
                 Names.Add(Name);
-                Hashes.Add(Name.GetHashCode() + MiscellaneousLogics.MainGetRandomValue(-1000, 1000)
-                    + MiscellaneousLogics.MainGetRandomValue(-100000, 100000)
-                    + MiscellaneousLogics.MainGetRandomValue(-10000000, 10000000));
+                Temp = Math.Abs(Name.GetHashCode() + MiscellaneousLogics.MainGetRandomValue(-1_000, 1_000)
+                    + MiscellaneousLogics.MainGetRandomValue(-100_000, 100_000)
+                    + MiscellaneousLogics.MainGetRandomValue(-10_000_000, 10_000_000));
+                if (Temp < 10_000_000)
+                    Temp += MiscellaneousLogics.MainGetRandomValue(10, 99) * 1_000_000;
+                Hashes.Add(Temp);
             }
             graphDrawer.AddDrawer(new GraphLegendDrawer(Names, Hashes));
 

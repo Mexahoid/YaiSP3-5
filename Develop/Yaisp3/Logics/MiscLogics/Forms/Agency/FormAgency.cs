@@ -16,14 +16,14 @@ namespace AgencySimulator
         private AgencyHandler CurrentAgency;
         private Type CurrentStrategy;
 
-        private List<Tuple<AgencyHandler, IStrategy>> Agencies;
+        private List<(AgencyHandler agency, IStrategy strategy)> Agencies;
         private List<Type> Strategies;
 
         private City CityLink;
         private QueueClass QueueLink;
         private MainDrawingProcessor DrawersLink;
 
-        public FormAgency(List<Tuple<AgencyHandler, IStrategy>> Agencies, List<Type> Strategies,
+        public FormAgency(List<(AgencyHandler agency, IStrategy strategy)> Agencies, List<Type> Strategies,
             City City, QueueClass Queue, MainDrawingProcessor Drawers)
         {
             DrawersLink = Drawers;
@@ -32,6 +32,7 @@ namespace AgencySimulator
             this.Agencies = Agencies;
             this.Strategies = Strategies;
             InitializeComponent();
+            List<string> StrategyNames = new List<string>();
 
             int L = Strategies.Count;
             if (L != 0)
@@ -49,7 +50,7 @@ namespace AgencySimulator
             {
                 int C = Agencies.Count;
                 for (int i = 0; i < C; i++)
-                    CtrlLBAgencies.Items.Add(Agencies[i].ToString());
+                    CtrlLBAgencies.Items.Add(Agencies[i].agency.ToString() + ", " + Agencies[i].strategy.GetName());
             }
         }
 
@@ -68,8 +69,8 @@ namespace AgencySimulator
                 CurrentStrategy = Strategies[CtrlLBStrategies.SelectedIndex];
                 CurrentAgency.AgencySetLink(CityLink, QueueLink, DrawersLink);              //Агентству заталкиваем ссылки
                 IStrategy AgencyStrat = Activator.CreateInstance(CurrentStrategy) as IStrategy;
-                Agencies.Add(Tuple.Create(CurrentAgency, AgencyStrat));                 //И заталкиваем в общий список
-                CtrlLBAgencies.Items.Add(CurrentAgency.ToString());                         //Потом заносим имя агентства в список агентств
+                Agencies.Add((CurrentAgency, AgencyStrat));                 //И заталкиваем в общий список
+                CtrlLBAgencies.Items.Add(CurrentAgency.ToString() + ", " + AgencyStrat.GetName()); //Потом заносим имя агентства в список агентств
                 CurrentAgency = null;
                 CurrentStrategy = null;
 
@@ -84,7 +85,7 @@ namespace AgencySimulator
         {
             CurrentAgency.AgencyChangeName(CtrlTxbName.Text);
             IStrategy AgencyStrat = Activator.CreateInstance(CurrentStrategy) as IStrategy;
-            Agencies[CtrlLBAgencies.SelectedIndex] = Tuple.Create(CurrentAgency, AgencyStrat);
+            Agencies[CtrlLBAgencies.SelectedIndex] = (CurrentAgency, AgencyStrat);
         }
         
 
@@ -92,15 +93,15 @@ namespace AgencySimulator
         {
             if (CtrlLBAgencies.SelectedIndex > -1)
             {
-                CurrentAgency = Agencies[CtrlLBAgencies.SelectedIndex].Item1;
-                CurrentStrategy = Agencies[CtrlLBAgencies.SelectedIndex].Item2.GetType();
+                CurrentAgency = Agencies[CtrlLBAgencies.SelectedIndex].agency;
+                CurrentStrategy = Agencies[CtrlLBAgencies.SelectedIndex].strategy.GetType();
 
                 int index = CtrlLBStrategies.FindString(CurrentStrategy.ToString(), -1);
                 if (index != -1)
                     CtrlLBStrategies.SetSelected(index, true);
                 
                 CtrlButEdit.Enabled = CtrlButDelete.Enabled = true;
-                Tuple<int, int> T = CurrentAgency.AgencyGetData();
+                (int, int) T = CurrentAgency.AgencyGetData();
                 CtrlTxbName.Text = CurrentAgency.ToString();
                 CtrlNumDeposit.Value = T.Item1;
                 CtrlNumBillboards.Value = T.Item2;

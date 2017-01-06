@@ -70,8 +70,8 @@ namespace AgencySimulator
         /// <summary>
         /// Возвращает кортеж данных агентства.
         /// </summary>
-        /// <returns>Возвращает кортеж из строки и двух целочисленных значений.</returns>
-        public Tuple<int, int> AgencyGetData()
+        /// <returns>Возвращает кортеж из двух целочисленных значений.</returns>
+        public (int, int) AgencyGetData()
         {
             return Agency.GetData();
         }
@@ -112,7 +112,7 @@ namespace AgencySimulator
         /// Возвращает список-отчет роста бюджета.
         /// </summary>
         /// <returns>Возвращает кортеж вещественных чисел.</returns>
-        public List<Tuple<double, double>> AgencyGetSummary()
+        public List<(double, double)> AgencyGetSummary()
         {
             return Agency.GetAgencySummary();
         }

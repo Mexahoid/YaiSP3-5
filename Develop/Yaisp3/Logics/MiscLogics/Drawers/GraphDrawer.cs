@@ -14,12 +14,12 @@ namespace AgencySimulator
         /// <summary>
         /// Кортеж точек графика.
         /// </summary>
-        private List<Tuple<double, double>> points;
+        private List<(double x, double y)> points;
 
         /// <summary>
         /// Хэш названия данного агентства.
         /// </summary>
-        private int hash;
+        private long hash;
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace AgencySimulator
         /// </summary>
         /// <param name="Points">Кортеж точек графика.</param>
         /// <param name="HashCode">Хэш названия агентства.</param>
-        public GraphDrawer(List<Tuple<double, double>> Points, int HashCode)
+        public GraphDrawer(List<(double, double)> Points, long HashCode)
         {
             points = Points;
             hash = HashCode;
@@ -48,14 +48,23 @@ namespace AgencySimulator
             Graphics.DrawLine(Pens.Blue, GetScreenX(-500), GetScreenY(0), GetScreenX(500), GetScreenY(0));
             if (L != 0)
             {
-                Pen P = new Pen(Color.FromArgb(hash), 2);
+                int B = (int)(hash % 100 * 2);
+                while (B * 2 < 255)
+                    B *= 2;
+                int G = (int)(hash % 10_000 / 50);
+                while (G * 2 < 255)
+                    G *= 2;
+                int R = (int)(hash % 1_000_000 / 5_000);
+                while (R * 2 < 255)
+                    R *= 2;
+                Pen P = new Pen(Color.FromArgb(R, G, B), 2);
                 Graphics.DrawLine(P, new Point(GetScreenX(0), GetScreenY(0)),
-                  new Point(GetScreenX(points[0].Item1), GetScreenY(-points[0].Item2)));
+                  new Point(GetScreenX(points[0].x), GetScreenY(-points[0].y)));
                 for (int i = 1; i < L; i++)
                 {
                     Graphics.DrawLine(P,
-                        new Point(GetScreenX(points[i - 1].Item1), GetScreenY(-points[i - 1].Item2)),
-                         new Point(GetScreenX(points[i].Item1), GetScreenY(-points[i].Item2)));
+                        new Point(GetScreenX(points[i - 1].x), GetScreenY(-points[i - 1].y)),
+                         new Point(GetScreenX(points[i].x), GetScreenY(-points[i].y)));
                 }
             }
         }

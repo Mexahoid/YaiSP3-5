@@ -11,17 +11,17 @@ namespace AgencySimulator
     {
         #region Поля
 
-        private bool drawingMap = false;
+        /// <summary>
+        /// Флаг, зависящий от нажатия/подъема кнопки мыши на карте.
+        /// </summary>
+        private bool movingMap = false;
+
+        /// <summary>
+        /// Старые координаты мыши - для движения карты.
+        /// </summary>
         private MouseEventArgs eOld;
-        private MainDrawingProcessor drawers;
 
-        private List<Tuple<AgencyHandler, IStrategy>> Agencies;
-
-        private CityHandler City;
-        private DateHandler Date;
-        private QueueHandler Queue;
-
-        private List<Type> StrategiesTypes;
+        private DataHandler mainDataHandler;
 
         #endregion
 
@@ -32,25 +32,19 @@ namespace AgencySimulator
         public FormMain()
         {
             InitializeComponent();
-            Agencies = new List<Tuple<AgencyHandler, IStrategy>>();
-            drawers = new MainDrawingProcessor();
-            drawers.SetCanvas(CtrlPicBxMap);
-            Date = new DateHandler();
-            City = new CityHandler();
-            Queue = new QueueHandler();
+            mainDataHandler = new DataHandler();
+            mainDataHandler.DrawerSetCanvas(CtrlPicBxMap);
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             CtrlPicBxMap.MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
-
-            (int, int) Tally()
-            {
-                return (0, 0);
-            }
+            mainDataHandler.SetEventLink(new DataHandler.DelegateAgenDestr(AgencyDestroyEventHandler));
         }
 
+        /// <summary>
+        /// Изменяет скорость течения времени.
+        /// </summary>
         private void CtrlTBSpeed_Scroll(object sender, EventArgs e)
         {
             CtrlTimer.Interval = CtrlTBSpeed.Value * 20;
-
         }
 
         /// <summary>
@@ -59,7 +53,7 @@ namespace AgencySimulator
         /// <param name="e">Объект отрисовки.</param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            drawers.Draw();
+            mainDataHandler.DrawerDraw();
         }
 
         /// <summary>
@@ -77,7 +71,7 @@ namespace AgencySimulator
         private void LoadPlugins(string SelectPath)
         {
             string[] pluginFiles = Directory.GetFiles(SelectPath, "*.dll");
-            StrategiesTypes = new List<Type>();
+            mainDataHandler.TypesClear();
 
             foreach (string pluginPath in pluginFiles)
             {
@@ -87,9 +81,10 @@ namespace AgencySimulator
                     Assembly assembly = Assembly.LoadFrom(pluginPath);
                     if (assembly != null)
                     {
-                        objType = assembly.GetTypes()[0];
+                        Type[] Temp = assembly.GetTypes();
+                        objType = Temp[0];
                         if (objType.GetInterface("IStrategy") != null)
-                            StrategiesTypes.Add(objType);
+                            mainDataHandler.TypesAdd(objType);
                     }
                 }
                 catch
@@ -99,14 +94,25 @@ namespace AgencySimulator
             }
         }
 
+        /// <summary>
+        /// Обработчик события уничтожения агентства.
+        /// </summary>
+        /// <param name="name">Название уничтожаемого агентства.</param>
+        private void AgencyDestroyEventHandler(string name)
+        {
+            CtrlTimer.Enabled = false;
+            CtrlButTimerPause.Text = "Продолжить";
+            MessageBox.Show("Агентство " + name + " было ликвидировано по причине банкротства.", "Беда!");
+        }
+
         #endregion
 
         #region Методы мыши
 
         private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
         {
-            drawers.Zoom(e.X, e.Y, e.Delta);
-            drawers.Draw();
+            mainDataHandler.DrawerZoom(e.X, e.Y, e.Delta);
+            mainDataHandler.DrawerDraw();
         }
         private void CtrlPicBxMap_MouseDown(object sender, MouseEventArgs e)
         {
@@ -115,25 +121,25 @@ namespace AgencySimulator
                 case MouseButtons.Left:
                 case MouseButtons.Right:
                     eOld = e;
-                    drawingMap = true;
+                    movingMap = true;
                     break;
                 case MouseButtons.Middle:
-                    drawers.SetNormalZoom();
+                    mainDataHandler.DrawerSetNormalZoom();
                     break;
             }
-            drawers.Draw();
+            mainDataHandler.DrawerDraw();
         }
         private void CtrlPicBxMap_MouseUp(object sender, MouseEventArgs e)
         {
-            drawingMap = false;
+            movingMap = false;
         }
         private void CtrlPicBxMap_MouseMove(object sender, MouseEventArgs e)
         {
-            if (drawingMap)
+            if (movingMap)
             {
-                drawers.Move(e.X, e.Y, eOld.X, eOld.Y);
+                mainDataHandler.DrawerMove(e.X, e.Y, eOld.X, eOld.Y);
                 eOld = e;
-                drawers.Draw();
+                mainDataHandler.DrawerDraw();
             }
         }
 
@@ -143,14 +149,12 @@ namespace AgencySimulator
 
         private void CtrlTSMIAgencyMenuClick(object sender, EventArgs e)
         {
-            if (StrategiesTypes == null || StrategiesTypes.Count == 0)
-            {
+            if (mainDataHandler.TypesNotExist())
                 MessageBox.Show("Какие агентства без стратегий? Не забудь их загрузить.", "Неа, не пущу.", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
             else
             {
-                FormAgency Af = new FormAgency(Agencies, StrategiesTypes,
-                    City.GetCityLink(), Queue.GetQueueLink(), drawers);
+                FormAgency Af = new FormAgency(mainDataHandler.AgenciesGetLink(), mainDataHandler.TypesGetLink(),
+                    mainDataHandler.CityGetLink().GetCityLink(), mainDataHandler.QueueGetLink(), mainDataHandler.DrawerGetLink());
                 if (Af.ShowDialog() == DialogResult.OK)
                 {
                     CtrlChBIndAgen.Checked = true;
@@ -161,7 +165,7 @@ namespace AgencySimulator
         }
         private void CtrlTSMICreateCityClick(object sender, EventArgs e)
         {
-            FormCity Cf = new FormCity(drawers, City);
+            FormCity Cf = new FormCity(mainDataHandler.DrawerGetLink(), mainDataHandler.CityGetLink());
             if (Cf.ShowDialog() == DialogResult.OK)
             {
                 CtrlChBIndCity.Checked = true;
@@ -171,18 +175,18 @@ namespace AgencySimulator
             }
             else
                 if (!CtrlChBIndCity.Checked)
-                City = null;
-            drawers.SetCanvas(CtrlPicBxMap);
+                mainDataHandler.CityClear();
+            mainDataHandler.DrawerSetCanvas(CtrlPicBxMap);
             CtrlPicBxMap.Invalidate();
         }
         private void CtrlTSMIProximityMapClick(object sender, EventArgs e)
         {
-            FormProximity Pr = new FormProximity(City);
+            FormProximity Pr = new FormProximity(mainDataHandler.CityGetLink());
             Pr.Show();
         }
         private void CtrlTSMIGraph_Click(object sender, EventArgs e)
         {
-            FormGraph Gr = new FormGraph(Agencies);
+            FormGraph Gr = new FormGraph(mainDataHandler.AgenciesGetLink());
             Gr.Show();
         }
         private void CtrlTSMIDrop_Click(object sender, EventArgs e)
@@ -203,22 +207,12 @@ namespace AgencySimulator
 
         private void CtrlTimer_Tick(object sender, EventArgs e)
         {
-            CtrlLblDate.Text = "Дата: " + Date.DateGetAsString();
-            Queue.QueueAddRand(CtrlTBQueueQuantity.Value, CtrlTBQueueIntense.Value);
-            CtrlTxbOrders.Text = Queue.ToString();
-            int C = Agencies.Count;
-            for (int i = 0; i < C; i++)
-                if (!Agencies[i].Item2.Action(Agencies[i].Item1.GetAgencyLink()))
-                {
-                    CtrlTimer.Enabled = false;
-                    CtrlButTimerPause.Text = "Продолжить";
-                    MessageBox.Show("Агентство " + Agencies[i].Item1.ToString() + " было ликвидировано по причине банкротства.", "Беда!");
-                    Agencies[i].Item1.AgencyDestroy();
-                    Agencies.RemoveAt(i--);
-                    C--;
-                }
-            Date.DateNewDay();
-            drawers.Draw();
+            CtrlLblDate.Text = mainDataHandler.DateGet();
+            mainDataHandler.QueueNewClient(CtrlTBQueueQuantity.Value, CtrlTBQueueIntense.Value);
+            CtrlTxbOrders.Text = mainDataHandler.QueueNames();
+            mainDataHandler.AgenciesAction();
+            mainDataHandler.DateNew();
+            mainDataHandler.DrawerDraw();
         }
         private void CtrlButTimerStartClick(object sender, EventArgs e)
         {
@@ -238,7 +232,6 @@ namespace AgencySimulator
         }
 
         #endregion
-
 
         #endregion
     }
