@@ -15,14 +15,25 @@ namespace AgencySimulator
         #region Поля
 
         /// <summary>
+        /// Делегат для события перерисовки.
+        /// </summary>
+        /// <param name="e">Рабочая графика.</param>
+        public delegate void DelegateReDraw(PaintEventArgs e);
+
+        /// <summary>
+        /// Событие для перерисовки графики.
+        /// </summary>
+        private event DelegateReDraw EventReDraw;
+
+        /// <summary>
         /// Список рисовальщиков.
         /// </summary>
         private List<IDrawable> Drawers;
-
+        
         /// <summary>
-        /// Канва, связанная с элементом управления.
+        /// Главный экземпляр графики.
         /// </summary>
-        private Graphics CanvasControl;
+        private PaintEventArgs TempCanv;
 
         /// <summary>
         /// Канва, связанная с изображением.
@@ -56,27 +67,24 @@ namespace AgencySimulator
         /// <summary>
         /// Конструктор процессора рисовальщиков.
         /// </summary>
-        public MainDrawingProcessor()
-        {
-            Drawers = new List<IDrawable>();
-        }
+        public MainDrawingProcessor() => Drawers = new List<IDrawable>();
+
+        /// <summary>
+        /// Устанавливает метод, вызываемый при необходимости отрисовки.
+        /// </summary>
+        /// <param name="Del"></param>
+        public void SetRedrawEvent(DelegateReDraw Del) => EventReDraw += Del;
 
         //VS сказала реализовать интерфейс IDisposable, потому здесь стоит очистка канваса.
         /// <summary>
         /// Очистка битмапа.
         /// </summary>
-        public void Dispose()
-        {
-            Bitmap.Dispose();
-        }
+        public void Dispose() => Bitmap.Dispose();
 
         /// <summary>
         /// Очистка списка рисовальщиков.
         /// </summary>
-        public void CleanDrawers()
-        {
-            Drawers = new List<IDrawable>();
-        }
+        public void CleanDrawers() => Drawers = new List<IDrawable>();
 
         /// <summary>
         /// Добавляет рисовальщик в лист.
@@ -94,9 +102,9 @@ namespace AgencySimulator
         /// <param name="Control">Элемент управления, на котором осуществляется рисование.</param>
         public void SetCanvas(Control Control)
         {
-            CanvasControl = Control.CreateGraphics();
             Bitmap = new Bitmap(Control.Width, Control.Height);
             CanvasDrawing = Graphics.FromImage(Bitmap);
+            TempCanv = new PaintEventArgs(Control.CreateGraphics(), Control.ClientRectangle);
             SetNormalZoom();
             I2 = Control.Width;
             J2 = Control.Height;
@@ -108,7 +116,6 @@ namespace AgencySimulator
         public void Draw()
         {
             CanvasDrawing.Clear(Color.White);
-
             int C = Drawers.Count;
 
             for (int i = C; i > 0; i--)     //Т.к. Grid должен рисоваться последним
@@ -116,7 +123,7 @@ namespace AgencySimulator
                 Drawers[i - 1].SetDims(Tuple.Create(I2, J2, x1p, y1p, x2p, y2p));
                 Drawers[i - 1].Draw(CanvasDrawing);
             }
-            CanvasControl.DrawImage(Bitmap, 0, 0);
+            TempCanv.Graphics.DrawImage(Bitmap, 0, 0);
         }
 
         /// <summary>
@@ -152,25 +159,43 @@ namespace AgencySimulator
         /// <summary>
         /// Удалить первый отрисовщик биллборда.
         /// </summary>
-        public void DeleteFirstBillboardDrawer()
+        public void DeleteInvalidBillboardDrawers()
         {
             int C = Drawers.Count;
             for (int i = 0; i < C; i++)       //проверка на пустоту
-                if (Drawers[i].GetType() == typeof(BillboardDrawer) && 
+                if (Drawers[i].GetType() == typeof(BillboardDrawer) &&
                     !((BillboardDrawer)Drawers[i]).IsValid())
                 {
-                    Drawers.RemoveAt(i);
-                    break;
+                    Drawers.RemoveAt(i--);
+                    C--;
                 }
+            EventReDraw(TempCanv);
         }
 
         /// <summary>
         /// В общем случае заменяет рисовальщик добавляемого дома реальным домом.
         /// </summary>
         /// <param name="Drawer">Рисовальщик дома.</param>
-        public void SetLastDrawer(DrawingWrapperTemplate Drawer)
+        public bool SetLastDrawer(CityHandler CityLink, int Width, int Height)
         {
-            Drawers[Drawers.Count - 1] = Drawer;
+            if ((Drawers[Drawers.Count - 1] as HoveringDrawer).FindPlaceInMatrix(out int Row, out int Col))
+            {
+                Drawers[Drawers.Count - 1] = CityLink.CityHousePlace(Row, Col, Width, Height);
+                CheckList();
+                EventReDraw(TempCanv);
+                return true;
+            }
+            else
+            {
+                EventReDraw(TempCanv);
+                return false;
+            }
+        }
+
+        public void MoveHovering(int X, int Y)
+        {
+            (Drawers[Drawers.Count - 1] as HoveringDrawer).MoveTo(X, Y);
+            EventReDraw(TempCanv);
         }
 
         //========================== Набор команд линейных преобразований.
@@ -180,20 +205,14 @@ namespace AgencySimulator
         /// </summary>
         /// <param name="I">Х экрана.</param>
         /// <returns>Возвращает вещественное значение.</returns>
-        protected double GetGraphX(int I)
-        {
-            return x1p + (I - I1) * (x2p - x1p) / (I2 - I1);
-        }
+        protected double GetGraphX(int I) => x1p + (I - I1) * (x2p - x1p) / (I2 - I1);
 
         /// <summary>
         /// Превращает Y экрана в Y графика.
         /// </summary>
         /// <param name="J">Y экрана.</param>
         /// <returns>Возвращает вещественное значение.</returns>
-        protected double GetGraphY(int J)
-        {
-            return y1p + (J - J1) * (y2p - y1p) / (J2 - J1);
-        }
+        protected double GetGraphY(int J) => y1p + (J - J1) * (y2p - y1p) / (J2 - J1);
 
         /// <summary>
         /// Двигает изображение из одной точки в другую.
@@ -211,6 +230,7 @@ namespace AgencySimulator
             x2p -= dx;
             y1p -= dy;
             y2p -= dy;
+            EventReDraw(TempCanv);
         }
 
         /// <summary>
@@ -222,6 +242,7 @@ namespace AgencySimulator
             x2p = x2old;
             y1p = y1old;
             y2p = y2old;
+            EventReDraw(TempCanv);
         }
 
         /// <summary>
@@ -243,6 +264,7 @@ namespace AgencySimulator
             x2p = x + (x2p - x) * coeff;
             y1p = y - (y - y1p) * coeff;
             y2p = y + (y2p - y) * coeff;
+            EventReDraw(TempCanv);
         }
 
         #endregion

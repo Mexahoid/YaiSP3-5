@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AgencySimulator
 {
-    class DataHandler
+    class DataHandler : IDisposable
     {
         #region Поля
 
@@ -51,7 +51,7 @@ namespace AgencySimulator
         /// Список типов стратегий.
         /// </summary>
         private List<Type> strategiesTypes;
-        
+
         #endregion
 
         /// <summary>
@@ -74,7 +74,13 @@ namespace AgencySimulator
         /// </summary>
         /// <param name="Del">Метод, срабатывающий при уничтожении агентства.</param>
         public void SetEventLink(DelegateAgenDestr Del) => EventAgencyDestroy += Del;
-        
+
+        /// <summary>
+        /// Устанавливает обработчику отрисовщиков метод отрисовки.
+        /// </summary>
+        /// <param name="Del">Метод отрисовки.</param>
+        public void SetRedrawEvent(MainDrawingProcessor.DelegateReDraw Del) =>
+            drawers.SetRedrawEvent(Del);
         #endregion
 
         #region Методы обработчика даты
@@ -158,6 +164,7 @@ namespace AgencySimulator
                     agencies.RemoveAt(i--);
                     C--;
                 }
+            drawers.DeleteInvalidBillboardDrawers();
         }
 
         #endregion
@@ -214,9 +221,22 @@ namespace AgencySimulator
         /// <returns></returns>
         public List<Type> TypesGetLink() => strategiesTypes;
 
+        /// <summary>
+        /// Добавляет тип в список.
+        /// </summary>
+        /// <param name="Type">Добавляемый тип.</param>
         public void TypesAdd(Type Type) => strategiesTypes.Add(Type);
 
+        /// <summary>
+        /// Очищает список типов.
+        /// </summary>
         public void TypesClear() => strategiesTypes = new List<Type>();
+
+        //VS сказала реализовать интерфейс IDisposable, потому здесь стоит очистка канваса.
+        /// <summary>
+        /// Очистка битмапа.
+        /// </summary>
+        public void Dispose() => drawers.Dispose();
 
         #endregion
     }

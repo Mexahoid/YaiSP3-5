@@ -18,19 +18,13 @@ namespace AgencySimulator
         /// <summary>
         /// Создает очередь.
         /// </summary>
-        public QueueHandler()
-        {
-            Queue = new QueueClass();
-        }
+        public QueueHandler() => Queue = new QueueClass();
 
         /// <summary>
         /// Возвращает ссылку на объект очереди.
         /// </summary>
         /// <returns>Возвращает экземпляр очереди.</returns>
-        public QueueClass GetQueueLink()
-        {
-            return Queue;
-        }
+        public QueueClass GetQueueLink() => Queue;
         
         /// <summary>
         /// Добавляет в очередь случайное количество случайных клиентов.
@@ -63,9 +57,6 @@ namespace AgencySimulator
         /// Возвращает желания всех клиентов.
         /// </summary>
         /// <returns>Возвращает строку.</returns>
-        public override string ToString()
-        {
-            return Queue.ToString();
-        }
+        public override string ToString() => Queue.ToString();
     }
 }

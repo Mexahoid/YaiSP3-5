@@ -27,10 +27,7 @@ namespace AgencySimulator
         /// Возвращает заказ клиента.
         /// </summary>
         /// <returns>Возвращает кортеж из текста рекламы, цены за аренду и уровня.</returns>
-        public string GetOrder()
-        {
-            return clientDesire;
-        }
+        public string GetOrder() => clientDesire;
 
         /// <summary>
         /// Возвращает информацию о клиенте в текстовом формате.

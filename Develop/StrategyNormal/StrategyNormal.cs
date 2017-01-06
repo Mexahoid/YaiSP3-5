@@ -7,6 +7,9 @@ using AgencySimulator.Interfaces;
 
 namespace StrategyNormal
 {
+    /// <summary>
+    /// Класс умеренной стратегии.
+    /// </summary>
     [Description(Desc = "Умеренная")]
     public class StrategyNormal : IStrategy
     {
@@ -81,10 +84,7 @@ namespace StrategyNormal
         /// Возвращает название стратегии.
         /// </summary>
         /// <returns>Возвращает строку.</returns>
-        public string GetName()
-        {
-            return "Умеренная";
-        }
+        public string GetName() => "Умеренная";
 
         #endregion
     }

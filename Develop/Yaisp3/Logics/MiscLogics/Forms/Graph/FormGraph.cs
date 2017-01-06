@@ -12,12 +12,18 @@ namespace AgencySimulator
 {
     public partial class FormGraph : Form
     {
+        #region Поля
+
         private bool drawingGraph = false;
         private MainDrawingProcessor graphDrawer;
         private List<IDrawable> Drawers;
         private List<(AgencyHandler agency, IStrategy strategy)> Agencies;
 
         private MouseEventArgs eOld;
+
+        #endregion
+
+        #region Методы
 
         public FormGraph(List<(AgencyHandler agency, IStrategy strategy)> Agencies)
         {
@@ -32,6 +38,7 @@ namespace AgencySimulator
         private void InitData()
         {
             graphDrawer = new MainDrawingProcessor();
+            graphDrawer.SetRedrawEvent(OnPaint);
             Drawers = new List<IDrawable>();
             int C = Agencies.Count;
             List<string> Names = new List<string>();
@@ -95,6 +102,10 @@ namespace AgencySimulator
             }
         }
 
+        /// <summary>
+        /// Вызывает метод отрисовки на графике.
+        /// </summary>
+        /// <param name="e">Графика отрисовки.</param>
         protected override void OnPaint(PaintEventArgs e)
         {
             if (graphDrawer != null)
@@ -108,5 +119,7 @@ namespace AgencySimulator
         {
             CtrlPicBxGraph.Focus();
         }
+
+        #endregion
     }
 }

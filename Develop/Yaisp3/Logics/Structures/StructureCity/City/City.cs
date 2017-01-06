@@ -154,11 +154,12 @@ namespace AgencySimulator
         /// Пытается удалить первый невалидный биллборд.
         /// </summary>
         /// <returns>Возвращает логическое значение.</returns>
-        public bool DeleteOneBillboard()
+        public bool DeleteOneBillboard(int Agency)
         {
             int L = cityElements.Count;
             for (int i = 0; i < L; i++)
                 if (cityElements[i].GetType() == typeof(Billboard) &&
+                    ((Billboard)cityElements[i]).GetAgencyId() == Agency &&
                     !((Billboard)cityElements[i]).BillboardIsFilled())
                 {
                     ((Billboard)cityElements[i]).Invalidate();

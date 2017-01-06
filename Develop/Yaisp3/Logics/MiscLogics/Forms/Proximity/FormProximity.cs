@@ -19,10 +19,10 @@ namespace AgencySimulator
         {
             InitializeComponent();
             drawer = new MainDrawingProcessor();
+            drawer.SetRedrawEvent(new MainDrawingProcessor.DelegateReDraw(OnPaint));
             drawer.AddDrawer(new GridDrawer(City.CityGetSize()));
             drawer.AddDrawer(City.CityGetCoeffsMap());
             drawer.SetCanvas(CtrlPicBx);
-            drawer.Draw();
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             MouseWheel += new MouseEventHandler(CtrlPicBx_MouseWheel);
         }
@@ -47,7 +47,6 @@ namespace AgencySimulator
             {
                 drawer.Move(e.X, e.Y, eOld.X, eOld.Y);
                 eOld = e;
-                drawer.Draw();
             }
         }
         private void CtrlPicBx_MouseUp(object sender, MouseEventArgs e)
@@ -57,7 +56,6 @@ namespace AgencySimulator
         private void CtrlPicBx_MouseWheel(object sender, MouseEventArgs e)
         {
             drawer.Zoom(e.X, e.Y, e.Delta);
-            drawer.Draw();
         }
 
         protected override void OnPaint(PaintEventArgs e)

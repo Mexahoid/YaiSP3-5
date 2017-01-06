@@ -60,14 +60,11 @@ namespace AgencySimulator
         /// Возвращает случаное название и текст для биллборда.
         /// </summary>
         /// <returns>Возвращает кортеж из двух строк</returns>
-        public static Tuple<string, string> GetRandomData(int Rank)
-        {
-            return Tuple.Create(
-          Rank == 2 ? ClientNames[MiscellaneousLogics.MainGetRandomValue(0, ClientNames.Length)] :
+        public static (string, string) GetRandomData(int Rank) =>
+            (Rank == 2 ? ClientNames[MiscellaneousLogics.MainGetRandomValue(0, ClientNames.Length)] :
           Rank == 3 ? CompanyNames[MiscellaneousLogics.MainGetRandomValue(0, CompanyNames.Length)] :
           GovernNames[MiscellaneousLogics.MainGetRandomValue(0, GovernNames.Length)],
         BillboardTexts[MiscellaneousLogics.MainGetRandomValue(0, BillboardTexts.Length)]);
-        }
 
         #endregion
     }

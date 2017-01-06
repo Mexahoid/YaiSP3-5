@@ -14,30 +14,25 @@ namespace AgencySimulator
         /// Конструктор компании-заказчика.
         /// </summary>
         /// <param name="Data">Кортеж названия и желания компании.</param>
-        public ClientCompany(Tuple<string, string> Data)
+        public ClientCompany((string name, string desire) Data)
         {
-            clientName = Data.Item1;
-            clientDesire = Data.Item2;
+            clientName = Data.name;
+            clientDesire = Data.desire;
         }
 
         /// <summary>
         /// Возвращает информацию о компании.
         /// </summary>
         /// <returns>Возвращает строку.</returns>
-        public override string GetTextData()
-        {
-            return "Компания: " + clientName + Environment.NewLine +
+        public override string GetTextData() =>
+            "Компания: " + clientName + Environment.NewLine +
                     "Текст: " + clientDesire + Environment.NewLine +
                     "Предложение: " + 1000 + Environment.NewLine;
-        }
 
         /// <summary>
         /// Платит свою цену.
         /// </summary>
         /// <returns>Возвращает целочисленное значение.</returns>
-        public override int Pay()
-        {
-            return 1000;
-        }
+        public override int Pay() => 1000;
     }
 }

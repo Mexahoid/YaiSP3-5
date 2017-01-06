@@ -5,6 +5,9 @@ using System.Text;
 
 namespace AgencySimulator
 {
+    /// <summary>
+    /// Статический класс миск логики.
+    /// </summary>
     public static class MiscellaneousLogics
     {
         /// <summary>

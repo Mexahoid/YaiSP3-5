@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace AgencySimulator
 {
@@ -12,7 +13,7 @@ namespace AgencySimulator
     public abstract class DrawingWrapperTemplate : IDrawable
     {
         #region Поля
-
+        
         /// <summary>
         /// Координаты изображения окна.
         /// </summary>
@@ -26,7 +27,7 @@ namespace AgencySimulator
         #endregion
 
         #region Методы
-
+        
         /// <summary>
         /// Абстрактный метод рисования.
         /// </summary>

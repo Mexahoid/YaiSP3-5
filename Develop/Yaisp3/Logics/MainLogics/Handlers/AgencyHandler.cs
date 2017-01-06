@@ -76,6 +76,10 @@ namespace AgencySimulator
             return Agency.GetData();
         }
 
+        /// <summary>
+        /// Возвращает название агенства.
+        /// </summary>
+        /// <returns>Возвращает строку.</returns>
         public override string ToString()
         {
             return Agency.ToString();

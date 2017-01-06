@@ -21,6 +21,9 @@ namespace AgencySimulator
         /// </summary>
         private MouseEventArgs eOld;
 
+        /// <summary>
+        /// Главное хранилище информации и обработчиков.
+        /// </summary>
         private DataHandler mainDataHandler;
 
         #endregion
@@ -33,10 +36,11 @@ namespace AgencySimulator
         {
             InitializeComponent();
             mainDataHandler = new DataHandler();
+            mainDataHandler.SetRedrawEvent(OnPaint);
             mainDataHandler.DrawerSetCanvas(CtrlPicBxMap);
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
             CtrlPicBxMap.MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
-            mainDataHandler.SetEventLink(new DataHandler.DelegateAgenDestr(AgencyDestroyEventHandler));
+            mainDataHandler.SetEventLink(AgencyDestroyEventHandler);
         }
 
         /// <summary>
@@ -51,18 +55,12 @@ namespace AgencySimulator
         /// Переопределяет метода перерисовки для инвалидации.
         /// </summary>
         /// <param name="e">Объект отрисовки.</param>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            mainDataHandler.DrawerDraw();
-        }
+        protected override void OnPaint(PaintEventArgs e) => mainDataHandler.DrawerDraw();
 
         /// <summary>
         /// Костыль для Windows XP.
         /// </summary>
-        private void CtrlPicBxMap_Click(object sender, EventArgs e)
-        {
-            CtrlPicBxMap.Focus();
-        }
+        private void CtrlPicBxMap_Click(object sender, EventArgs e) => CtrlPicBxMap.Focus();
 
         /// <summary>
         /// Загружает плагины.
@@ -112,7 +110,7 @@ namespace AgencySimulator
         private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
         {
             mainDataHandler.DrawerZoom(e.X, e.Y, e.Delta);
-            mainDataHandler.DrawerDraw();
+            //mainDataHandler.DrawerDraw();
         }
         private void CtrlPicBxMap_MouseDown(object sender, MouseEventArgs e)
         {

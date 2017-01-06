@@ -247,7 +247,7 @@ namespace AgencySimulator
         /// </summary>
         public void DeleteOneBillboard()
         {
-            if (cityLink.DeleteOneBillboard())
+            if (cityLink.DeleteOneBillboard(agencyId))
             {
                 agencyFreeBillboards--;
                 int C = agencyBillboards.Count;
@@ -258,7 +258,6 @@ namespace AgencySimulator
                         break;
                     }
                 agencyStaffCount -= 3;
-                drawersLink.DeleteFirstBillboardDrawer();
             }
         }
 

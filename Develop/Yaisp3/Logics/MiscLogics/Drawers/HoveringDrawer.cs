@@ -9,7 +9,7 @@ namespace AgencySimulator
     /// <summary>
     /// Класс отрисовщика устанавливаемого дома.
     /// </summary>
-    class HoveringDrawer : DrawingWrapperTemplate
+    public class HoveringDrawer : DrawingWrapperTemplate
     {
         #region Поля
 
@@ -54,6 +54,7 @@ namespace AgencySimulator
         {
             Position = Tuple.Create(x1p + (X - I1) * (x2p - x1p) / (I2 - I1), 
                 y1p + (Y - J1) * (y2p - y1p) / (J2 - J1));
+
         }
 
         /// <summary>
