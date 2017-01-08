@@ -18,10 +18,7 @@ namespace AgencySimulator
         /// <summary>
         /// Считывает тексты в память.
         /// </summary>
-        public static void MainParseTexts()
-        {
-            TextStorageClass.ParseTextData();
-        }
+        public static void MainParseTexts() => TextStorageClass.ParseTextData();
 
         /// <summary>
         /// Возвращает случайное целое число от Min до Max.
@@ -29,9 +26,6 @@ namespace AgencySimulator
         /// <param name="Min">Минимальное случайное число.</param>
         /// <param name="Max">Максимальное случайное число.</param>
         /// <returns>Возвращает целочисленное значение.</returns>
-        public static int MainGetRandomValue(int Min, int Max)
-        {
-            return Sychev.Next(Min, Max);
-        }
+        public static int MainGetRandomValue(int Min, int Max) => Sychev.Next(Min, Max);
     }
 }

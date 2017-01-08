@@ -23,11 +23,11 @@ namespace StrategyConservative
             if (Sychev.Next(0, 100) == 97)
                 if (agency.HowMuchCanWeAfford(1) == 1)
                     agency.PlaceBillboardRnd();
-            List<(double, double)> Summary = agency.GetAgencySummary();
+            List<(double, double deposit)> Summary = agency.GetAgencySummary();
             int C = Summary.Count;
             if (C > 10)
             {
-                if (Summary[C - 1].Item2 / Summary[C - 11].Item2 < 0.8)
+                if (Summary[C - 1].deposit / Summary[C - 11].deposit < 0.8)
                 {
                     int A = agency.GetFreeBillboardsCount();
                     for (int i = 0; i < A; i++)
@@ -60,10 +60,7 @@ namespace StrategyConservative
         /// Возвращает название стратегии.
         /// </summary>
         /// <returns>Возвращает строку.</returns>
-        public string GetName()
-        {
-            return "Консервативная";
-        }
+        public string GetName() => "Консервативная";
 
         #endregion
     }

@@ -92,7 +92,7 @@ namespace AgencySimulator
         /// <param name="Drawer">Рисовальщик.</param>
         public void AddDrawer(IDrawable Drawer)
         {
-            Drawer.SetDims(Tuple.Create(I2, J2, x1p, y1p, x2p, y2p));
+            Drawer.SetDims((I2, J2, x1p, y1p, x2p, y2p));
             Drawers.Add(Drawer);
         }
 
@@ -120,7 +120,7 @@ namespace AgencySimulator
 
             for (int i = C; i > 0; i--)     //Т.к. Grid должен рисоваться последним
             {
-                Drawers[i - 1].SetDims(Tuple.Create(I2, J2, x1p, y1p, x2p, y2p));
+                Drawers[i - 1].SetDims((I2, J2, x1p, y1p, x2p, y2p));
                 Drawers[i - 1].Draw(CanvasDrawing);
             }
             TempCanv.Graphics.DrawImage(Bitmap, 0, 0);

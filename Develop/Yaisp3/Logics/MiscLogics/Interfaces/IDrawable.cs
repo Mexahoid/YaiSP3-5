@@ -22,6 +22,6 @@ namespace AgencySimulator
         /// Установка координат.
         /// </summary>
         /// <param name="T">Кортеж линейных координат.</param>
-        void SetDims(Tuple<int, int, double, double, double, double> T);
+        void SetDims((int height, int width, double x1p, double y1p, double x2p, double y2p) T);
     }
 }

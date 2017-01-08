@@ -23,7 +23,6 @@ namespace AgencySimulator
         {
             InitializeComponent();
             Drawers = OrigDrawers;
-
             CityLink = OrigCity;
             MouseWheel += new MouseEventHandler(CtrlPicBxMap_MouseScroll);
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.UserPaint, true);
@@ -31,21 +30,7 @@ namespace AgencySimulator
             placed = true;
         }
 
-        private void CtrlButMarkClick(object sender, EventArgs e)
-        {
-            CityLink.CreateCity(CtrlTxbCityName.Text, (int)(CtrlNumCityHeight.Value),
-              (int)(CtrlNumCityWidth.Value));
-            Drawers.CleanDrawers();
-            Drawers.AddDrawer(new GridDrawer(Tuple.Create((int)(CtrlNumCityWidth.Value),
-                (int)(CtrlNumCityHeight.Value))));
-            Drawers.SetCanvas(CtrlPicBxCity);
-            CtrlButHouse.Enabled = CtrlButReady.Enabled = true;
-        }
-
-        private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
-        {
-            Drawers.Zoom(e.X, e.Y, e.Delta);
-        }
+        private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e) => Drawers.Zoom(e.X, e.Y, e.Delta);
         private void CtrlPicBxCity_MouseDown(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -75,10 +60,7 @@ namespace AgencySimulator
                     break;
             }
         }
-        private void CtrlPicBxCity_MouseUp(object sender, MouseEventArgs e)
-        {
-            moving = false;
-        }
+        private void CtrlPicBxCity_MouseUp(object sender, MouseEventArgs e) => moving = false;
         private void CtrlPicBxCity_MouseMove(object sender, MouseEventArgs e)
         {
             if (moving)
@@ -90,6 +72,16 @@ namespace AgencySimulator
                 Drawers.MoveHovering(e.X, e.Y);
         }
 
+        private void CtrlButMarkClick(object sender, EventArgs e)
+        {
+            CityLink.CreateCity(CtrlTxbCityName.Text, (int)(CtrlNumCityHeight.Value),
+              (int)(CtrlNumCityWidth.Value));
+            Drawers.CleanDrawers();
+            Drawers.AddDrawer(new GridDrawer(((int)(CtrlNumCityWidth.Value),
+                (int)(CtrlNumCityHeight.Value))));
+            Drawers.SetCanvas(CtrlPicBxCity);
+            CtrlButHouse.Enabled = CtrlButReady.Enabled = true;
+        }
         private void CtrlButHouseClick(object sender, EventArgs e)
         {
             if (placed)
@@ -100,20 +92,12 @@ namespace AgencySimulator
                 placed = false;
             }
         }
-
         private void CtrlButReadyClick(object sender, EventArgs e) => Close();
 
         /// <summary>
         /// Костыль для Windows XP.
         /// </summary>
-        private void CtrlPicBxCity_Click(object sender, EventArgs e)
-        {
-            CtrlPicBxCity.Focus();
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            Drawers.Draw();
-        }
+        private void CtrlPicBxCity_Click(object sender, EventArgs e) => CtrlPicBxCity.Focus();
+        protected override void OnPaint(PaintEventArgs e) => Drawers.Draw();
     }
 }

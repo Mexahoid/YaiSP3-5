@@ -49,26 +49,14 @@ namespace AgencySimulator
                 eOld = e;
             }
         }
-        private void CtrlPicBx_MouseUp(object sender, MouseEventArgs e)
-        {
-            drawing = false;
-        }
-        private void CtrlPicBx_MouseWheel(object sender, MouseEventArgs e)
-        {
-            drawer.Zoom(e.X, e.Y, e.Delta);
-        }
+        private void CtrlPicBx_MouseUp(object sender, MouseEventArgs e) => drawing = false;
+        private void CtrlPicBx_MouseWheel(object sender, MouseEventArgs e) => drawer.Zoom(e.X, e.Y, e.Delta);
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            drawer.Draw();
-        }
+        protected override void OnPaint(PaintEventArgs e) => drawer.Draw();
 
         /// <summary>
         /// Костыль для Windows XP.
         /// </summary>
-        private void CtrlPicBx_Click(object sender, EventArgs e)
-        {
-            CtrlPicBx.Focus();
-        }
+        private void CtrlPicBx_Click(object sender, EventArgs e) => CtrlPicBx.Focus();
     }
 }

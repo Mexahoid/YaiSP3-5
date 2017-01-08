@@ -20,7 +20,7 @@ namespace AgencySimulator
         /// <summary>
         /// Кортеж из ширины и высоты города.
         /// </summary>
-        private Tuple<int, int> citySize;
+        private (int width, int height) citySize;
 
         /// <summary>
         /// Список элементов города.
@@ -50,7 +50,7 @@ namespace AgencySimulator
         public City(string Name, int Width, int Height)
         {
             cityMatrixProximity = new MatrixCoefficients(Height, Width);
-            citySize = Tuple.Create(Width, Height);
+            citySize = (Width, Height);
             cityElements = new List<TemplateElement>();
             cityName = Name;
         }
@@ -59,28 +59,19 @@ namespace AgencySimulator
         /// Возвращает размер города.
         /// </summary>
         /// <returns>Возвращает кортеж из двух целочисленных значений.</returns>
-        public Tuple<int, int> GetSize()
-        {
-            return citySize;
-        }
+        public (int, int) GetSize() => citySize;
 
         /// <summary>
         /// Возвращает название города.
         /// </summary>
         /// <returns>Возвращает строку с названием города.</returns>
-        public string GetName()
-        {
-            return cityName;
-        }
+        public string GetName() => cityName;
 
         /// <summary>
         /// Возвращает отрисовщика матрицы.
         /// </summary>
         /// <returns>Возвращает экземпляр отрисовщика матрицы коэффициентов.</returns>
-        public MatrixDrawer GetProximityDrawer()
-        {
-            return new MatrixDrawer(cityMatrixProximity);
-        }
+        public MatrixDrawer GetProximityDrawer() => new MatrixDrawer(cityMatrixProximity);
 
         /// <summary>
         /// Проверяет возможность установки элемента.
@@ -92,7 +83,7 @@ namespace AgencySimulator
         /// <returns>Возвращает логическое значение.</returns>
         private bool TryToPlaceElement(int Row, int Col, int RightWidth, int DownDepth)
         {
-            if (Row + DownDepth > citySize.Item2 || Col + RightWidth > citySize.Item1)
+            if (Row + DownDepth > citySize.height || Col + RightWidth > citySize.width)
                 return false;
             foreach (TemplateElement el in cityElements)
                 if (el.ContainsPosition(Row, Col, RightWidth, DownDepth))
@@ -112,9 +103,9 @@ namespace AgencySimulator
             if (TryToPlaceElement(Row, Col, RightWidth, DownDepth))
             {
                 House NewHouse = new House(++currentHouseGroup, RightWidth, DownDepth);
-                HouseDrawer Out = new HouseDrawer(NewHouse, citySize.Item2);
+                HouseDrawer Out = new HouseDrawer(NewHouse, citySize.height);
                 NewHouse.SetPosition(Row, Col);
-                cityMatrixProximity.PlaceCityElement(Tuple.Create(Row, Col), Tuple.Create(RightWidth, DownDepth));
+                cityMatrixProximity.PlaceCityElement((Row, Col), (RightWidth, DownDepth));
                 cityElements.Add(NewHouse);
                 return Out;
             }
@@ -127,11 +118,11 @@ namespace AgencySimulator
         /// <param name="Billboard">Устанавливаемый биллборд.</param>
         public BillboardDrawer PlaceBillboard(Billboard Billboard)
         {
-            Tuple<int, int> Position = cityMatrixProximity.GetRandomFreeSpace();
+            (int x, int y) Position = cityMatrixProximity.GetRandomFreeSpace();
             cityMatrixProximity.PlaceBillboard(Position);
-            Billboard.SetPosition(Position.Item1, Position.Item2);
+            Billboard.SetPosition(Position.x, Position.y);
             cityElements.Add(Billboard);
-            return new BillboardDrawer(Billboard, citySize.Item2);
+            return new BillboardDrawer(Billboard, citySize.height);
         }
 
         /// <summary>

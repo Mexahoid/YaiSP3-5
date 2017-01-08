@@ -87,10 +87,7 @@ namespace AgencySimulator
         /// Устанавливает ширину графики для позиционирования окна.
         /// </summary>
         /// <param name="T">Кортеж координат.</param>
-        public void SetDims(Tuple<int, int, double, double, double, double> T)
-        {
-            rightBoundary = T.Item2;
-        }
+        public void SetDims((int height, int width, double x1p, double y1p, double x2p, double y2p) T) => rightBoundary = T.width;
 
         #endregion
     }

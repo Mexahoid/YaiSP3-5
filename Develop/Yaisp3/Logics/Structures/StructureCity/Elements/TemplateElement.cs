@@ -50,19 +50,13 @@ namespace AgencySimulator
         /// Возвращает кортеж позиции верхнего левого угла элемента.
         /// </summary>
         /// <returns>Возвращает кортеж целочисленных значений.</returns>
-        public Tuple<int, int> GetPosition()
-        {
-            return Tuple.Create(y0, x0);
-        }
+        public (int, int) GetPosition() => (y0, x0);
 
         /// <summary>
         /// Возвращает кортеж размеров элемента.
         /// </summary>
         /// <returns>Возвращает кортеж целочисленных значений.</returns>
-        public Tuple<int, int> GetElementSize()
-        {
-            return Tuple.Create(elementWidth, elementHeight);
-        }
+        public (int, int) GetElementSize() => (elementWidth, elementHeight);
 
         /// <summary>
         /// Пересекается ли элемент с другим.

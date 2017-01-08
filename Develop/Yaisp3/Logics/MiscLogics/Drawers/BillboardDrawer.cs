@@ -44,13 +44,13 @@ namespace AgencySimulator
         /// <param name="Graphics">Канва, на которой производится рисование.</param>
         public override void Draw(Graphics Graphics)
         {
-            Tuple<int, int> Position = billboard.GetPosition();
+            (int y, int x) Position = billboard.GetPosition();
 
-            int ScrX = GetScreenX(5 * Position.Item2);
-            int LastX = GetScreenX(5 * Position.Item2 + 5);
+            int ScrX = GetScreenX(5 * Position.x);
+            int LastX = GetScreenX(5 * Position.x + 5);
 
-            int ScrY = GetScreenY(-cityHeight * 5 + 5 * Position.Item1);
-            int LastY = GetScreenY(-cityHeight * 5 + 5 * Position.Item1 + 5);
+            int ScrY = GetScreenY(-cityHeight * 5 + 5 * Position.y);
+            int LastY = GetScreenY(-cityHeight * 5 + 5 * Position.y + 5);
             
             switch (billboard.GetState())
             {
@@ -79,10 +79,7 @@ namespace AgencySimulator
         /// Возвращает валидность биллборда.
         /// </summary>
         /// <returns>Возвращает логическое значение.</returns>
-        public bool IsValid()
-        {
-            return billboard.GetState() != Billboard.State.Invalid;
-        }
+        public bool IsValid() => billboard.GetState() != Billboard.State.Invalid;
 
         #endregion
     }

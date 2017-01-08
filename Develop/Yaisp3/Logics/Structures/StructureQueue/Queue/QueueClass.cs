@@ -79,10 +79,16 @@ namespace AgencySimulator
         /// Голова очереди
         /// </summary>
         private QueueNodeClass queueHead;
+
         /// <summary>
         /// Хвост очереди
         /// </summary>
         private QueueNodeClass queueTail;
+
+        /// <summary>
+        /// Количество клиентов в очереди.
+        /// </summary>
+        private int Count;
 
         #endregion
 
@@ -94,6 +100,7 @@ namespace AgencySimulator
         public QueueClass()
         {
             queueHead = queueTail = null;
+            Count = 0;
         }
 
         /// <summary>
@@ -110,16 +117,14 @@ namespace AgencySimulator
                 queueTail.NodeNext = NewNode;
                 queueTail = NewNode;
             }
+            Count++;
         }
 
         /// <summary>
         /// Пустая ли очередь.
         /// </summary>
         /// <returns>Возвращает логическое значение.</returns>
-        public bool QueueIsNull()
-        {
-            return queueHead == null;
-        }
+        public bool QueueIsNull() => queueHead == null;
 
         /// <summary>
         /// Выдача обычного клиента из очереди.
@@ -167,17 +172,16 @@ namespace AgencySimulator
                 return C;
             }
             else
-                while (Q.NodeNext != null && 
-                    Q.NodeNext.NodeClient.GetType() != typeof(ClientGovernment))
+                while (Q.NodeNext?.NodeClient.GetType() != typeof(ClientGovernment))
                     Q = Q.NodeNext;
             QueueNodeClass P = Q.NodeNext;
             Q.NodeNext = P.NodeNext;
             return P.NodeClient;
         }
-
-
+        
         public TemplateClient QueueTakeClient()
         {
+            Count--;
             if (QueueHasHighPriority())
                 return QueuePushHighPriority();
             else
@@ -210,21 +214,7 @@ namespace AgencySimulator
         /// Возвращает количество клиентов в очереди.
         /// </summary>
         /// <returns>Возвращает целочисленное значений.</returns>
-        public int GetQueueCount()
-        {
-            if (!QueueIsNull())
-            {
-                QueueNodeClass Node = queueHead;
-                int Count = 1;
-                while (Node.NodeNext != null)
-                {
-                    Node = Node.NodeNext;
-                    Count++;
-                }
-                return Count;
-            }
-            return 0;
-        }
+        public int GetQueueCount() => Count;
 
         #endregion
     }

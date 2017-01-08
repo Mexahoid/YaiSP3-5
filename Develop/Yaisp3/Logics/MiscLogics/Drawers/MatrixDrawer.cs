@@ -26,10 +26,7 @@ namespace AgencySimulator
         /// Конструктор отрисовщика матрицы.
         /// </summary>
         /// <param name="Coeffs">Матрица коэффициентов.</param>
-        public MatrixDrawer(MatrixCoefficients Coeffs)
-        {
-            coeffs = Coeffs;
-        }
+        public MatrixDrawer(MatrixCoefficients Coeffs) => coeffs = Coeffs;
 
         /// <summary>
         /// Отрисовывает матрицу коэффициентов.

@@ -13,6 +13,8 @@ namespace AgencySimulator
 {
     public partial class FormAgency : Form
     {
+        #region Поля
+
         private AgencyHandler CurrentAgency;
         private Type CurrentStrategy;
 
@@ -22,6 +24,10 @@ namespace AgencySimulator
         private City CityLink;
         private QueueClass QueueLink;
         private MainDrawingProcessor DrawersLink;
+
+        #endregion
+
+        #region Методы
 
         public FormAgency(List<(AgencyHandler agency, IStrategy strategy)> Agencies, List<Type> Strategies,
             City City, QueueClass Queue, MainDrawingProcessor Drawers)
@@ -41,8 +47,8 @@ namespace AgencySimulator
                 for (int i = 0; i < L; i++)
                 {
                     attrs = Strategies[i].GetCustomAttributes(false);
-                if (attrs.Length > 0 && attrs[0] as Description != null)
-                    CtrlLBStrategies.Items.Add((attrs[0] as Description).Desc);
+                    if (attrs.Length > 0 && attrs[0] as Description != null)
+                        CtrlLBStrategies.Items.Add((attrs[0] as Description).Desc);
                 }
             }
 
@@ -87,7 +93,6 @@ namespace AgencySimulator
             IStrategy AgencyStrat = Activator.CreateInstance(CurrentStrategy) as IStrategy;
             Agencies[CtrlLBAgencies.SelectedIndex] = (CurrentAgency, AgencyStrat);
         }
-        
 
         private void CtrlLBAgencies_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -99,12 +104,12 @@ namespace AgencySimulator
                 int index = CtrlLBStrategies.FindString(CurrentStrategy.ToString(), -1);
                 if (index != -1)
                     CtrlLBStrategies.SetSelected(index, true);
-                
+
                 CtrlButEdit.Enabled = CtrlButDelete.Enabled = true;
-                (int, int) T = CurrentAgency.AgencyGetData();
+                (int deposit, int billboards) T = CurrentAgency.AgencyGetData();
                 CtrlTxbName.Text = CurrentAgency.ToString();
-                CtrlNumDeposit.Value = T.Item1;
-                CtrlNumBillboards.Value = T.Item2;
+                CtrlNumDeposit.Value = T.deposit;
+                CtrlNumBillboards.Value = T.billboards;
             }
         }
 
@@ -118,9 +123,8 @@ namespace AgencySimulator
                 CtrlButSuction.Enabled = false;
         }
 
-        private void CtrlButSuction_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+        private void CtrlButSuction_Click(object sender, EventArgs e) => Close();
+
+        #endregion
     }
 }

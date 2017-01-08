@@ -38,14 +38,14 @@ namespace AgencySimulator
         /// Устанавливает координаты рисования.
         /// </summary>
         /// <param name="Coords">Кортеж координатных составляющих.</param>
-        public void SetDims(Tuple<int, int, double, double, double, double> Coords)
+        public void SetDims((int height, int width, double x1p, double y1p, double x2p, double y2p) Coords)
         {
-            I2 = Coords.Item1;
-            J2 = Coords.Item2;
-            x1p = Coords.Item3;
-            y1p = Coords.Item4;
-            x2p = Coords.Item5;
-            y2p = Coords.Item6;
+            I2 = Coords.height;
+            J2 = Coords.width;
+            x1p = Coords.x1p;
+            y1p = Coords.y1p;
+            x2p = Coords.x2p;
+            y2p = Coords.y2p;
         }
 
         /// <summary>
@@ -53,20 +53,16 @@ namespace AgencySimulator
         /// </summary>
         /// <param name="x">Х графика.</param>
         /// <returns>Возвращает целочисленное значение.</returns>
-        protected int GetScreenX(double x)
-        {
-            return I1 + (int)((x - x1p) * (I2 - I1) / (x2p - x1p));
-        }
+        protected int GetScreenX(double x) =>
+            I1 + (int)((x - x1p) * (I2 - I1) / (x2p - x1p));
 
         /// <summary>
         /// Превращает Y графика в Y экрана.
         /// </summary>
         /// <param name="y">Y графика.</param>
         /// <returns>Возвращает целочисленное значение.</returns>
-        protected int GetScreenY(double y)
-        {
-            return J1 + (int)((y - y1p) * (J1 - J2) / (y1p - y2p));
-        }
+        protected int GetScreenY(double y) =>
+            J1 + (int)((y - y1p) * (J1 - J2) / (y1p - y2p));
 
         #endregion
     }

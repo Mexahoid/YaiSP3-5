@@ -104,30 +104,20 @@ namespace AgencySimulator
         /// Возвращает кортеж, состоящий из депозита и кол-ва щитов.
         /// </summary>
         /// <returns>Возвращает кортеж из двух целочисленных значений.</returns>
-        public (int, int) GetData()
-        {
-            return (agencyDeposit, agencyBillboards.Count + agencyFreeBillboards);
-        }
+        public (int deposit, int billboards) GetData() =>
+            (agencyDeposit, agencyBillboards.Count + agencyFreeBillboards);
 
         /// <summary>
         /// Меняет название агентства.
         /// </summary>
         /// <param name="Name">Новое имя агентства.</param>
-        public void ChangeName(string Name)
-        {
-            agencyName = Name;
-        }
+        public void ChangeName(string Name) => agencyName = Name;
 
         /// <summary>
         /// Возвращает количество клиентов в очереди.
         /// </summary>
         /// <returns>Возвращает целочисленное значение.</returns>
-        public int QueueCount()
-        {
-            if (queueLink == null)
-                return 0;
-            return queueLink.GetQueueCount();
-        }
+        public int QueueCount() => queueLink?.GetQueueCount()??0;
 
         /// <summary>
         /// Устанавливает биллборд на случайном месте.
@@ -204,19 +194,13 @@ namespace AgencySimulator
         /// Возвращает список из подневных значений счета агентства.
         /// </summary>
         /// <returns>Возвращает кортеж вещественных значений.</returns>
-        public List<(double, double)> GetAgencySummary()
-        {
-            return agencySummary;
-        }
+        public List<(double, double)> GetAgencySummary() => agencySummary;
 
         /// <summary>
         /// Возвращает количество свободных биллбордов.
         /// </summary>
         /// <returns>Возвращает целое значение.</returns>
-        public int GetFreeBillboardsCount()
-        {
-            return agencyFreeBillboards;
-        }
+        public int GetFreeBillboardsCount() => agencyFreeBillboards;
 
         /// <summary>
         /// Вернуть количество строящихся биллбордов.
@@ -265,10 +249,7 @@ namespace AgencySimulator
         /// Возвращает название агентства.
         /// </summary>
         /// <returns>Возвращает строку.</returns>
-        public override string ToString()
-        {
-            return agencyName;
-        }
+        public override string ToString() => agencyName;
 
         #endregion
     }

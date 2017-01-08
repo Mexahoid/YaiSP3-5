@@ -16,7 +16,7 @@ namespace AgencySimulator
         /// <summary>
         /// Кортеж ширины и высоты города.
         /// </summary>
-        Tuple<int, int> citySize;
+        (int width, int height) citySize;
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace AgencySimulator
         /// Конструктор отрисовщика сетки.
         /// </summary>
         /// <param name="Size">Кортеж размеров города.</param>
-        public GridDrawer(Tuple<int, int> Size)
+        public GridDrawer((int, int) Size)
         {
             citySize = Size;
         }
@@ -37,12 +37,12 @@ namespace AgencySimulator
         /// <param name="Graphics">Канва, на которой производится рисование.</param>
         public override void Draw(Graphics Graphics)
         {
-            for (int i = 0; i <= citySize.Item2; i++)
+            for (int i = 0; i <= citySize.height; i++)
                 Graphics.DrawLine(Pens.Black, GetScreenX(0), GetScreenY(i * -5),
-                  GetScreenX(citySize.Item1 * 5), GetScreenY(i * -5));
-            for (int i = 0; i <= citySize.Item1; i++)
+                  GetScreenX(citySize.width * 5), GetScreenY(i * -5));
+            for (int i = 0; i <= citySize.width; i++)
                 Graphics.DrawLine(Pens.Black, GetScreenX(i * 5), GetScreenY(0),
-                  GetScreenX(i * 5), GetScreenY(citySize.Item2 * -5));
+                  GetScreenX(i * 5), GetScreenY(citySize.height * -5));
         }
 
         #endregion

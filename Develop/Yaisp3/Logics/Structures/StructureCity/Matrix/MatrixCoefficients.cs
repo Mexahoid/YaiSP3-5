@@ -50,16 +50,16 @@ namespace AgencySimulator
         /// Возвращает случайную позицию с минимальным коэффициентом.
         /// </summary>
         /// <returns>Возвращает массив целочисленных значений.</returns>
-        public Tuple<int, int> GetRandomFreeSpace()
+        public (int, int) GetRandomFreeSpace()
         {
             int minCoeff = GetCoeff(true);
 
-            List<Tuple<int, int>> FreeSpaces = new List<Tuple<int, int>>();
+            List<(int, int)> FreeSpaces = new List<(int, int)>();
 
             for (int i = 0; i < rows; i++)
                 for (int j = 0; j < cols; j++)
                     if (matrix[i, j] == minCoeff)  //Если находим точку с минимальным коэффициентом...
-                        FreeSpaces.Add(Tuple.Create(i, j));     //Добавляем ее в список
+                        FreeSpaces.Add((i, j));     //Добавляем ее в список
 
             return FreeSpaces[MiscellaneousLogics.MainGetRandomValue(0, FreeSpaces.Count - 1)];
         }
@@ -69,10 +69,7 @@ namespace AgencySimulator
         /// </summary>
         /// <param name="Row">Ряд матрицы.</param>
         /// <param name="Col">Столбец матрицы.</param>
-        public void PlaceBillboard(Tuple<int, int> Position)
-        {
-            RecursionCoefficients(Position.Item1, Position.Item2, 10);
-        }
+        public void PlaceBillboard((int y, int x) Position) => RecursionCoefficients(Position.y, Position.x, 10);
 
         /// <summary>
         /// Устанавливает элемент дома с большим числом коэффициента.
@@ -81,10 +78,10 @@ namespace AgencySimulator
         /// <param name="Col">Столбец матрицы.</param>
         /// <param name="Height">Высота дома.</param>
         /// <param name="Width">Ширина дома.</param>
-        public void PlaceCityElement(Tuple<int, int> Position, Tuple<int, int> Size)
+        public void PlaceCityElement((int y, int x) Position, (int width, int height) Size)
         {
-            for (int i = Position.Item1; i < Position.Item1 + Size.Item2; i++)
-                for (int j = Position.Item2; j < Position.Item2 + Size.Item1; j++)
+            for (int i = Position.y; i < Position.y + Size.height; i++)
+                for (int j = Position.x; j < Position.x + Size.width; j++)
                     matrix[i, j] = 1000;
         }
 
@@ -150,10 +147,7 @@ namespace AgencySimulator
         /// Возвращает карту коэффициентов.
         /// </summary>
         /// <returns>Возвращает массив целочисленных значений.</returns>
-        public int[,] GetCoeffMap()
-        {
-            return matrix;
-        }
+        public int[,] GetCoeffMap() => matrix;
 
         #endregion
     }

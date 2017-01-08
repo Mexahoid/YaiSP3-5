@@ -47,7 +47,7 @@ namespace AgencySimulator
             int Temp = 0;
             for (int i = 0; i < C; i++)
             {
-                Name = Agencies[i].Item1.ToString();
+                Name = Agencies[i].agency.ToString();
                 Names.Add(Name);
                 Temp = Math.Abs(Name.GetHashCode() + MiscellaneousLogics.MainGetRandomValue(-1_000, 1_000)
                     + MiscellaneousLogics.MainGetRandomValue(-100_000, 100_000)
@@ -59,18 +59,11 @@ namespace AgencySimulator
             graphDrawer.AddDrawer(new GraphLegendDrawer(Names, Hashes));
 
             for (int i = 0; i < C; i++)
-                graphDrawer.AddDrawer(new GraphDrawer(Agencies[i].Item1.AgencyGetSummary(), Hashes[i]));
+                graphDrawer.AddDrawer(new GraphDrawer(Agencies[i].agency.AgencyGetSummary(), Hashes[i]));
             graphDrawer.SetCanvas(CtrlPicBxGraph);
         }
 
-        private void CtrlPicBxGraph_MouseScroll(object sender, MouseEventArgs e)
-        {
-            if (graphDrawer != null)
-            {
-                graphDrawer.Zoom(e.X, e.Y, e.Delta);
-                graphDrawer.Draw();
-            }
-        }
+        private void CtrlPicBxGraph_MouseScroll(object sender, MouseEventArgs e) => graphDrawer.Zoom(e.X, e.Y, e.Delta);
         private void CtrlPicBxGraph_MouseDown(object sender, MouseEventArgs e)
         {
             if (graphDrawer != null)
@@ -85,20 +78,15 @@ namespace AgencySimulator
                         graphDrawer.SetNormalZoom();
                         break;
                 }
-                graphDrawer.Draw();
             }
         }
-        private void CtrlPicBxGraph_MouseUp(object sender, MouseEventArgs e)
-        {
-            drawingGraph = false;
-        }
+        private void CtrlPicBxGraph_MouseUp(object sender, MouseEventArgs e) => drawingGraph = false;
         private void CtrlPicBxGraph_MouseMove(object sender, MouseEventArgs e)
         {
             if (drawingGraph)
             {
                 graphDrawer.Move(e.X, e.Y, eOld.X, eOld.Y);
                 eOld = e;
-                graphDrawer.Draw();
             }
         }
 
@@ -106,19 +94,12 @@ namespace AgencySimulator
         /// Вызывает метод отрисовки на графике.
         /// </summary>
         /// <param name="e">Графика отрисовки.</param>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            if (graphDrawer != null)
-                graphDrawer.Draw();
-        }
+        protected override void OnPaint(PaintEventArgs e) => graphDrawer.Draw();
 
         /// <summary>
         /// Костыль для Windows XP.
         /// </summary>
-        private void CtrlPicBxGraph_Click(object sender, EventArgs e)
-        {
-            CtrlPicBxGraph.Focus();
-        }
+        private void CtrlPicBxGraph_Click(object sender, EventArgs e) => CtrlPicBxGraph.Focus();
 
         #endregion
     }

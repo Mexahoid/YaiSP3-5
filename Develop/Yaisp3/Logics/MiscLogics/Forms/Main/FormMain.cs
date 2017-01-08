@@ -107,11 +107,8 @@ namespace AgencySimulator
 
         #region Методы мыши
 
-        private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e)
-        {
+        private void CtrlPicBxMap_MouseScroll(object sender, MouseEventArgs e) =>
             mainDataHandler.DrawerZoom(e.X, e.Y, e.Delta);
-            //mainDataHandler.DrawerDraw();
-        }
         private void CtrlPicBxMap_MouseDown(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -127,10 +124,8 @@ namespace AgencySimulator
             }
             mainDataHandler.DrawerDraw();
         }
-        private void CtrlPicBxMap_MouseUp(object sender, MouseEventArgs e)
-        {
+        private void CtrlPicBxMap_MouseUp(object sender, MouseEventArgs e) =>
             movingMap = false;
-        }
         private void CtrlPicBxMap_MouseMove(object sender, MouseEventArgs e)
         {
             if (movingMap)

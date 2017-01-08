@@ -18,18 +18,12 @@ namespace AgencySimulator
         /// <summary>
         /// Добавляет один день к дате.
         /// </summary>
-        public void DateNewDay()
-        {
-            CurrentDate = CurrentDate.AddDays(1);
-        }
+        public void DateNewDay() => CurrentDate = CurrentDate.AddDays(1);
 
         /// <summary>
         /// Возвращает дату строкой вида DD.MM.YYYY.
         /// </summary>
         /// <returns>Возвращает строку.</returns>
-        public string DateGetAsString()
-        {
-            return CurrentDate.ToShortDateString();
-        }
+        public string DateGetAsString() => CurrentDate.ToShortDateString();
     }
 }

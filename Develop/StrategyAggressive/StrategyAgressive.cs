@@ -7,6 +7,9 @@ using AgencySimulator.Interfaces;
 
 namespace StrategyAggressive
 {
+    /// <summary>
+    /// Класс агрессивной стратегии.
+    /// </summary>
     [Description(Desc = "Агрессивная")]
     public class StrategyAgressive : IStrategy
     {
@@ -72,19 +75,19 @@ namespace StrategyAggressive
             }
             if (--daysTillResetting < 1)
                 pastOrderCount = 0;
-            List<(double, double)> Summary = agency.GetAgencySummary();
+            List<(double day, double deposit)> Summary = agency.GetAgencySummary();
             int C = Summary.Count;
             if (C > 10)
             {
                 if (badDaysCounter > 0)
                 {
-                    if (Summary[C - 1].Item2 / Summary[C - 11].Item2 < 0.8)
+                    if (Summary[C - 1].deposit / Summary[C - 11].deposit < 0.8)
                         badDaysCounter--;
                     else
                         badDaysCounter = -1;
                 }
                 else
-                if (Summary[C - 1].Item2 / Summary[C - 11].Item2 < 0.8)
+                if (Summary[C - 1].deposit / Summary[C - 11].deposit < 0.8)
                     badDaysCounter = Sychev.Next(30, 100);
                 if (badDaysCounter == 0)
                 {
@@ -101,10 +104,7 @@ namespace StrategyAggressive
         /// Возвращает название стратегии.
         /// </summary>
         /// <returns>Возвращает строку.</returns>
-        public string GetName()
-        {
-            return "Агрессивная";
-        }
+        public string GetName() => "Агрессивная";
 
         #endregion
     }

@@ -30,36 +30,24 @@ namespace AgencySimulator
         /// Возвращает размеры города.
         /// </summary>
         /// <returns>Возвращает кортеж из двух целочисленных значений.</returns>
-        public Tuple<int, int> CityGetSize()
-        {
-            return City.GetSize();
-        }
+        public (int, int) CityGetSize() => City.GetSize();
 
         /// <summary>
         /// Возвращает название города.
         /// </summary>
         /// <returns>Возвращает строку.</returns>
-        public string CityGetName()
-        {
-            return City.GetName();
-        }
+        public string CityGetName() => City.GetName();
 
         /// <summary>
         /// Возвращает Тrue, Если город создан и False, Если нет.
         /// </summary>
         /// <returns>Возвращает логическое значение.</returns>
-        public bool CityIsPresent()
-        {
-            return City != null;
-        }
+        public bool CityIsPresent() => City != null;
 
         /// <summary>
         /// Уничтожает экземпляр города.
         /// </summary>
-        public void CityDestroy()
-        {
-            City = null;
-        }
+        public void CityDestroy() => City = null;
         
         /// <summary>
         /// Устанавливает новый дом.

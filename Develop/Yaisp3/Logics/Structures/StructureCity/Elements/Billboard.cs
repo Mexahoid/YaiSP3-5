@@ -112,10 +112,7 @@ namespace AgencySimulator
         /// <summary>
         /// Отправляет биллборд на снос.
         /// </summary>
-        public void Invalidate()
-        {
-            state = State.Invalid;
-        }
+        public void Invalidate() => state = State.Invalid;
 
         /// <summary>
         /// Проводит день работы биллборда.
@@ -137,19 +134,14 @@ namespace AgencySimulator
         /// Возвращает информацию о том, строится ли ещё биллборд.
         /// </summary>
         /// <returns>Возвращает логическое значение.</returns>
-        public bool BillboardBuilded()
-        {
-            return state != State.Building;
-        }
+        public bool BillboardBuilded() => state != State.Building;
 
         /// <summary>
         /// Возвращает информацию о том, есть ли реклама на биллборде.
         /// </summary>
         /// <returns>Возвращает логическое значение.</returns>
-        public bool BillboardIsFilled()
-        {
-            return owner != null && state != State.Building;
-        }
+        public bool BillboardIsFilled() =>
+            owner != null && state != State.Building;
 
         /// <summary>
         /// Заполняет биллборд заказом клиента.
@@ -168,37 +160,25 @@ namespace AgencySimulator
         /// Возвращает дневной доход с биллборда.
         /// </summary>
         /// <returns>Возвращает целочисленное значение.</returns>
-        public int BillboardPayMoney()
-        {
-            return costPerDay;
-        }
+        public int BillboardPayMoney() => costPerDay;
 
         /// <summary>
         /// Возвращает состояние биллборда.
         /// </summary>
         /// <returns>Возвращает состояние биллборда.</returns>
-        public State GetState()
-        {
-            return state;
-        }
+        public State GetState() => state;
 
         /// <summary>
         /// Собирает деньги с хозяина биллборда.
         /// </summary>
         /// <returns>Возвращает целое число.</returns>
-        public int ClientPay()
-        {
-            return owner == null ? 0 : owner.Pay();
-        }
+        public int ClientPay() => owner?.Pay()??0;
 
         /// <summary>
         /// Возвращает ИД агентства.
         /// </summary>
         /// <returns>Возвращает целочисленное значение.</returns>
-        public int GetAgencyId()
-        {
-            return agencyId;
-        }
+        public int GetAgencyId() => agencyId;
 
         #endregion
     }

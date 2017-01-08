@@ -48,11 +48,11 @@ namespace StrategyNormal
             Random Sychev = new Random((int)DateTime.Now.Ticks);
             if (!BuildOrderedBillboards(agency))
                 return false;
-            List<(double, double)> Summary = agency.GetAgencySummary();
+            List<(double, double deposit)> Summary = agency.GetAgencySummary();
             int C = Summary.Count;
             if (C > 15)
             {
-                double coeff = Summary[Summary.Count - 1].Item2 / Summary[Summary.Count - 16].Item2;
+                double coeff = Summary[Summary.Count - 1].deposit / Summary[Summary.Count - 16].deposit;
                 if (coeff > 1.5)
                     if (agency.HowMuchCanWeAfford(1) == 1)
                         agency.PlaceBillboardRnd();
@@ -61,13 +61,13 @@ namespace StrategyNormal
             {
                 if (badDaysCounter > 0)
                 {
-                    if (Summary[C - 1].Item2 / Summary[C - 11].Item2 < 0.9)
+                    if (Summary[C - 1].deposit / Summary[C - 11].deposit < 0.9)
                         badDaysCounter--;
                     else
                         badDaysCounter = -1;
                 }
                 else
-                    if (Summary[C - 1].Item2 / Summary[C - 11].Item2 < 0.9)
+                    if (Summary[C - 1].deposit / Summary[C - 11].deposit < 0.9)
                     badDaysCounter = Sychev.Next(1, 15);
                 if (badDaysCounter == 0 && agency.GetFreeBillboardsCount() > 0)
                 {
