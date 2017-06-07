@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgencySimulator", "Yaisp3\AgencySimulator.csproj", "{B663DC1C-C655-4E6A-930B-EB77CF342AC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgencySimulator", "YaiSP3-5\AgencySimulator.csproj", "{B663DC1C-C655-4E6A-930B-EB77CF342AC8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{C15EA4A6-0987-4104-A1EF-85B1DE660310}"
 EndProject
